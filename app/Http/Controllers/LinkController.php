@@ -21,8 +21,8 @@ class LinkController extends Controller
         
         $rules = [
             'url' => 'required|url',
-            'custom_code' => [
-                Auth::check() ? 'nullable' : 'prohibited', 
+            'custom_code' => Auth::check() ? [
+                'nullable', 
                 'string', 
                 'min:6', 
                 'max:20',
@@ -33,7 +33,7 @@ class LinkController extends Controller
                         $fail('Mã tùy chỉnh này thuộc hệ thống, vui lòng chọn mã khác.');
                     }
                 },
-            ]
+            ] : ['prohibited']
         ];
 
         $messages = [

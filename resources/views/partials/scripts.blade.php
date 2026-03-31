@@ -361,12 +361,12 @@
             btn.innerHTML = '✨ SNAPPING...';
 
             try {
+                const body = { url: input.value };
+                if (customInput) body.custom_code = customInput.value;
+
                 const data = await Api.fetch('api/shorten', {
                     method: 'POST',
-                    body: {
-                        url: input.value,
-                        custom_code: customInput ? customInput.value : null
-                    }
+                    body: body
                 });
 
                 input.value = data.short_url;
