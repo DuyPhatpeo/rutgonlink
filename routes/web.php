@@ -8,10 +8,13 @@ Route::get('/', function () {
     return view('index');
 });
 
-// Auth Routes
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// Auth Routes (API)
+Route::post('/api/login', [AuthController::class, 'login']);
+Route::post('/api/register', [AuthController::class, 'register']);
+Route::post('/api/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout']); // Backward compatibility
+
+
 
 // Link API Routes
 Route::post('/api/shorten', [LinkController::class, 'shorten']);
