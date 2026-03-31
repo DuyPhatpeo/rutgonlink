@@ -14,29 +14,29 @@
 <div id="statsWidget" class="hidden h-full">
     <div class="flex flex-col md:flex-row gap-3 h-full">
 
-        {{-- Stat Cards (dọc, vuông) --}}
-        <div class="flex flex-col gap-3 shrink-0">
+        {{-- Stat Cards (Nằm ngang trên mobile, Dọc trên desktop) --}}
+        <div class="grid grid-cols-2 md:flex md:flex-col gap-2 md:gap-3 shrink-0">
 
             {{-- Card: Liên kết --}}
-            <div class="w-40 aspect-square bg-white rounded-2xl border border-blue-100/60 shadow-sm overflow-hidden relative">
+            <div class="bg-white rounded-2xl border border-blue-100/60 shadow-sm overflow-hidden relative aspect-auto md:aspect-square md:w-40 py-3 md:py-0">
                 <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent pointer-events-none"></div>
-                <div class="relative h-full flex flex-col justify-center px-5">
-                    <div class="text-[9px] font-black text-blue-400 uppercase tracking-[0.2em] mb-2">Liên kết</div>
-                    <div id="statTotalLinks" class="text-4xl font-black text-slate-900 leading-none tabular-nums mb-1.5">—</div>
-                    <div id="statTodayLinks" class="text-[9px] font-semibold text-slate-400">
-                        <span>+0 hôm nay</span>
+                <div class="relative h-full flex flex-col justify-center px-4 md:px-5">
+                    <div class="text-[7px] md:text-[9px] font-black text-blue-400 uppercase tracking-[0.2em] mb-1 md:mb-2 text-center md:text-left">Liên kết</div>
+                    <div id="statTotalLinks" class="text-xl md:text-4xl font-black text-slate-900 leading-none tabular-nums mb-1 md:mb-1.5 text-center md:text-left">—</div>
+                    <div id="statTodayLinks" class="text-[7px] md:text-[9px] font-semibold text-slate-400 text-center md:text-left">
+                        <span>+0</span>
                     </div>
                 </div>
             </div>
 
             {{-- Card: Click --}}
-            <div class="w-40 aspect-square bg-white rounded-2xl border border-indigo-100/60 shadow-sm overflow-hidden relative">
+            <div class="bg-white rounded-2xl border border-indigo-100/60 shadow-sm overflow-hidden relative aspect-auto md:aspect-square md:w-40 py-3 md:py-0">
                 <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 to-transparent pointer-events-none"></div>
-                <div class="relative h-full flex flex-col justify-center px-5">
-                    <div class="text-[9px] font-black text-indigo-400 uppercase tracking-[0.2em] mb-2">Lượt Click</div>
-                    <div id="statTotalClicks" class="text-4xl font-black text-slate-900 leading-none tabular-nums mb-1.5">—</div>
-                    <div id="statTodayClicks" class="text-[9px] font-semibold text-slate-400">
-                        <span>+0 hôm nay</span>
+                <div class="relative h-full flex flex-col justify-center px-4 md:px-5">
+                    <div class="text-[7px] md:text-[9px] font-black text-indigo-400 uppercase tracking-[0.2em] mb-1 md:mb-2 text-center md:text-left">Lượt Click</div>
+                    <div id="statTotalClicks" class="text-xl md:text-4xl font-black text-slate-900 leading-none tabular-nums mb-1 md:mb-1.5 text-center md:text-left">—</div>
+                    <div id="statTodayClicks" class="text-[7px] md:text-[9px] font-semibold text-slate-400 text-center md:text-left">
+                        <span>+0</span>
                     </div>
                 </div>
             </div>

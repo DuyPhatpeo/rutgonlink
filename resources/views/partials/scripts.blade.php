@@ -46,6 +46,25 @@
      * Bộ điều khiển Modal (Ẩn/Hiện)
      */
     const Modal = {
+        init() {
+            // Đóng khi nhấn nền (Backdrop)
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('fixed') && e.target.id.endsWith('Modal')) {
+                    this.close(e.target.id);
+                }
+            });
+
+            // Đóng khi nhấn phím ESC
+            window.addEventListener('keydown', (e) => {
+                const isEscape = e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27;
+                if (isEscape) {
+                    // Tìm tất cả modal đang mở (không có class hidden)
+                    document.querySelectorAll('[id$="Modal"]:not(.hidden)').forEach(modal => {
+                        this.close(modal.id);
+                    });
+                }
+            });
+        },
         open(id) {
             const el = document.getElementById(id);
             if (el) {
@@ -65,6 +84,9 @@
             this.open(newId);
         }
     };
+
+    // Khởi tạo tính năng đóng khi nhấn nền
+    Modal.init();
 
     /**
      * Hiển thị lỗi ngay trên ô nhập liệu
@@ -271,11 +293,8 @@
                 btn.classList.add('bg-brand-green');
                 btn.classList.remove('bg-brand-blue');
 
-                // Hiển thị mã QR
-                if (data.qr_code && qrContainer && qrImage) {
-                    qrImage.src = data.qr_code;
-                    qrContainer.classList.remove('hidden');
-                    qrContainer.classList.add('flex');
+                if (data.qr_code) {
+                    this.showQR(data.short_url, data.qr_code);
                 }
 
                 if (IS_AUTHENTICATED) {
@@ -295,10 +314,14 @@
 
         resetBtn() {
             this.isShortened = false;
+            this.currentShortUrl = null;
             const btn = document.getElementById('btnSubmit');
             const input = document.getElementById('url');
+            const stickyInput = document.getElementById('stickyUrl');
             const customInput = document.getElementById('customCode');
             const qrContainer = document.getElementById('qrContainer');
+            const clearBtn = document.getElementById('clearUrl');
+            const stickyClearBtn = document.getElementById('stickyClearUrl');
 
             if (qrContainer) {
                 qrContainer.classList.add('hidden');
@@ -306,7 +329,11 @@
             }
 
             if (input) input.value = '';
+            if (stickyInput) stickyInput.value = '';
             if (customInput) customInput.value = '';
+            
+            if (clearBtn) clearBtn.classList.add('hidden');
+            if (stickyClearBtn) stickyClearBtn.classList.add('hidden');
 
             const form = document.querySelector('form[onsubmit="LinkManager.handleShorten(event)"]');
             if (form) ErrorUI.clear(form);
@@ -315,6 +342,21 @@
                 btn.innerHTML = 'Rút gọn link';
                 btn.classList.add('bg-brand-blue');
                 btn.classList.remove('bg-brand-green');
+            }
+        },
+
+        clearInput(id) {
+            const input = document.getElementById(id);
+            if (input) {
+                input.value = '';
+                input.focus();
+                this.resetBtn();
+                
+                // Cập nhật nút Clear liên quan
+                const clearBtn = document.getElementById('clearUrl');
+                const stickyClearBtn = document.getElementById('stickyClearUrl');
+                if (clearBtn) clearBtn.classList.add('hidden');
+                if (stickyClearBtn) stickyClearBtn.classList.add('hidden');
             }
         },
 
@@ -339,54 +381,61 @@
                 data.forEach((link, index) => {
                     const menuId = 'menu-' + Math.random().toString(36).substr(2, 8);
                     const card = document.createElement('div');
-                    card.className = "p-6 md:p-8 hover:bg-slate-50/50 transition-all group relative border-b border-slate-200 last:border-0" + (index >= LIMIT ? ' hidden stats-extra' : '');
+                    card.className = "p-5 md:p-6 hover:bg-slate-50/50 transition-all group relative border-b border-slate-200 last:border-0" + (index >= LIMIT ? ' hidden stats-extra' : '');
                     card.innerHTML = `
-                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                            <div class="space-y-3 flex-1 min-w-0">
-                                <h4 class="text-base md:text-lg font-bold text-slate-800 truncate hover:text-brand-blue cursor-pointer transition-colors" title="${link.original_url}">
-                                    ${link.original_url.replace(/^https?:\/\//, '')}
-                                </h4>
-                                <div class="flex flex-wrap items-center gap-3">
-                                    <a href="${link.full_short_url}" target="_blank" class="text-brand-blue font-black text-xs md:text-sm hover:underline underline-offset-4 decoration-2 truncate max-w-[200px] md:max-w-none">
-                                        ${link.full_short_url.replace(/^https?:\/\//, '')}
-                                    </a>
-                                    <button onclick="Utils.copyToClipboard('${link.full_short_url}', this)" class="bg-blue-50 text-brand-blue text-[9px] md:text-[10px] font-black px-4 py-1.5 rounded-full hover:bg-brand-blue hover:text-white transition-all uppercase tracking-widest leading-none shadow-sm">
-                                        Sao chép
-                                    </button>
-                                </div>
-                                <div class="flex items-center gap-4 md:gap-6 pt-2">
-                                    <span class="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest">${link.created_at}</span>
-                                    <span class="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-full leading-none shadow-inner border border-slate-200/50">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-brand-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                                        ${link.clicks} Click
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <!-- Menu Hành động 3 chấm (click-toggle) -->
-                            <div class="relative">
-                                <button onclick="LinkManager.toggleMenu('${menuId}')" class="p-3 text-slate-300 hover:text-slate-600 hover:bg-slate-100 rounded-2xl transition-all shadow-sm border border-transparent hover:border-slate-200/50">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div class="flex flex-col gap-3">
+                            <!-- Nút Menu (3 chấm) - Căn giữa chiều dọc bên phải -->
+                            <div class="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-10">
+                                <button onclick="LinkManager.toggleMenu('${menuId}')" class="p-2 text-slate-300 hover:text-brand-blue transition-all active:scale-90">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-7 md:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                                     </svg>
                                 </button>
                                 
-                                <div id="${menuId}" class="absolute right-0 top-full mt-1 w-48 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 hidden z-50 overflow-hidden">
+                                <div id="${menuId}" class="absolute right-0 top-1/2 -translate-y-1/2 mt-8 md:mt-10 w-40 md:w-48 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 hidden z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
                                     <div class="p-1.5 space-y-0.5">
-                                        <a href="${link.original_url}" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[10px] font-black text-slate-600 hover:bg-slate-50 hover:text-brand-blue transition-all uppercase tracking-widest">
+                                        <a href="${link.original_url}" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[10px] font-black text-slate-600 hover:bg-slate-50 hover:text-brand-blue transition-all uppercase tracking-widest text-left">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                                             Link gốc
                                         </a>
                                         <button onclick="LinkManager.showQR('${link.full_short_url}')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[10px] font-black text-slate-600 hover:bg-slate-50 hover:text-brand-blue transition-all uppercase tracking-widest text-left">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
                                             Mã QR
                                         </button>
-                                        <div class="h-px bg-slate-100 my-1 mx-2"></div>
-                                        <button onclick="LinkManager.deleteLink(${link.id})" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[10px] font-black text-rose-500 hover:bg-rose-50 hover:text-rose-600 transition-all uppercase tracking-widest text-left">
+                                        <button onclick="LinkManager.deleteLink('${link.id}')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[10px] font-black text-rose-500 hover:bg-rose-50 transition-all uppercase tracking-widest text-left">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                            Xoá vĩnh viễn
+                                            Xoá link
                                         </button>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="pr-14 md:pr-16 space-y-3">
+                                <!-- Link Gốc -->
+                                <h4 class="text-[11px] md:text-sm font-bold text-slate-400 truncate opacity-70 mb-0.5" title="${link.original_url}">
+                                    ${link.original_url.replace(/^https?:\/\//, '')}
+                                </h4>
+                                
+                                <!-- Link Rút gọn - HIỂN THỊ ĐẦY ĐỦ VỚI KÍCH THƯỚC HỢP LÝ -->
+                                <div class="flex flex-wrap items-center gap-2 md:gap-4">
+                                    <a href="${link.full_short_url}" target="_blank" class="text-brand-blue font-black text-sm md:text-lg hover:bg-blue-50/50 px-1 rounded-lg transition-all decoration-brand-blue hover:underline underline-offset-8 decoration-2 whitespace-normal break-all">
+                                        ${link.full_short_url.replace(/^https?:\/\//, '')}
+                                    </a>
+                                    <button onclick="Utils.copyToClipboard('${link.full_short_url}', this)" class="bg-blue-100/50 text-brand-blue text-[9px] md:text-[10px] font-black px-4 py-2 rounded-xl hover:bg-brand-blue hover:text-white transition-all uppercase tracking-widest leading-none shadow-sm border border-blue-200/50 h-fit">
+                                        Sao chép
+                                    </button>
+                                </div>
+
+                                <!-- Thống kê phụ -->
+                                <div class="flex items-center gap-6 md:gap-10 pt-1">
+                                    <div class="flex items-center gap-1.5 opacity-60">
+                                        <div class="w-1.5 h-1.5 bg-slate-200 rounded-full"></div>
+                                        <span class="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">${link.created_at}</span>
+                                    </div>
+                                    <span class="text-[9px] md:text-[11px] font-black text-brand-blue uppercase tracking-widest flex items-center gap-2 bg-white px-3 py-1.5 rounded-full leading-none border border-blue-50 shadow-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 text-brand-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                                        ${link.clicks} Click
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -394,25 +443,18 @@
                     statsBody.appendChild(card);
                 });
 
-                // Nút "Xem tất cả" nếu có nhiều hơn LIMIT
+                // Nút "Xem thêm / Thu gọn" duy nhất và căn giữa
                 if (data.length > LIMIT) {
                     const remaining = data.length - LIMIT;
-                    const toggleBtn = document.createElement('div');
-                    toggleBtn.className = 'border-t border-slate-100';
-                    toggleBtn.innerHTML = `
-                        <div class="flex items-center">
-                            <button id="statsToggleBtn" onclick="LinkManager.toggleShowAll('stats')" class="flex-1 py-3.5 text-[10px] font-black text-slate-400 hover:text-brand-blue hover:bg-slate-50 transition-all uppercase tracking-widest flex items-center justify-center gap-2">
-                                <span id="statsToggleText">Xem thêm (còn ${remaining})</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" /></svg>
-                            </button>
-                            <div class="w-px h-6 bg-slate-100"></div>
-                            <button id="statsCollapseBtn" onclick="LinkManager.collapseAll('stats')" class="opacity-0 pointer-events-none py-3.5 px-5 text-[10px] font-black text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all uppercase tracking-widest flex items-center gap-2 whitespace-nowrap">
-                                Ẩn bớt
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" /></svg>
-                            </button>
-                        </div>
+                    const toggleArea = document.createElement('div');
+                    toggleArea.className = 'border-t border-slate-100 bg-slate-50/30';
+                    toggleArea.innerHTML = `
+                        <button id="statsToggleBtn" onclick="LinkManager.toggleShowAll('stats')" class="w-full py-4 text-[10px] font-black text-slate-400 hover:text-brand-blue hover:bg-white transition-all uppercase tracking-[0.2em] flex items-center justify-center gap-2 group">
+                            <span id="statsToggleText">Xem thêm (còn ${remaining})</span>
+                            <svg id="statsToggleIcon" xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" /></svg>
+                        </button>
                     `;
-                    statsBody.appendChild(toggleBtn);
+                    statsBody.appendChild(toggleArea);
                 }
 
                 // Tải widget thống kê
@@ -578,25 +620,18 @@
                     logsBody.appendChild(card);
                 });
 
-                // Nút "Xem tất cả" nếu có nhiều hơn LIMIT
+                // Nút "Xem thêm / Thu gọn" duy nhất và căn giữa
                 if (data.length > LIMIT) {
                     const remaining = data.length - LIMIT;
-                    const toggleBtn = document.createElement('div');
-                    toggleBtn.className = 'border-t border-slate-100';
-                    toggleBtn.innerHTML = `
-                        <div class="flex items-center">
-                            <button id="logsToggleBtn" onclick="LinkManager.toggleShowAll('logs')" class="flex-1 py-3.5 text-[10px] font-black text-slate-400 hover:text-emerald-600 hover:bg-slate-50 transition-all uppercase tracking-widest flex items-center justify-center gap-2">
-                                <span id="logsToggleText">Xem thêm (còn ${remaining})</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" /></svg>
-                            </button>
-                            <div class="w-px h-6 bg-slate-100"></div>
-                            <button id="logsCollapseBtn" onclick="LinkManager.collapseAll('logs')" class="opacity-0 pointer-events-none py-3.5 px-5 text-[10px] font-black text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all uppercase tracking-widest flex items-center gap-2 whitespace-nowrap">
-                                Ẩn bớt
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" /></svg>
-                            </button>
-                        </div>
+                    const toggleArea = document.createElement('div');
+                    toggleArea.className = 'border-t border-slate-100 bg-slate-50/30';
+                    toggleArea.innerHTML = `
+                        <button id="logsToggleBtn" onclick="LinkManager.toggleShowAll('logs')" class="w-full py-4 text-[10px] font-black text-slate-400 hover:text-emerald-600 hover:bg-white transition-all uppercase tracking-[0.2em] flex items-center justify-center gap-2 group">
+                            <span id="logsToggleText">Xem thêm (còn ${remaining})</span>
+                            <svg id="logsToggleIcon" xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" /></svg>
+                        </button>
                     `;
-                    logsBody.appendChild(toggleBtn);
+                    logsBody.appendChild(toggleArea);
                 }
 
             } catch (e) {
@@ -604,19 +639,55 @@
             }
         },
 
-        showQR(url) {
-            const qrContainer = document.getElementById('qrContainer');
-            const qrImage = document.getElementById('qrImage');
-            if (qrContainer && qrImage) {
-                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(url)}`;
-                qrImage.src = qrUrl;
-                qrContainer.classList.remove('hidden');
-                qrContainer.classList.add('flex');
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-                Toast.show('Đã cập nhật mã QR! ✨', 'info');
+        showQR(shortUrl, qrUrl = null) {
+            const qrModalImage = document.getElementById('qrModalImage');
+            if (qrModalImage) {
+                this.currentShortUrl = shortUrl;
+                qrModalImage.src = qrUrl || `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(shortUrl)}`;
+                Modal.open('qrModal');
+                Toast.show('Đã tạo mã QR! ✨', 'info');
+            }
+        },
+
+        async saveQR() {
+            const qrImage = document.getElementById('qrModalImage');
+            if (!qrImage || !qrImage.src) return;
+            
+            try {
+                const response = await fetch(qrImage.src);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `LinkSnap_QR_${Math.random().toString(36).substr(2, 6)}.png`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                Toast.show('Đã tải mã QR về máy!', 'success');
+            } catch (e) {
+                console.error('Save QR error', e);
+                Toast.show('Không thể tải mã QR. Thử chuột phải chọn "Lưu hình ảnh".', 'error');
+            }
+        },
+
+        async shareLink() {
+            const url = this.currentShortUrl || document.getElementById('url')?.value;
+            if (!url) return;
+
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Chia sẻ liên kết từ LinkSnap',
+                        text: 'Truy cập liên kết rút gọn của tôi:',
+                        url: url
+                    });
+                } catch (e) {
+                    if (e.name !== 'AbortError') console.error('Share error', e);
+                }
+            } else {
+                navigator.clipboard.writeText(url);
+                Toast.show('Trình duyệt không hỗ trợ chia sẻ. Đã copy link vào bộ nhớ!', 'info');
             }
         },
 
@@ -653,10 +724,18 @@
             }
 
             const stillHidden = document.querySelectorAll('.' + extraClass + '.hidden').length;
-            const textEl = document.getElementById(textId);
-            const btn = document.getElementById(btnId);
+            const textEl = document.getElementById(type + 'ToggleText');
+            const iconEl = document.getElementById(type + 'ToggleIcon');
+            const btn = document.getElementById(type + 'ToggleBtn');
+
             if (stillHidden === 0) {
-                if (btn) btn.classList.add('hidden');
+                if (textEl) textEl.textContent = 'Thu gọn';
+                if (iconEl) iconEl.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" />';
+                if (btn) {
+                    btn.setAttribute('onclick', `LinkManager.collapseAll('${type}')`);
+                    btn.classList.add('text-rose-400', 'hover:text-rose-600');
+                    btn.classList.remove('text-slate-400');
+                }
             } else {
                 if (textEl) textEl.textContent = 'Xem thêm (còn ' + stillHidden + ')';
             }
@@ -668,15 +747,17 @@
             const total = allExtras.length;
             allExtras.forEach(card => card.classList.add('hidden'));
 
-            const toggleBtn = document.getElementById(type + 'ToggleBtn');
+            const btn = document.getElementById(type + 'ToggleBtn');
             const textEl = document.getElementById(type + 'ToggleText');
-            const collapseBtn = document.getElementById(type + 'CollapseBtn');
-            if (toggleBtn) toggleBtn.classList.remove('hidden');
-            if (textEl) textEl.textContent = 'Xem thêm (còn ' + total + ')';
-            // Ẩn lại nút Ẩn bớt (giữ chỗ bằng opacity-0)
-            if (collapseBtn) {
-                collapseBtn.classList.add('opacity-0', 'pointer-events-none');
+            const iconEl = document.getElementById(type + 'ToggleIcon');
+
+            if (btn) {
+                btn.setAttribute('onclick', `LinkManager.toggleShowAll('${type}')`);
+                btn.classList.remove('text-rose-400', 'hover:text-rose-600');
+                btn.classList.add('text-slate-400');
             }
+            if (textEl) textEl.textContent = 'Xem thêm (còn ' + total + ')';
+            if (iconEl) iconEl.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />';
         },
 
         async deleteLink(id) {
@@ -731,20 +812,35 @@
         // Đồng bộ 2 chiều: sticky ↔ ô nhập chính
         const mainInput = document.getElementById('url');
         const stickyInput = document.getElementById('stickyUrl');
-        if (mainInput && stickyInput) {
+        const clearBtn = document.getElementById('clearUrl');
+        const stickyClearBtn = document.getElementById('stickyClearUrl');
+
+        const updateClearBtn = (val) => {
+            if (clearBtn) {
+                if (val) clearBtn.classList.remove('hidden');
+                else clearBtn.classList.add('hidden');
+            }
+            if (stickyClearBtn) {
+                if (val) stickyClearBtn.classList.remove('hidden');
+                else stickyClearBtn.classList.add('hidden');
+            }
+        };
+
+        if (mainInput) {
             mainInput.addEventListener('input', () => {
-                stickyInput.value = mainInput.value;
-            });
-            stickyInput.addEventListener('input', () => {
-                mainInput.value = stickyInput.value;
+                if (stickyInput) stickyInput.value = mainInput.value;
+                updateClearBtn(mainInput.value);
                 if (LinkManager.isShortened) LinkManager.resetBtn();
             });
         }
 
-        // Lắng nghe sự kiện nhập URL để reset lại nút bấm
-        document.getElementById('url')?.addEventListener('input', () => {
-            if (LinkManager.isShortened) LinkManager.resetBtn();
-        });
+        if (stickyInput) {
+            stickyInput.addEventListener('input', () => {
+                if (mainInput) mainInput.value = stickyInput.value;
+                updateClearBtn(stickyInput.value);
+                if (LinkManager.isShortened) LinkManager.resetBtn();
+            });
+        }
 
         // Tự động bỏ dấu cho mã tùy chỉnh
         const customInput = document.getElementById('customCode');
