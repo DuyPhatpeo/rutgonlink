@@ -17,12 +17,36 @@ class LinkController extends Controller
      */
     public function shorten(Request $request)
     {
+        $blacklist = ['login', 'register', 'logout', 'api', 'stats', 'logs', 'chart', 'admin', 'dashboard', 'settings', 'profile'];
+        
         $rules = [
             'url' => 'required|url',
-            'custom_code' => ['nullable', 'string', 'min:6', 'regex:/^[a-zA-Z0-9]+$/', Rule::unique('links', 'short_code')]
+            'custom_code' => [
+                Auth::check() ? 'nullable' : 'prohibited', 
+                'string', 
+                'min:6', 
+                'max:20',
+                'regex:/^[a-zA-Z0-9]+$/', 
+                Rule::unique('links', 'short_code'),
+                function ($attribute, $value, $fail) use ($blacklist) {
+                    if (in_array(strtolower($value), $blacklist)) {
+                        $fail('Mã tùy chỉnh này thuộc hệ thống, vui lòng chọn mã khác.');
+                    }
+                },
+            ]
         ];
 
-        $request->validate($rules);
+        $messages = [
+            'url.required' => 'Vui lòng nhập địa chỉ URL.',
+            'url.url' => 'Địa chỉ URL không hợp lệ.',
+            'custom_code.min' => 'Mã tùy chỉnh phải có ít nhất 6 ký tự.',
+            'custom_code.max' => 'Mã tùy chỉnh không được quá 20 ký tự.',
+            'custom_code.prohibited' => 'Vui lòng đăng nhập để sử dụng tính năng mã tùy chỉnh.',
+            'custom_code.regex' => 'Mã tùy chỉnh chỉ được chứa chữ cái và số, không có ký tự đặc biệt.',
+            'custom_code.unique' => 'Mã tùy chỉnh này đã được sử dụng, vui lòng chọn mã khác.',
+        ];
+
+        $request->validate($rules, $messages);
 
         $shortCode = $request->custom_code;
 

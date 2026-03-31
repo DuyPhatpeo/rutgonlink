@@ -118,20 +118,24 @@
     const ErrorUI = {
         show(inputEl, msg) {
             if (!inputEl) return;
+            
+            // Nếu là form rút gọn chính, dùng AlertUI (luôn absolute)
+            if (inputEl.id === 'url' || inputEl.id === 'customCode') {
+                AlertUI.show(msg);
+                inputEl.classList.add('!border-rose-400', '!bg-rose-50/50');
+                return;
+            }
+
             let container = inputEl.closest('.group') || inputEl.parentElement;
             let errorEl = container.querySelector('.input-error');
             if (!errorEl) {
+                // Đảm bảo container là relative để absolute hoạt động tốt
+                container.style.position = 'relative';
+
                 errorEl = document.createElement('div');
-                errorEl.className = 'input-error absolute -top-11 left-6 text-rose-500 text-[10px] font-black uppercase tracking-widest mt-1 bg-white px-3 py-1.5 rounded-xl shadow-lg border border-rose-100 animate-in fade-in slide-in-from-bottom-2 z-20';
-
-                // Thiết kế riêng cho form trong Modal (Login/Register)
-                if (container.classList.contains('group')) {
-                    errorEl.className = 'input-error absolute right-4 top-0 text-rose-500 text-[9px] font-black uppercase tracking-[0.1em] animate-in fade-in slide-in-from-right-2 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-100 z-10';
-                    container.style.position = 'relative';
-                } else {
-                    container.style.position = container.style.position || 'relative';
-                }
-
+                // Thiết kế: Cùng hàng với Label (nằm bên phải), không đẩy input xuống
+                errorEl.className = 'input-error absolute top-0 right-4 text-rose-500 text-[10px] md:text-[11px] font-black uppercase tracking-wider animate-in fade-in slide-in-from-right-1 z-30 opacity-90';
+                
                 inputEl.parentElement.insertBefore(errorEl, inputEl);
             }
             errorEl.innerHTML = `${msg}`;
@@ -142,6 +146,53 @@
             formEl.querySelectorAll('input').forEach(input => {
                 input.classList.remove('!border-rose-400', '!bg-rose-50/50');
             });
+            AlertUI.clear();
+        }
+    };
+
+    /**
+     * Bộ hiển thị thông báo dạng Alert (Dành riêng cho form rút gọn chính)
+     */
+    const AlertUI = {
+        show(message) {
+            this.clear();
+            
+            const inputUrl = document.getElementById('url');
+            if (!inputUrl) return;
+            const container = inputUrl.closest('section');
+            if (!container) return;
+
+            // Đảm bảo container có relative để định vị absolute chính xác
+            container.classList.add('relative');
+
+            const alert = document.createElement('div');
+            alert.id = 'formAlert';
+            // Tăng z-index và làm nổi bật hơn để không bị che khuất
+            alert.className = 'absolute -top-20 left-0 right-0 bg-[#fee2e2] border-2 border-[#fecaca] rounded-2xl px-6 py-4 flex items-center justify-between shadow-xl animate-in fade-in zoom-in slide-in-from-top-4 duration-300 z-[9999]';
+            alert.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 bg-[#b91c1c] rounded-full animate-ping shrink-0"></div>
+                    <span class="text-xs md:text-sm font-black text-[#991b1b] uppercase tracking-widest">${message}</span>
+                </div>
+                <button onclick="AlertUI.clear()" class="text-[#991b1b]/60 hover:text-[#991b1b] transition-all p-1 active:scale-95">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            `;
+            
+            container.appendChild(alert);
+
+            // Tự động tắt sau 10 giây (tăng thêm thời gian để người dùng dễ quan sát)
+            this.timeout = setTimeout(() => this.clear(), 10000);
+        },
+        clear() {
+            if (this.timeout) clearTimeout(this.timeout);
+            const el = document.getElementById('formAlert');
+            if (el) {
+                el.classList.add('fade-out', 'zoom-out');
+                setTimeout(() => el.remove(), 200);
+            }
         }
     };
 
@@ -328,18 +379,41 @@
                 }
                 Toast.show('Rút gọn liên kết thành công!', 'success');
             } catch (err) {
-                const msg = err.data?.message || 'URL không hợp lệ hoặc mã tùy chỉnh đã tồn tại.';
-                ErrorUI.show(input, msg);
-                this.resetBtn();
+                // Xử lý lỗi validation từ Laravel
+                if (err.data?.errors) {
+                    const errors = err.data.errors;
+                    if (errors.url) ErrorUI.show(input, errors.url[0]);
+                    if (errors.custom_code) {
+                        const customCodeEl = document.getElementById('customCode');
+                        if (customCodeEl) ErrorUI.show(customCodeEl, errors.custom_code[0]);
+                        else Toast.show(errors.custom_code[0], 'error');
+                    }
+                } else {
+                    const msg = err.data?.message || 'URL không hợp lệ hoặc mã tùy chỉnh đã tồn tại.';
+                    ErrorUI.show(input, msg);
+                }
+                
+                // Reset nút bấm về trạng thái ban đầu nhưng GIỮ LẠI nội dung input để người dùng sửa
+                this.resetBtnState();
             } finally {
                 btn.disabled = false;
             }
         },
 
-        resetBtn() {
+        resetBtnState() {
             this.isShortened = false;
-            this.currentShortUrl = null;
             const btn = document.getElementById('btnSubmit');
+            if (btn) {
+                btn.innerHTML = 'Rút gọn link';
+                btn.classList.add('bg-brand-blue');
+                btn.classList.remove('bg-brand-green');
+                btn.disabled = false;
+            }
+        },
+
+        resetBtn() {
+            this.resetBtnState();
+            this.currentShortUrl = null;
             const input = document.getElementById('url');
             const stickyInput = document.getElementById('stickyUrl');
             const customInput = document.getElementById('customCode');
@@ -361,12 +435,6 @@
 
             const form = document.querySelector('form[onsubmit="LinkManager.handleShorten(event)"]');
             if (form) ErrorUI.clear(form);
-
-            if (btn) {
-                btn.innerHTML = 'Rút gọn link';
-                btn.classList.add('bg-brand-blue');
-                btn.classList.remove('bg-brand-green');
-            }
         },
 
         clearInput(id) {

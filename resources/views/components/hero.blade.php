@@ -24,7 +24,7 @@
 
     {{-- URL Input Form --}}
     <div class="flex-1 flex flex-col justify-center pt-6 md:pt-10 pb-12 md:pb-20">
-        <section class="max-w-6xl w-full mx-auto animate-in slide-in-from-bottom-10 duration-1000 delay-150 px-4 md:px-6">
+        <section class="max-w-6xl w-full mx-auto animate-in slide-in-from-bottom-10 duration-1000 delay-150 px-4 md:px-6 relative">
             <div class="bg-white rounded-[32px] md:rounded-[50px] p-2 md:p-3 shadow-2xl shadow-blue-100/60 border border-white relative overflow-hidden group">
                 <div class="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity"></div>
 
