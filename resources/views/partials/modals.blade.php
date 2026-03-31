@@ -50,6 +50,7 @@
                 <input type="password" name="password_confirmation" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-3.5 md:py-4 px-5 md:px-6 outline-none focus:border-brand-blue focus:bg-white transition-all text-sm">
             </div>
             <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-black py-4 md:py-5 rounded-2xl transition-all shadow-xl shadow-blue-100 uppercase tracking-widest mt-4 md:mt-6 text-xs md:text-sm">Đăng ký hoàn tất</button>
+            <p class="text-center text-[10px] md:text-xs text-slate-500 font-medium">Đã có tài khoản? <button type="button" onclick="Modal.switch('registerModal', 'loginModal')" class="text-brand-blue font-bold hover:underline underline-offset-4 decoration-2">Đăng nhập ngay</button></p>
         </form>
         <button onclick="Modal.close('registerModal')" class="mt-6 md:mt-8 w-full text-[10px] font-black text-slate-300 hover:text-slate-500 transition-colors uppercase tracking-widest">Đóng</button>
     </div>
