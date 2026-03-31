@@ -63,6 +63,13 @@
                 Toast.show('Không thể sao chép. Vui lòng thử lại.', 'error');
                 return false;
             }
+        },
+        debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
         }
     };
 
@@ -452,12 +459,13 @@
             }
         },
 
-        async loadStats() {
+        async loadStats(search = '') {
             const statsBody = document.getElementById('statsBody');
             if (!statsBody) return;
 
             try {
-                const data = await Api.fetch('api/stats');
+                const url = search ? `api/stats?search=${encodeURIComponent(search)}` : 'api/stats';
+                const data = await Api.fetch(url);
                 statsBody.innerHTML = '';
 
                 if (data.length === 0) {
@@ -807,9 +815,6 @@
 
         toggleShowAll(type) {
             const extraClass = type === 'stats' ? 'stats-extra' : 'logs-extra';
-            const textId = type + 'ToggleText';
-            const btnId = type + 'ToggleBtn';
-            const collapseId = type + 'CollapseBtn';
             const STEP = 5;
 
             const hiddenCards = document.querySelectorAll('.' + extraClass + '.hidden');
@@ -820,12 +825,6 @@
                     shown++;
                 }
             });
-
-            // Hiện nút Ẩn bớt (bỏ opacity-0, pointer-events-none)
-            const collapseBtn = document.getElementById(collapseId);
-            if (collapseBtn) {
-                collapseBtn.classList.remove('opacity-0', 'pointer-events-none');
-            }
 
             const stillHidden = document.querySelectorAll('.' + extraClass + '.hidden').length;
             const textEl = document.getElementById(type + 'ToggleText');
@@ -884,14 +883,6 @@
         }
     };
 
-    // Bấm ra ngoài để đóng menu
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('[id^="menu-"]') && !e.target.closest('button[onclick*="toggleMenu"]')) {
-            document.querySelectorAll('[id^="menu-"]').forEach(m => m.classList.add('hidden'));
-        }
-    });
-
-
     /**
      * Tiện ích xử lý chuỗi (Loại bỏ dấu tiếng Việt và ký tự đặc biệt)
      */
@@ -904,6 +895,13 @@
         }
     };
 
+    // Bấm ra ngoài để đóng menu
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('[id^="menu-"]') && !e.target.closest('button[onclick*="toggleMenu"]')) {
+            document.querySelectorAll('[id^="menu-"]').forEach(m => m.classList.add('hidden'));
+        }
+    });
+
     // Khởi tạo các sự kiện khi trang đã tải xong (DOMContentLoaded)
     document.addEventListener('DOMContentLoaded', () => {
         // Nếu đã đăng nhập, tự động tải danh sách link
@@ -911,6 +909,14 @@
             LinkManager.loadStats();
             LinkManager.loadLogs();
             LinkManager.loadChart();
+        }
+
+        // Logic Tìm kiếm Link (Debounced)
+        const searchInput = document.getElementById('searchLinks');
+        if (searchInput) {
+            searchInput.addEventListener('input', Utils.debounce((e) => {
+                LinkManager.loadStats(e.target.value);
+            }, 400));
         }
 
         // Đồng bộ 2 chiều: sticky ↔ ô nhập chính

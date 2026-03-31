@@ -95,14 +95,24 @@ class LinkController extends Controller
     /**
      * Lấy danh sách link của người dùng hiện tại (kèm thông tin rút gọn).
      */
-    public function stats()
+    public function stats(Request $request)
     {
         if (!Auth::check()) {
             return response()->json([], 401);
         }
 
-        $links = Link::where('user_id', Auth::id())
-                    ->orderBy('created_at', 'desc')
+        $query = Link::where('user_id', Auth::id());
+
+        // Lọc theo từ khóa tìm kiếm nếu có
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('original_url', 'like', "%{$search}%")
+                  ->orWhere('short_code', 'like', "%{$search}%");
+            });
+        }
+
+        $links = $query->orderBy('created_at', 'desc')
                     ->get()
                     ->map(function ($link) {
                         return [
