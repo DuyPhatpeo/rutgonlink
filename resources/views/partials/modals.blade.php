@@ -72,6 +72,20 @@
                 <span class="text-[10px] items-center font-black uppercase tracking-widest">Tải về máy</span>
             </button>
         </div>
+        
+        {{-- Link Rút gọn để Copy --}}
+        <div class="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 flex items-center justify-between gap-3 group/link cursor-pointer hover:bg-slate-100/50 transition-all active:scale-[0.98]" onclick="LinkManager.copyCurrentQRLink()">
+            <div class="flex-1 min-w-0 flex flex-col items-start gap-0.5 text-left">
+                <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none">Liên kết rút gọn</span>
+                <span id="qrShortUrlDisplay" class="text-xs font-black text-brand-blue truncate w-full tracking-tight">...</span>
+            </div>
+            <div class="bg-white p-2 rounded-xl shadow-sm border border-slate-100 text-slate-400 group-hover/link:text-brand-blue transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+            </div>
+        </div>
+
 
         {{-- Các nút Hành động (Nằm ngang) --}}
         <div class="w-full flex items-center gap-3">

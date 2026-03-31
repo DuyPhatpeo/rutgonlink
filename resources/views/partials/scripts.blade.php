@@ -43,6 +43,30 @@
     };
 
     /**
+     * Tiện ích chung
+     */
+    const Utils = {
+        async copyToClipboard(text, btn = null) {
+            try {
+                await navigator.clipboard.writeText(text);
+                if (btn) {
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = 'COPIED! ✨';
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                    }, 2000);
+                }
+                Toast.show('Đã sao chép vào bộ nhớ tạm!', 'success');
+                return true;
+            } catch (err) {
+                console.error('Copy failed', err);
+                Toast.show('Không thể sao chép. Vui lòng thử lại.', 'error');
+                return false;
+            }
+        }
+    };
+
+    /**
      * Bộ điều khiển Modal (Ẩn/Hiện)
      */
     const Modal = {
@@ -641,11 +665,23 @@
 
         showQR(shortUrl, qrUrl = null) {
             const qrModalImage = document.getElementById('qrModalImage');
+            const qrShortUrlDisplay = document.getElementById('qrShortUrlDisplay');
             if (qrModalImage) {
                 this.currentShortUrl = shortUrl;
                 qrModalImage.src = qrUrl || `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(shortUrl)}`;
+                
+                if (qrShortUrlDisplay) {
+                    qrShortUrlDisplay.textContent = shortUrl.replace(/^https?:\/\//, '');
+                }
+
                 Modal.open('qrModal');
                 Toast.show('Đã tạo mã QR! ✨', 'info');
+            }
+        },
+
+        copyCurrentQRLink() {
+            if (this.currentShortUrl) {
+                Utils.copyToClipboard(this.currentShortUrl);
             }
         },
 
