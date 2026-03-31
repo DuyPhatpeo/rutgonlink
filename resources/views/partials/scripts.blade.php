@@ -317,7 +317,7 @@
                 btn.classList.add('bg-brand-green');
                 btn.classList.remove('bg-brand-blue');
 
-                if (data.qr_code) {
+                if (data.qr_code && IS_AUTHENTICATED) {
                     this.showQR(data.short_url, data.qr_code);
                 }
 
