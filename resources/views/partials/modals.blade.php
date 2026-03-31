@@ -11,11 +11,11 @@
             @csrf
             <div class="group">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-4 transition group-focus-within:text-brand-blue">Email</label>
-                <input type="email" name="email" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 outline-none focus:border-brand-blue focus:bg-white transition-all mt-2" required>
+                <input type="email" name="email" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 outline-none focus:border-brand-blue focus:bg-white transition-all mt-2">
             </div>
             <div class="group">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-4 transition group-focus-within:text-brand-blue">Mật khẩu</label>
-                <input type="password" name="password" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 outline-none focus:border-brand-blue focus:bg-white transition-all mt-2" required>
+                <input type="password" name="password" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 outline-none focus:border-brand-blue focus:bg-white transition-all mt-2">
             </div>
             <button type="submit" class="w-full bg-slate-900 hover:bg-black text-white font-black py-5 rounded-2xl transition-all shadow-xl shadow-slate-200 uppercase tracking-[0.2em] mt-6">Xác nhận</button>
             <p class="text-center text-xs text-slate-500 font-medium">Chưa có tài khoản? <button type="button" onclick="Modal.switch('loginModal', 'registerModal')" class="text-brand-blue font-bold hover:underline underline-offset-4 decoration-2">Đăng ký ngay</button></p>
@@ -35,19 +35,19 @@
             @csrf
             <div class="group">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-4">Họ và Tên</label>
-                <input type="text" name="name" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 outline-none focus:border-brand-blue focus:bg-white transition-all" required>
+                <input type="text" name="name" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 outline-none focus:border-brand-blue focus:bg-white transition-all">
             </div>
             <div class="group">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-4">Email</label>
-                <input type="email" name="email" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 outline-none focus:border-brand-blue focus:bg-white transition-all" required>
+                <input type="email" name="email" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 outline-none focus:border-brand-blue focus:bg-white transition-all">
             </div>
             <div class="group">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-4">Mật khẩu</label>
-                <input type="password" name="password" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 outline-none focus:border-brand-blue focus:bg-white transition-all" required>
+                <input type="password" name="password" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 outline-none focus:border-brand-blue focus:bg-white transition-all">
             </div>
             <div class="group">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-4">Xác nhận</label>
-                <input type="password" name="password_confirmation" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 outline-none focus:border-brand-blue focus:bg-white transition-all" required>
+                <input type="password" name="password_confirmation" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 outline-none focus:border-brand-blue focus:bg-white transition-all">
             </div>
             <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-black py-5 rounded-2xl transition-all shadow-xl shadow-blue-100 uppercase tracking-[0.2em] mt-6">Đăng ký hoàn tất</button>
         </form>

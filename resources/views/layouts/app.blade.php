@@ -6,6 +6,7 @@
     <title>@yield('title', 'LinkSnap - Hệ thống rút gọn link chuyên nghiệp')</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -15,7 +16,7 @@
                     colors: { 
                         'brand-blue': '#2563eb', 
                         'brand-green': '#059669', 
-                        'bg-soft': '#f8fafc' 
+                        'bg-soft': '#eef4ff'
                     }
                 }
             }
@@ -29,11 +30,12 @@
     </style>
     @stack('styles')
 </head>
-<body class="bg-bg-soft font-inter min-h-screen text-slate-900" data-auth="{{ Auth::check() ? '1' : '0' }}">
+<body class="font-inter min-h-screen text-slate-900 bg-blue-50" data-auth="{{ Auth::check() ? '1' : '0' }}">
     <!-- Thanh điều hướng (Navbar) -->
-    <nav class="container mx-auto px-6 py-8 flex justify-between items-center">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center transition-all">
         <div class="text-3xl font-black text-brand-blue tracking-tighter select-none cursor-pointer" onclick="window.location.assign('/')">LinkSnap</div>
         <div class="flex items-center gap-6">
+
             @auth
                 <div class="flex items-center gap-4">
                     <span class="text-slate-500 font-semibold hidden md:inline">Chào, <span class="text-slate-800 font-bold">{{ Auth::user()->name }}</span>!</span>
@@ -44,8 +46,8 @@
                 </div>
             @else
                 <div class="flex items-center gap-4">
-                    <button onclick="Modal.open('loginModal')" class="text-sm font-black text-slate-600 hover:text-brand-blue transition-colors uppercase">Đăng nhập</button>
-                    <button onclick="Modal.open('registerModal')" class="text-sm font-black bg-white border border-slate-200 px-6 py-3 rounded-2xl shadow-sm hover:shadow-md transition-all uppercase">Đăng ký</button>
+                    <button onclick="Modal.open('loginModal')" class="text-xs font-black bg-brand-blue text-white px-6 py-3 rounded-2xl shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all uppercase">Đăng nhập</button>
+                    <button onclick="Modal.open('registerModal')" class="text-xs font-black text-slate-400 hover:text-slate-600 px-4 py-3 transition-all uppercase">Đăng ký</button>
                 </div>
             @endauth
         </div>
@@ -57,10 +59,30 @@
     </main>
 
     <!-- Footer -->
-    <footer class="container mx-auto px-6 pb-20 text-center space-y-6 animate-in fade-in duration-1000 delay-500">
-        <p class="text-slate-300 text-[10px] font-black uppercase tracking-[0.3em]">
-            &copy; 2026 LinkSnap &bull; Thiết kế bởi Trần Duy Phát
-        </p>
+    <footer class="border-t border-slate-200/60 bg-white">
+        <div class="container mx-auto px-6 py-12 flex flex-col items-center gap-6 animate-in fade-in duration-1000 delay-500">
+            {{-- Logo Mark --}}
+            <div class="flex items-center gap-2 cursor-pointer select-none" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-blue to-indigo-500 flex items-center justify-center text-white font-black text-lg shadow-md shadow-blue-200">
+                    L
+                </div>
+                <span class="text-xl font-black text-slate-800 tracking-tight">LinkSnap</span>
+            </div>
+            
+            {{-- Copyright --}}
+            <div class="flex flex-col items-center gap-2">
+                <p class="text-slate-400 text-xs font-semibold">
+                    Hệ thống rút gọn link minh bạch, nhanh chóng và miễn phí.
+                </p>
+                <div class="flex items-center gap-2 text-slate-300 text-[10px] font-black uppercase tracking-[0.2em] mt-2">
+                    <span>&copy; {{ date('Y') }}</span>
+                    <span class="w-1 h-1 bg-slate-200 rounded-full"></span>
+                    <span>LinkSnap</span>
+                    <span class="w-1 h-1 bg-slate-200 rounded-full"></span>
+                    <span>Tác giả: Trần Duy Phát</span>
+                </div>
+            </div>
+        </div>
     </footer>
 
     <!-- Modals -->

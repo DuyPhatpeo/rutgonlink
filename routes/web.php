@@ -21,6 +21,7 @@ Route::post('/api/shorten', [LinkController::class, 'shorten']);
 Route::middleware('auth')->group(function () {
     Route::get('/api/stats', [LinkController::class, 'stats']);
     Route::get('/api/logs', [LinkController::class, 'logs']);
+    Route::get('/api/chart', [LinkController::class, 'chart']);
     Route::delete('/api/delete/{id}', [LinkController::class, 'delete']);
 });
 

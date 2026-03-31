@@ -113,6 +113,7 @@ class LinkController extends Controller
                         $device = $this->getDeviceInfo($log->user_agent);
                         return [
                             'id' => $log->id,
+                            'link_id' => $log->link_id,
                             'short_code' => $log->link->short_code,
                             'original_url' => $log->link->original_url,
                             'ip' => $log->ip_address,
@@ -151,18 +152,72 @@ class LinkController extends Controller
     }
 
     /**
+     * Dữ liệu biểu đồ click 14 ngày gần nhất + tổng hợp thống kê.
+     */
+    public function chart()
+    {
+        if (!Auth::check()) {
+            return response()->json([], 401);
+        }
+
+        $userId = Auth::id();
+        $linkIds = Link::where('user_id', $userId)->pluck('id');
+
+        // Tổng số link
+        $totalLinks = $linkIds->count();
+
+        // Link tạo hôm nay
+        $todayLinks = Link::where('user_id', $userId)
+            ->whereDate('created_at', today())
+            ->count();
+
+        // Tổng click
+        $totalClicks = Link::where('user_id', $userId)->sum('clicks');
+
+        // Click hôm nay (từ logs)
+        $todayClicks = LinkLog::whereIn('link_id', $linkIds)
+            ->whereDate('created_at', today())
+            ->count();
+
+        // Click theo ngày (14 ngày gần nhất)
+        $dailyClicks = [];
+        for ($i = 13; $i >= 0; $i--) {
+            $date = now()->subDays($i)->toDateString();
+            $count = LinkLog::whereIn('link_id', $linkIds)
+                ->whereDate('created_at', $date)
+                ->count();
+            $dailyClicks[] = [
+                'date'  => $date,
+                'count' => $count,
+            ];
+        }
+
+        return response()->json([
+            'total_links'  => $totalLinks,
+            'today_links'  => $todayLinks,
+            'total_clicks' => $totalClicks,
+            'today_clicks' => $todayClicks,
+            'daily_clicks' => $dailyClicks,
+        ]);
+    }
+    /**
      * Xóa link.
      */
     public function delete($id)
     {
-        $link = Link::where('id', $id)
-                    ->where('user_id', Auth::id())
-                    ->firstOrFail();
-        
-        $link->delete();
+        try {
+            $link = Link::where('id', $id)
+                        ->where('user_id', Auth::id())
+                        ->firstOrFail();
+            
+            // Xóa logs trước để tránh lỗi khóa ngoại (nếu onDelete cascade chưa thiết lập)
+            $link->logs()->delete();
+            $link->delete();
 
-        return response()->json(['success' => true]);
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }
-
 
