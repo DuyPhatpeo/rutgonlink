@@ -43,7 +43,8 @@ class LinkController extends Controller
         return response()->json([
             'short_url' => url('/' . $link->short_code),
             'short_code' => $link->short_code,
-            'original_url' => $link->original_url
+            'original_url' => $link->original_url,
+            'qr_code' => 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' . urlencode(url('/' . $link->short_code))
         ]);
     }
 
