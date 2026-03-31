@@ -65,7 +65,7 @@
             e.preventDefault();
             const formData = new FormData(e.target);
             try {
-                await Api.fetch('/login', { method: 'POST', body: Object.fromEntries(formData) });
+                await Api.fetch('/api/login', { method: 'POST', body: Object.fromEntries(formData) });
                 window.location.assign('/');
             } catch (err) {
                 alert(err.data?.message || 'Thông tin đăng nhập không hợp lệ.');
@@ -75,7 +75,7 @@
             e.preventDefault();
             const formData = new FormData(e.target);
             try {
-                await Api.fetch('/register', { method: 'POST', body: Object.fromEntries(formData) });
+                await Api.fetch('/api/register', { method: 'POST', body: Object.fromEntries(formData) });
                 window.location.assign('/');
             } catch (err) {
                 const msg = err.data?.errors ? Object.values(err.data.errors).flat().join('\n') : (err.data?.message || 'Lỗi đăng ký');
@@ -173,34 +173,110 @@
                 statsBody.innerHTML = '';
                 
                 if (data.length === 0) {
-                    statsBody.innerHTML = `<tr><td colspan="4" class="px-8 py-20 text-center text-slate-300 font-bold uppercase tracking-widest text-xs italic">Chưa có bản ghi nào.</td></tr>`;
+                    statsBody.innerHTML = `
+                        <div class="bg-white rounded-[40px] p-20 shadow-sm border border-slate-100 flex flex-col items-center gap-4">
+                            <span class="text-[10px] font-black text-slate-200 uppercase tracking-[0.2em]">Chưa có bản ghi nào.</span>
+                        </div>
+                    `;
                     return;
                 }
 
                 data.forEach(link => {
-                    const fullUrl = `${window.location.origin}/${link.short_code}`;
-                    const row = document.createElement('tr');
-                    row.className = "hover:bg-slate-50 transition-all group border-b border-slate-50/50 last:border-0 text-slate-900";
-                    row.innerHTML = `
-                        <td class="px-8 py-8 max-w-[200px] md:max-w-[300px] truncate text-slate-500 text-sm font-semibold italic" title="${link.original_url}">
-                            ${link.original_url}
-                        </td>
-                        <td class="px-8 py-8 max-w-[250px] md:max-w-none">
-                            <a href="${fullUrl}" target="_blank" 
-                               class="font-black text-brand-blue hover:text-blue-700 underline underline-offset-8 decoration-2 decoration-blue-50 hover:decoration-blue-200 transition-all text-xl tracking-tight block truncate" 
-                               title="${fullUrl}">
-                                ${fullUrl}
-                            </a>
-                        </td>
-                        <td class="px-8 py-8 text-center font-black text-slate-800 text-lg">${link.clicks}</td>
-                        <td class="px-8 py-8 text-right">
-                            <button onclick="LinkManager.deleteLink(${link.id})" class="p-3 text-slate-200 hover:text-rose-500 hover:bg-rose-50 rounded-2xl transition-all">🗑️</button>
-                        </td>
+                    const card = document.createElement('div');
+                    card.className = "p-6 md:p-8 hover:bg-slate-50/50 transition-all group relative border-b border-slate-50 last:border-0";
+                    card.innerHTML = `
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                            <div class="space-y-3 flex-1 min-w-0">
+                                <h4 class="text-base md:text-lg font-bold text-slate-800 truncate" title="${link.original_url}">
+                                    ${link.original_url.replace(/^https?:\/\//, '')}
+                                </h4>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <a href="${link.full_short_url}" target="_blank" class="text-brand-blue font-black text-xs md:text-sm hover:underline underline-offset-4 decoration-2 truncate max-w-[200px] md:max-w-none">
+                                        ${link.full_short_url.replace(/^https?:\/\//, '')}
+                                    </a>
+                                    <button onclick="Utils.copyToClipboard('${link.full_short_url}', this)" class="bg-blue-50 text-brand-blue text-[9px] md:text-[10px] font-black px-4 py-1.5 rounded-full hover:bg-brand-blue hover:text-white transition-all uppercase tracking-widest">
+                                        Sao chép
+                                    </button>
+                                </div>
+                                <div class="flex items-center gap-4 md:gap-6 pt-2">
+                                    <span class="text-[9px] md:text-[10px] font-black text-slate-300 uppercase tracking-widest">${link.created_at}</span>
+                                    <span class="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                        <span class="w-1 h-1 bg-slate-200 rounded-full"></span>
+                                        ${link.clicks} Click
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button onclick="LinkManager.deleteLink(${link.id})" class="p-4 text-slate-200 md:text-slate-100 hover:text-rose-500 hover:bg-rose-50 rounded-3xl transition-all md:opacity-0 md:group-hover:opacity-100">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
                     `;
-                    statsBody.appendChild(row);
+                    statsBody.appendChild(card);
                 });
             } catch (e) {
                 console.error('Stats loading failed.');
+            }
+        },
+
+        async loadLogs() {
+            const logsBody = document.getElementById('logsBody');
+            if (!logsBody) return;
+            
+            try {
+                const data = await Api.fetch('/api/logs');
+                logsBody.innerHTML = '';
+                
+                if (data.length === 0) {
+                    logsBody.innerHTML = `
+                        <div class="py-12 flex flex-col items-center gap-4 text-center px-6">
+                            <span class="text-[10px] font-black text-slate-200 uppercase tracking-[0.2em]">Chưa có hoạt động.</span>
+                        </div>
+                    `;
+                    return;
+                }
+
+                data.forEach(log => {
+                    const card = document.createElement('div');
+                    card.className = "p-5 md:p-6 flex items-start gap-4 md:gap-5 hover:bg-slate-50/50 transition-all border-b border-slate-50 last:border-0";
+                    
+                    // Icons mapping
+                    const osIcon = log.os === 'Windows' ? '🪟' : (log.os === 'MacOS' ? '🍎' : '📱');
+                    const browserIcon = log.browser === 'Chrome' ? '🌐' : '🧭';
+
+                    card.innerHTML = `
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-slate-50 rounded-xl md:rounded-2xl flex items-center justify-center text-lg md:text-xl shadow-inner italic font-black text-brand-blue shrink-0">
+                            /
+                        </div>
+                        <div class="flex-1 min-w-0 space-y-2">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-1 md:gap-4">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="text-xs font-black text-slate-800 tracking-tight shrink-0">/${log.short_code}</span>
+                                    <a href="${log.original_url}" target="_blank" class="text-[10px] font-medium text-slate-400 hover:text-brand-blue truncate hover:underline underline-offset-2" title="${log.original_url}">
+                                        ${log.original_url.replace(/^https?:\/\//, '')}
+                                    </a>
+                                </div>
+                                <span class="text-[9px] font-black text-slate-300 uppercase tracking-widest whitespace-nowrap">${log.created_at}</span>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-2 md:gap-3 text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+                                <span class="flex items-center gap-1.5 text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
+                                    <span class="w-1 h-1 md:w-1.5 md:h-1.5 bg-emerald-500 rounded-full"></span>
+                                    ${log.ip}
+                                </span>
+                                <span class="flex items-center gap-1">${osIcon} ${log.os}</span>
+                                <span class="flex items-center gap-1">${browserIcon} ${log.browser}</span>
+                            </div>
+                        </div>
+                    `;
+                    logsBody.appendChild(card);
+                });
+
+
+            } catch (e) {
+                console.error('Logs loading failed.');
             }
         },
 
@@ -209,9 +285,23 @@
             try {
                 await Api.fetch(`/api/delete/${id}`, { method: 'DELETE' });
                 this.loadStats();
+                this.loadLogs();
             } catch (e) {
                 alert('Không thể thực hiện yêu cầu.');
             }
+        }
+    };
+
+
+    /**
+     * Tiện ích xử lý chuỗi (Loại bỏ dấu tiếng Việt và ký tự đặc biệt)
+     */
+    const StringHelper = {
+        removeAccents(str) {
+            return str.normalize('NFD')
+                      .replace(/[\u0300-\u036f]/g, '')
+                      .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+                      .replace(/[^a-zA-Z0-9]/g, ''); // Chỉ giữ lại chữ và số
         }
     };
 
@@ -220,11 +310,26 @@
         // Nếu đã đăng nhập, tự động tải danh sách link
         if (IS_AUTHENTICATED) {
             LinkManager.loadStats();
+            LinkManager.loadLogs();
         }
+
         
         // Lắng nghe sự kiện nhập URL để reset lại nút bấm
         document.getElementById('url')?.addEventListener('input', () => {
             if (LinkManager.isShortened) LinkManager.resetBtn();
         });
+
+        // Tự động bỏ dấu cho mã tùy chỉnh
+        const customInput = document.getElementById('customCode');
+        if (customInput) {
+            customInput.addEventListener('input', (e) => {
+                const originalValue = e.target.value;
+                const normalizedValue = StringHelper.removeAccents(originalValue);
+                if (originalValue !== normalizedValue) {
+                    e.target.value = normalizedValue;
+                }
+            });
+        }
     });
 </script>
+

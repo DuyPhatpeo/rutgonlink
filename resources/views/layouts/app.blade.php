@@ -37,7 +37,7 @@
             @auth
                 <div class="flex items-center gap-4">
                     <span class="text-slate-500 font-semibold hidden md:inline">Chào, <span class="text-slate-800 font-bold">{{ Auth::user()->name }}</span>!</span>
-                    <form action="/logout" method="POST">
+                    <form action="/api/logout" method="POST">
                         @csrf
                         <button type="submit" class="text-xs font-black text-rose-500 hover:bg-rose-50 px-5 py-2.5 rounded-2xl transition-all border border-transparent hover:border-rose-100 uppercase">Đăng xuất</button>
                     </form>
