@@ -50,11 +50,19 @@
             try {
                 await navigator.clipboard.writeText(text);
                 if (btn) {
-                    const originalText = btn.innerHTML;
-                    btn.innerHTML = 'COPIED! ✨';
-                    setTimeout(() => {
-                        btn.innerHTML = originalText;
-                    }, 2000);
+                    const originalContent = btn.innerHTML;
+                    // Nếu là nút icon (có chứa <svg), chỉ đổi màu hoặc hiệu ứng nhẹ thay vì hiện chữ
+                    if (originalContent.includes('<svg')) {
+                        btn.classList.add('!bg-brand-green', '!text-white', '!border-brand-green');
+                        setTimeout(() => {
+                            btn.classList.remove('!bg-brand-green', '!text-white', '!border-brand-green');
+                        }, 2000);
+                    } else {
+                        btn.innerHTML = 'COPIED! ✨';
+                        setTimeout(() => {
+                            btn.innerHTML = originalContent;
+                        }, 2000);
+                    }
                 }
                 Toast.show('Đã sao chép vào bộ nhớ tạm!', 'success');
                 return true;
@@ -477,11 +485,12 @@
                     return;
                 }
 
-                const LIMIT = 5;
+                const LIMIT = 7;
                 data.forEach((link, index) => {
+                    if (index >= LIMIT) return;
                     const menuId = 'menu-' + Math.random().toString(36).substr(2, 8);
                     const card = document.createElement('div');
-                    card.className = "p-5 md:p-6 hover:bg-slate-50/50 transition-all group relative border-b border-slate-200 last:border-0" + (index >= LIMIT ? ' hidden stats-extra' : '');
+                    card.className = "p-5 md:p-6 hover:bg-slate-50/50 transition-all group relative border-b border-slate-200 last:border-0";
                     card.innerHTML = `
                         <div class="flex flex-col gap-3">
                             <!-- Nút Menu (3 chấm) - Căn giữa chiều dọc bên phải -->
@@ -494,6 +503,10 @@
                                 
                                 <div id="${menuId}" class="absolute right-0 top-1/2 -translate-y-1/2 mt-8 md:mt-10 w-40 md:w-48 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 hidden z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
                                     <div class="p-1.5 space-y-0.5">
+                                        <a href="/links/${link.id}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[10px] font-black text-slate-600 hover:bg-slate-50 hover:text-brand-blue transition-all uppercase tracking-widest text-left">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                                            Thống kê
+                                        </a>
                                         <a href="${link.original_url}" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[10px] font-black text-slate-600 hover:bg-slate-50 hover:text-brand-blue transition-all uppercase tracking-widest text-left">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                                             Link gốc
@@ -521,8 +534,8 @@
                                     <a href="${link.full_short_url}" target="_blank" class="text-brand-blue font-black text-sm md:text-lg hover:bg-blue-50/50 px-1 rounded-lg transition-all decoration-brand-blue hover:underline underline-offset-8 decoration-2 whitespace-normal break-all">
                                         ${link.full_short_url.replace(/^https?:\/\//, '')}
                                     </a>
-                                    <button onclick="Utils.copyToClipboard('${link.full_short_url}', this)" class="bg-blue-100/50 text-brand-blue text-[9px] md:text-[10px] font-black px-4 py-2 rounded-xl hover:bg-brand-blue hover:text-white transition-all uppercase tracking-widest leading-none shadow-sm border border-blue-200/50 h-fit">
-                                        Sao chép
+                                    <button onclick="Utils.copyToClipboard('${link.full_short_url}', this)" class="bg-blue-50 text-brand-blue p-2 rounded-xl hover:bg-brand-blue hover:text-white transition-all shadow-sm border border-blue-200/50 h-fit active:scale-90" title="Sao chép">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                                     </button>
                                 </div>
 
@@ -533,7 +546,7 @@
                                         <span class="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">${link.created_at}</span>
                                     </div>
                                     <span class="text-[9px] md:text-[11px] font-black text-brand-blue uppercase tracking-widest flex items-center gap-2 bg-white px-3 py-1.5 rounded-full leading-none border border-blue-50 shadow-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 text-brand-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" /></svg>
                                         ${link.clicks} Click
                                     </span>
                                 </div>
@@ -545,14 +558,13 @@
 
                 // Nút "Xem thêm / Thu gọn" duy nhất và căn giữa
                 if (data.length > LIMIT) {
-                    const remaining = data.length - LIMIT;
                     const toggleArea = document.createElement('div');
                     toggleArea.className = 'border-t border-slate-100 bg-slate-50/30';
                     toggleArea.innerHTML = `
-                        <button id="statsToggleBtn" onclick="LinkManager.toggleShowAll('stats')" class="w-full py-4 text-[10px] font-black text-slate-400 hover:text-brand-blue hover:bg-white transition-all uppercase tracking-[0.2em] flex items-center justify-center gap-2 group">
-                            <span id="statsToggleText">Xem thêm (còn ${remaining})</span>
-                            <svg id="statsToggleIcon" xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" /></svg>
-                        </button>
+                        <a href="/links" class="w-full py-4 text-[10px] font-black text-slate-400 hover:text-brand-blue hover:bg-white transition-all uppercase tracking-[0.2em] flex items-center justify-center gap-2 group">
+                            <span>Xem tất cả liên kết</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                        </a>
                     `;
                     statsBody.appendChild(toggleArea);
                 }
@@ -679,10 +691,11 @@
                     return;
                 }
 
-                const LIMIT = 5;
+                const LIMIT = 7;
                 data.forEach((log, index) => {
+                    if (index >= LIMIT) return;
                     const card = document.createElement('div');
-                    card.className = "p-5 md:p-6 flex items-start gap-4 md:gap-5 hover:bg-slate-50/80 transition-all border-b border-slate-200 last:border-0" + (index >= LIMIT ? ' hidden logs-extra' : '');
+                    card.className = "p-5 md:p-6 flex items-start gap-4 md:gap-5 hover:bg-slate-50/80 transition-all border-b border-slate-200 last:border-0";
 
                     const osIcon = log.os === 'Windows' ? '🪟' : (log.os === 'MacOS' ? '🍎' : '📱');
                     const browserIcon = log.browser === 'Chrome' ? '🌐' : '🧭';
@@ -722,14 +735,12 @@
 
                 // Nút "Xem thêm / Thu gọn" duy nhất và căn giữa
                 if (data.length > LIMIT) {
-                    const remaining = data.length - LIMIT;
                     const toggleArea = document.createElement('div');
                     toggleArea.className = 'border-t border-slate-100 bg-slate-50/30';
                     toggleArea.innerHTML = `
-                        <button id="logsToggleBtn" onclick="LinkManager.toggleShowAll('logs')" class="w-full py-4 text-[10px] font-black text-slate-400 hover:text-emerald-600 hover:bg-white transition-all uppercase tracking-[0.2em] flex items-center justify-center gap-2 group">
-                            <span id="logsToggleText">Xem thêm (còn ${remaining})</span>
-                            <svg id="logsToggleIcon" xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" /></svg>
-                        </button>
+                        <div class="w-full py-4 text-[10px] font-black text-slate-300 uppercase tracking-[0.2em] flex items-center justify-center bg-slate-50/50">
+                            Hoạt động gần nhất
+                        </div>
                     `;
                     logsBody.appendChild(toggleArea);
                 }

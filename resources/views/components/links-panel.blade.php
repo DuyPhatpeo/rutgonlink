@@ -1,9 +1,12 @@
 {{-- Panel: Liên kết gần đây --}}
-<div class="lg:col-span-2 flex flex-col gap-4">
+<div class="flex flex-col gap-4">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 px-1">
-        <div class="flex items-center gap-3">
-            <div class="w-1 h-5 bg-brand-blue rounded-full"></div>
-            <h3 class="text-xs font-black text-slate-700 uppercase tracking-widest">Liên kết của bạn</h3>
+        <div class="space-y-1">
+            <span class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] block">My Shortcuts</span>
+            <h3 class="text-xl font-black text-slate-800 tracking-tight flex items-center gap-2">
+                <span class="w-1.5 h-6 bg-brand-blue rounded-full"></span>
+                Liên kết gần đây
+            </h3>
         </div>
         
         {{-- Ô tìm kiếm --}}

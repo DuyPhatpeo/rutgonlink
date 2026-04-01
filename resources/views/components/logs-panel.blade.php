@@ -1,8 +1,11 @@
 {{-- Panel: Hoạt động gần đây (Logs) --}}
-<div class="lg:col-span-3 flex flex-col gap-4">
-    <div class="flex items-center gap-3 px-1">
-        <div class="w-1 h-5 bg-emerald-500 rounded-full"></div>
-        <h3 class="text-xs font-black text-slate-700 uppercase tracking-widest">Hoạt động gần đây</h3>
+<div class="flex flex-col gap-4">
+    <div class="space-y-1">
+        <span class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] block">Recent Traffic</span>
+        <h3 class="text-xl font-black text-slate-800 tracking-tight flex items-center gap-2 px-1">
+            <span class="w-1.5 h-6 bg-emerald-500 rounded-full"></span>
+            Hoạt động gần đây
+        </h3>
     </div>
 
     <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">

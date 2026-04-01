@@ -254,5 +254,85 @@ class LinkController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    /**
+     * Danh sách tất cả liên kết (View).
+     */
+    public function index(Request $request)
+    {
+        $query = Link::where('user_id', Auth::id());
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('original_url', 'like', "%{$search}%")
+                  ->orWhere('short_code', 'like', "%{$search}%");
+            });
+        }
+
+        $links = $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+
+        return view('links.index', compact('links'));
+    }
+
+    /**
+     * Chi tiết thống kê một liên kết (View).
+     */
+    public function show($id)
+    {
+        $link = Link::where('id', $id)
+                    ->where('user_id', Auth::id())
+                    ->firstOrFail();
+
+        // Thống kê click theo ngày (14 ngày gần nhất)
+        $dailyClicks = [];
+        for ($i = 13; $i >= 0; $i--) {
+            $date = now()->subDays($i)->toDateString();
+            $count = LinkLog::where('link_id', $link->id)
+                ->whereDate('created_at', $date)
+                ->count();
+            $dailyClicks[] = ['date' => $date, 'count' => $count];
+        }
+
+        // Lấy toàn bộ logs cho phân tích
+        $allLogs = LinkLog::where('link_id', $link->id)->get();
+
+        // Clicks hôm nay
+        $clicksToday = $allLogs->filter(fn($l) => $l->created_at->isToday())->count();
+
+        // Unique visitors (IP duy nhất)
+        $uniqueVisitors = $allLogs->pluck('ip_address')->unique()->count();
+
+        // OS & Browser distribution
+        $osDist = [];
+        $browserDist = [];
+        foreach ($allLogs as $log) {
+            $device = $this->getDeviceInfo($log->user_agent);
+            $osDist[$device['os']] = ($osDist[$device['os']] ?? 0) + 1;
+            $browserDist[$device['browser']] = ($browserDist[$device['browser']] ?? 0) + 1;
+        }
+        arsort($osDist);
+        arsort($browserDist);
+
+        // Logs gần nhất (hiển thị)
+        $logs = LinkLog::where('link_id', $link->id)
+                    ->orderBy('created_at', 'desc')
+                    ->limit(50)
+                    ->get()
+                    ->map(function ($log) {
+                        $device = $this->getDeviceInfo($log->user_agent);
+                        return [
+                            'ip'         => $log->ip_address,
+                            'os'         => $device['os'],
+                            'browser'    => $device['browser'],
+                            'created_at' => $log->created_at->diffForHumans()
+                        ];
+                    });
+
+        return view('links.show', compact(
+            'link', 'dailyClicks', 'logs',
+            'clicksToday', 'uniqueVisitors', 'osDist', 'browserDist'
+        ));
+    }
 }
 

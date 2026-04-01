@@ -23,6 +23,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/logs', [LinkController::class, 'logs']);
     Route::get('/api/chart', [LinkController::class, 'chart']);
     Route::delete('/api/delete/{id}', [LinkController::class, 'delete']);
+
+    // Web Routes
+    Route::get('/links', [LinkController::class, 'index'])->name('links.index');
+    Route::get('/links/{id}', [LinkController::class, 'show'])->name('links.show');
 });
 
 

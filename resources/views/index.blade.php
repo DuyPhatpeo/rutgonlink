@@ -57,8 +57,8 @@
         </div>
 
         {{-- Bảng Links + Logs --}}
-        <section class="max-w-7xl mx-auto px-4 md:px-6 pt-8 pb-32">
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <section class="max-w-[1340px] mx-auto px-4 md:px-6 pt-8 pb-32">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 @include('components.links-panel')
                 @include('components.logs-panel')
             </div>
