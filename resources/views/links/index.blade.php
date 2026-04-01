@@ -7,7 +7,7 @@
     <div class="max-w-7xl mx-auto px-4 md:px-6">
         
         {{-- Header Section --}}
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div class="bg-white/40 backdrop-blur-sm rounded-[32px] p-6 md:p-8 border border-white shadow-sm mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="space-y-2">
                 <nav class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
                     <a href="/" class="hover:text-brand-blue transition-colors">Dashboard</a>
@@ -27,7 +27,7 @@
                         </svg>
                     </div>
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm link hoặc mã..." 
-                        class="w-full bg-white border-2 border-slate-100 py-3.5 pl-14 pr-6 rounded-2xl outline-none focus:border-brand-blue/30 focus:shadow-xl focus:shadow-blue-100/50 transition-all font-bold text-slate-700 text-sm">
+                        class="w-full bg-white/80 border-2 border-slate-100 py-3.5 pl-14 pr-6 rounded-2xl outline-none focus:border-brand-blue/30 focus:shadow-xl focus:shadow-blue-100/50 transition-all font-bold text-slate-700 text-sm">
                 </form>
             </div>
         </div>

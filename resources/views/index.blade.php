@@ -10,7 +10,7 @@
     {{-- Viewport đầu tiên: Hero + Form + Widget biểu đồ --}}
     <div class="flex flex-col px-4 md:px-6 max-w-6xl mx-auto">
         {{-- Hero compact --}}
-        <section class="animate-in fade-in duration-700 pt-4 md:pt-8 pb-4 md:pb-6">
+        <section class="animate-in fade-in duration-700 bg-white/40 backdrop-blur-sm rounded-[32px] p-6 md:p-8 border border-white shadow-sm mt-4 md:mt-8 mb-6">
             <p class="text-base md:text-lg font-black tracking-tight text-slate-700 leading-tight">
                 <span class="bg-gradient-to-r from-brand-blue to-indigo-500 bg-clip-text text-transparent italic block md:inline mb-1 md:mb-0">Rút gọn link miễn phí.</span>
                 <span class="text-slate-400 font-semibold text-xs md:text-sm md:ml-2">Tạo link ngắn, truy cập tức thì.</span>
