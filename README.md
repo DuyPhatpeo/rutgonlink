@@ -32,8 +32,6 @@ LinkSnap là giải pháp quản lý liên kết toàn diện, giúp biến các
 
 - **Mô hình**: MVC (Model-View-Controller) chuẩn Laravel.
 - **Presentation Layer**: Sử dụng Blade Components và Partials để tối ưu mã nguồn giao diện.
-- **Internal Data Flow**: Dashboard cập nhật dữ liệu qua AJAX (Fetch API) không cần tải lại trang.
-- **Security**: Hệ thống xác thực bằng Middleware để bảo mật dữ liệu người dùng.
 
 ## ● API Design
 
