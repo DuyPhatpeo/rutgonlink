@@ -164,7 +164,7 @@
                                         <span class="text-[10px] font-black text-slate-400">{{ $count }} ({{ $pct }}%)</span>
                                     </div>
                                     <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
-                                        <div class="{{ $bar }} h-full rounded-full transition-all duration-700" style="width: {{ $pct }}%"></div>
+                                        <div class="{{ $bar }} h-full rounded-full transition-all duration-700" @style(['width' => $pct . '%'])></div>
                                     </div>
                                 </div>
                                 @endforeach
@@ -195,7 +195,7 @@
                                         <span class="text-[10px] font-black text-slate-400">{{ $count }} ({{ $pct }}%)</span>
                                     </div>
                                     <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
-                                        <div class="{{ $bar }} h-full rounded-full transition-all duration-700" style="width: {{ $pct }}%"></div>
+                                        <div class="{{ $bar }} h-full rounded-full transition-all duration-700" @style(['width' => $pct . '%'])></div>
                                     </div>
                                 </div>
                                 @endforeach
@@ -260,7 +260,7 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const d = @json($dailyClicks);
+    const d = <?php echo json_encode($dailyClicks); ?>;
     const canvas = document.getElementById('linkClicksChart');
     if (!canvas || !window.Chart) return;
 
