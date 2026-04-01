@@ -92,5 +92,17 @@
     <!-- Scripts -->
     @include('partials.scripts')
     @stack('scripts')
+
+    {{-- Tự động hiển thị Toast từ Session Flash --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            @if(session('error'))
+                Toast.show({!! json_encode(session('error')) !!}, 'error');
+            @endif
+            @if(session('success'))
+                Toast.show({!! json_encode(session('success')) !!}, 'success');
+            @endif
+        });
+    </script>
 </body>
 </html>

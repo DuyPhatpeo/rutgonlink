@@ -77,7 +77,11 @@ class LinkController extends Controller
      */
     public function redirect($short_code)
     {
-        $link = Link::where('short_code', $short_code)->firstOrFail();
+        $link = Link::where('short_code', $short_code)->first();
+
+        if (!$link) {
+            return redirect('/')->with('error', "Xin lỗi, liên kết '{$short_code}' không tồn tại hoặc đã bị xóa.");
+        }
 
         // Tăng click count
         $link->increment('clicks');
