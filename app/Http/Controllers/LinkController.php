@@ -235,6 +235,7 @@ class LinkController extends Controller
             'daily_clicks' => $dailyClicks,
         ]);
     }
+
     /**
      * Xóa link.
      */
@@ -322,17 +323,64 @@ class LinkController extends Controller
                     ->map(function ($log) {
                         $device = $this->getDeviceInfo($log->user_agent);
                         return [
-                            'ip'         => $log->ip_address,
-                            'os'         => $device['os'],
-                            'browser'    => $device['browser'],
+                            'ip' => $log->ip_address,
+                            'os' => $device['os'],
+                            'browser' => $device['browser'],
                             'created_at' => $log->created_at->diffForHumans()
                         ];
                     });
 
-        return view('links.show', compact(
-            'link', 'dailyClicks', 'logs',
-            'clicksToday', 'uniqueVisitors', 'osDist', 'browserDist'
-        ));
+        return view('links.show', compact('link', 'logs', 'dailyClicks', 'osDist', 'browserDist', 'clicksToday', 'uniqueVisitors'));
+    }
+
+    /**
+     * API: Chi tiết thống kê của một liên kết (JSON).
+     */
+    public function detail($id)
+    {
+        $link = Link::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        
+        $allLogs = LinkLog::where('link_id', $link->id)->get();
+        $clicksToday = $allLogs->filter(fn($l) => $l->created_at->isToday())->count();
+        $uniqueVisitors = $allLogs->pluck('ip_address')->unique()->count();
+
+        $dailyClicks = [];
+        for ($i = 13; $i >= 0; $i--) {
+            $date = now()->subDays($i)->toDateString();
+            $count = LinkLog::where('link_id', $link->id)->whereDate('created_at', $date)->count();
+            $dailyClicks[] = ['date' => $date, 'count' => $count];
+        }
+
+        return response()->json([
+            'link' => $link,
+            'metrics' => [
+                'total_clicks' => $link->clicks,
+                'today_clicks' => $clicksToday,
+                'unique_visitors' => $uniqueVisitors
+            ],
+            'chart' => $dailyClicks
+        ]);
+    }
+
+    /**
+     * API: Cập nhật URL gốc.
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate(['url' => 'required|url']);
+        $link = Link::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $link->update(['original_url' => $request->url]);
+        return response()->json(['success' => true, 'link' => $link]);
+    }
+
+    /**
+     * API: Reset thống kê.
+     */
+    public function reset($id)
+    {
+        $link = Link::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $link->logs()->delete();
+        $link->update(['clicks' => 0]);
+        return response()->json(['success' => true]);
     }
 }
-

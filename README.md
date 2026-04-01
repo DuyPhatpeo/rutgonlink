@@ -1,104 +1,67 @@
-# LinkSnap - URL Shortener
+# 🚀 LinkSnap v3.1 Premium - URL Shortener & Analytics
 
-LinkSnap là một hệ thống rút gọn liên kết hiện đại, được thiết kế với giao diện cao cấp và tập trung tối đa vào trải nghiệm người dùng cùng khả năng phân tích dữ liệu mạnh mẽ.
+Hệ thống rút gọn liên kết hiện đại với trải nghiệm người dùng cao cấp và khả năng phân tích dữ liệu chuyên sâu.
 
-**Live Demo:** [https://linksnap.free.laravel.cloud/](https://linksnap.free.laravel.cloud/)
+**🌐 Live Demo:** [https://linksnap.free.laravel.cloud/](https://linksnap.free.laravel.cloud/)
+
+---
 
 ## ● Project Overview
 
-LinkSnap không chỉ đơn thuần là một công cụ rút gọn link. Đây là một nền tảng quản lý liên kết toàn diện, cho phép người dùng tạo ra các đường dẫn ngắn gọn, dễ nhớ, đồng thời cung cấp các báo cáo chi tiết về lưu lượng truy cập trong thời gian thực. Dự án được xây dựng với mục tiêu mang lại sự chuyên nghiệp, tốc độ và tính minh bạch cho mọi liên kết được chia sẻ.
+LinkSnap là giải pháp quản lý liên kết toàn diện, giúp biến các URL dài thành các mã ngắn gọn. Hệ thống tích hợp bộ công cụ phân tích thời gian thực để theo dõi hiệu quả click, đối tượng truy cập và xu hướng tăng trưởng.
 
 ## ● Features Implemented
 
-- **Rút gọn Link siêu tốc**: Xử lý và tạo liên kết rút gọn ngay lập tức.
-- **Mã tùy chỉnh (Custom Alias)**: Cho phép người dùng tự đặt tên cho đường dẫn theo thương hiệu cá nhân.
-- **Mã QR tự động**: Mỗi liên kết được tạo ra sẽ đi kèm với một mã QR chất lượng cao để tải về hoặc chia sẻ.
-- **Dashboard phân tích chuyên sâu**:
-  - Biểu đồ thống kê lượt click theo thời gian (Chart.js).
-  - Theo dõi chi tiết log truy cập (Địa chỉ IP, Hệ điều hành, Trình duyệt).
-- **Xác thực người dùng**: Hệ thống đăng ký, đăng nhập bảo mật để quản lý liên kết cá nhân.
+- **Rút gọn thông minh**: Tạo link ngắn tức thì, hỗ trợ mã tùy chỉnh (Custom Alias) cho người dùng đã đăng nhập.
+- **Phân tích chuyên sâu (Deep Analytics)**:
+  - Biểu đồ tăng trưởng 14 ngày (Area Chart).
+  - Thống kê tỷ lệ Hệ điều hành (Windows, MacOS, Android, iOS...) và Trình duyệt.
+  - Chỉ số thời gian thực: Tổng click, Click trong ngày, Visitors duy nhất (IP).
+- **Quản lý Link nâng cao**: Tìm kiếm thời gian thực, xóa liên kết, cập nhật URL gốc và Reset thống kê.
+- **Trải nghiệm Premium**: Giao diện Glassmorphism (kính mờ), Header Sticky, và hệ thống phân trang tùy chỉnh mượt mà.
+- **Mã QR thông minh**: Tự động tạo và hỗ trợ tải về mã QR cho mỗi liên kết.
 
 ## ● Tech Stack
 
-- **Backend**: Laravel 11.x (PHP 8.2+)
-- **Frontend**: Vanilla JavaScript (ES6+), Tailwind CSS
-- **Database**: MySQL
-- **QR Code**: QR Server API integration
+- **Backend**: Laravel 11.x (PHP 8.2+).
+- **Frontend**: Tailwind CSS, Vanilla JavaScript (ES6+), Chart.js (Biểu đồ).
+- **Database**: MySQL / MariaDB.
+- **Integrations**: QR Server API.
 
 ## ● Architecture Overview
 
-LinkSnap tuân thủ kiến trúc **Monolithic MVC** của Laravel nhưng được hiện đại hóa phần Frontend:
-
-- **Presentation Layer**: Sử dụng Blade Components và View Partials để module hóa giao diện.
-- **Logic Layer**: LinkController và AuthController xử lý các nghiệp vụ cốt lõi.
-- **Internal API**: Xây dựng một lớp API nội bộ trả về JSON để Dashboard có thể cập nhật dữ liệu (thống kê, biểu đồ) mà không cần tải lại toàn bộ trang.
-- **Middleware**: Sử dụng Middleware `auth` để bảo vệ các vùng dữ liệu nhạy cảm của người dùng.
+- **Mô hình**: MVC (Model-View-Controller) chuẩn Laravel.
+- **Presentation Layer**: Sử dụng Blade Components và Partials để tối ưu mã nguồn giao diện.
+- **Internal Data Flow**: Dashboard cập nhật dữ liệu qua AJAX (Fetch API) không cần tải lại trang.
+- **Security**: Hệ thống xác thực bằng Middleware để bảo mật dữ liệu người dùng.
 
 ## ● API Design
 
-Hệ thống sử dụng các Endpoint API sau để giao tiếp giữa Frontend và Backend:
-
-| Endpoint | Method | Description |
+| Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| `/api/login` | `POST` | Đăng nhập hệ thống |
-| `/api/register` | `POST` | Đăng ký tài khoản mới |
-| `/api/logout` | `POST` | Đăng xuất người dùng |
-| `/api/shorten` | `POST` | Tạo liên kết rút gọn mới |
-| `/api/stats` | `GET` | Lấy danh sách thống kê liên kết |
-| `/api/logs` | `GET` | Lấy nhật ký truy cập (Link Logs) |
-| `/api/chart` | `GET` | Lấy dữ liệu biểu đồ tăng trưởng |
-| `/api/delete/{id}` | `DELETE` | Xoá liên kết khỏi hệ thống |
-| `/{short_code}` | `GET` | Endpoint điều hướng (Main Redirect Engine) |
+| `POST` | `/api/shorten` | Tạo liên kết rút gọn mới |
+| `GET` | `/api/stats` | Lấy danh sách link (có hỗ trợ search) |
+| `GET` | `/api/logs` | Lấy 15 nhật ký truy cập toàn cục gần nhất |
+| `GET` | `/api/chart` | Dữ liệu biểu đồ & metric tổng quan Dashboard |
+| `GET` | `/api/links/{id}` | Lấy chi tiết thống kê JSON của 1 link |
+| `PATCH` | `/api/links/{id}` | Cập nhật URL gốc của liên kết |
+| `POST` | `/api/links/{id}/reset` | Xóa sạch thống kê và nhật ký của link |
+| `DELETE` | `/api/delete/{id}` | Xóa vĩnh viễn liên kết |
+| `GET` | `/{short_code}` | Engine điều hướng (Redirect Service) |
 
 ## ● Data Model
 
-Cấu trúc cơ sở dữ liệu chính gồm 3 thực thể quan trọng:
-
-1. **User**: Quản lý thông tin tài khoản (id, name, email, password).
-2. **Link**: Lưu trữ thông tin liên kết (id, user_id, original_url, short_code, clicks).
-3. **LinkLog**: Lưu vết mỗi lượt truy cập (id, link_id, ip_address, user_agent - dùng để phân tích OS/Browser).
+- **Users**: Lưu trữ thông tin định danh và tài khoản.
+- **Links**: Lưu URL gốc, mã rút gọn và quan hệ với người dùng.
+- **LinkLogs**: Lưu vết chi tiết mỗi lần click (IP, thiết bị, trình duyệt) gắn với Link.
 
 ## ● How to Run
 
-### Yêu cầu hệ thống
-
-- PHP >= 8.2
-- Composer
-- MySQL
-
-### Các bước cài đặt
-
-1. **Clone dự án**:
-
-   ```bash
-   git clone <your-repo-url>
-   cd rutgonlink
-   ```
-
-2. **Cài đặt dependencies**:
-
-   ```bash
-   composer install
-   ```
-
-3. **Cấu hình môi trường**:
-   - Sao chép tệp `.env.example` thành `.env`.
-   - Cấu hình thông tin kết nối Database (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`).
-
-4. **Khởi tạo ứng dụng**:
-
-   ```bash
-   php artisan key:generate
-   php artisan migrate
-   ```
-
-5. **Chạy ứng dụng**:
-
-   ```bash
-   php artisan serve
-   ```
-
-   Truy cập tại: `http://127.0.0.1:8000` hoặc trải nghiệm trực tiếp tại: [https://linksnap.free.laravel.cloud/](https://linksnap.free.laravel.cloud/)
+1. **Clone Repo**: `https://github.com/DuyPhatpeo/rutgonlink.git`
+2. **Cài đặt**: `composer install`
+3. **Cấu hình**: Tạo `.env`, cập nhật thông tin Database và chạy `php artisan key:generate`.
+4. **Khởi tạo bảng**: `php artisan migrate`.
+5. **Chạy ứng dụng**: `php artisan serve`.
 
 ---
-*Dự án được phát triển bởi **Trần Duy Phát***
+*© 2024 LinkSnap - Phát triển với sự tâm huyết bởi **Trần Duy Phát***
