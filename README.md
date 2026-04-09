@@ -14,9 +14,9 @@ LinkSnap là giải pháp quản lý liên kết toàn diện, giúp biến các
 
 - **Rút gọn thông minh**: Tạo link ngắn tức thì, hỗ trợ mã tùy chỉnh (Custom Alias) cho người dùng đã đăng nhập.
 - **Phân tích chuyên sâu (Deep Analytics)**:
-    - Biểu đồ tăng trưởng 14 ngày (Area Chart).
-    - Thống kê tỷ lệ Hệ điều hành (Windows, MacOS, Android, iOS...) và Trình duyệt.
-    - Chỉ số thời gian thực: Tổng click, Click trong ngày, Visitors duy nhất (IP).
+  - Biểu đồ tăng trưởng 14 ngày (Area Chart).
+  - Thống kê tỷ lệ Hệ điều hành (Windows, MacOS, Android, iOS...) và Trình duyệt.
+  - Chỉ số thời gian thực: Tổng click, Click trong ngày, Visitors duy nhất (IP).
 - **Quản lý Link nâng cao**: Tìm kiếm thời gian thực, xóa liên kết, cập nhật URL gốc và Reset thống kê.
 - **Mã QR thông minh**: Tự động tạo và hỗ trợ tải về mã QR cho mỗi liên kết.
 

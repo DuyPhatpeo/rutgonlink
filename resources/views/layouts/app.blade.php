@@ -49,10 +49,18 @@
             .no-scrollbar::-webkit-scrollbar { display: none; }
             .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
             .glass { 
-                @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-premium;
+                background-color: rgb(255 255 255 / 0.7);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                border: 1px solid rgb(255 255 255 / 0.4);
+                box-shadow: 0 20px 50px -12px rgba(37, 99, 235, 0.12);
             }
             .glass-dark {
-                @apply bg-slate-900/80 backdrop-blur-xl border border-slate-700/30 shadow-2xl;
+                background-color: rgb(15 23 42 / 0.8);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                border: 1px solid rgb(51 65 85 / 0.3);
+                box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
             }
         }
     </style>
@@ -128,15 +136,21 @@
     @include('partials.scripts')
     @stack('scripts')
 
+    {{-- Flash Data for JS --}}
+    <div id="flash-data" 
+         data-error="{{ session('error') }}" 
+         data-success="{{ session('success') }}" 
+         class="hidden"></div>
+
     {{-- Tự động hiển thị Toast từ Session Flash --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            @if(session('error'))
-                Toast.show({!! json_encode(session('error')) !!}, 'error');
-            @endif
-            @if(session('success'))
-                Toast.show({!! json_encode(session('success')) !!}, 'success');
-            @endif
+            const flashData = document.getElementById('flash-data');
+            const error = flashData.getAttribute('data-error');
+            const success = flashData.getAttribute('data-success');
+
+            if (error) Toast.show(error, 'error');
+            if (success) Toast.show(success, 'success');
         });
     </script>
 </body>
