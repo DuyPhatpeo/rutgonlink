@@ -18,15 +18,15 @@ class LinkController extends Controller
     public function shorten(Request $request)
     {
         $blacklist = ['login', 'register', 'logout', 'api', 'stats', 'logs', 'chart', 'admin', 'dashboard', 'settings', 'profile'];
-        
+
         $rules = [
             'url' => 'required|url',
             'custom_code' => Auth::check() ? [
-                'nullable', 
-                'string', 
-                'min:6', 
+                'nullable',
+                'string',
+                'min:6',
                 'max:20',
-                'regex:/^[a-zA-Z0-9]+$/', 
+                'regex:/^[a-zA-Z0-9]+$/',
                 Rule::unique('links', 'short_code'),
                 function ($attribute, $value, $fail) use ($blacklist) {
                     if (in_array(strtolower($value), $blacklist)) {
@@ -138,7 +138,7 @@ class LinkController extends Controller
     public function verifyPassword(Request $request, $id)
     {
         $link = Link::findOrFail($id);
-        
+
         try {
             $decrypted = \Illuminate\Support\Facades\Crypt::decryptString($link->password);
             if ($request->password !== $decrypted) {
@@ -173,22 +173,23 @@ class LinkController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('original_url', 'like', "%{$search}%")
-                  ->orWhere('short_code', 'like', "%{$search}%");
+                    ->orWhere('short_code', 'like', "%{$search}%");
             });
         }
 
-                     ->limit(4)
-                     ->get()
-                    ->map(function ($link) {
-                        return [
-                            'id' => $link->id,
-                            'original_url' => $link->original_url,
-                            'short_code' => $link->short_code,
-                            'clicks' => $link->clicks,
-                            'created_at' => $link->created_at->diffForHumans(),
-                            'full_short_url' => url('/' . $link->short_code)
-                        ];
-                    });
+        $links = $query->orderBy('created_at', 'desc')
+            ->limit(4)
+            ->get()
+            ->map(function ($link) {
+                return [
+                    'id' => $link->id,
+                    'original_url' => $link->original_url,
+                    'short_code' => $link->short_code,
+                    'clicks' => $link->clicks,
+                    'created_at' => $link->created_at->diffForHumans(),
+                    'full_short_url' => url('/' . $link->short_code)
+                ];
+            });
 
         return response()->json($links);
     }
@@ -203,25 +204,25 @@ class LinkController extends Controller
         }
 
         $logs = LinkLog::whereIn('link_id', function ($query) {
-                        $query->select('id')->from('links')->where('user_id', Auth::id());
-                    })
-                    ->with('link')
-                    ->orderBy('created_at', 'desc')
-                    ->limit(5)
-                    ->get()
-                    ->map(function ($log) {
-                        $device = $this->getDeviceInfo($log->user_agent);
-                        return [
-                            'id' => $log->id,
-                            'link_id' => $log->link_id,
-                            'short_code' => $log->link->short_code,
-                            'original_url' => $log->link->original_url,
-                            'ip' => $log->ip_address,
-                            'os' => $device['os'],
-                            'browser' => $device['browser'],
-                            'created_at' => $log->created_at->diffForHumans()
-                        ];
-                    });
+            $query->select('id')->from('links')->where('user_id', Auth::id());
+        })
+            ->with('link')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get()
+            ->map(function ($log) {
+                $device = $this->getDeviceInfo($log->user_agent);
+                return [
+                    'id' => $log->id,
+                    'link_id' => $log->link_id,
+                    'short_code' => $log->link->short_code,
+                    'original_url' => $log->link->original_url,
+                    'ip' => $log->ip_address,
+                    'os' => $device['os'],
+                    'browser' => $device['browser'],
+                    'created_at' => $log->created_at->diffForHumans()
+                ];
+            });
 
         return response()->json($logs);
     }
@@ -308,9 +309,9 @@ class LinkController extends Controller
     {
         try {
             $link = Link::where('id', $id)
-                        ->where('user_id', Auth::id())
-                        ->firstOrFail();
-            
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
+
             // Xóa logs trước để tránh lỗi khóa ngoại (nếu onDelete cascade chưa thiết lập)
             $link->logs()->delete();
             $link->delete();
@@ -332,7 +333,7 @@ class LinkController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('original_url', 'like', "%{$search}%")
-                  ->orWhere('short_code', 'like', "%{$search}%");
+                    ->orWhere('short_code', 'like', "%{$search}%");
             });
         }
 
@@ -347,8 +348,8 @@ class LinkController extends Controller
     public function show($id)
     {
         $link = Link::where('id', $id)
-                    ->where('user_id', Auth::id())
-                    ->firstOrFail();
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
 
         // Thống kê click theo ngày (14 ngày gần nhất)
         $dailyClicks = [];
@@ -382,18 +383,18 @@ class LinkController extends Controller
 
         // Logs gần nhất (hiển thị)
         $logs = LinkLog::where('link_id', $link->id)
-                    ->orderBy('created_at', 'desc')
-                    ->limit(50)
-                    ->get()
-                    ->map(function ($log) {
-                        $device = $this->getDeviceInfo($log->user_agent);
-                        return [
-                            'ip' => $log->ip_address,
-                            'os' => $device['os'],
-                            'browser' => $device['browser'],
-                            'created_at' => $log->created_at->diffForHumans()
-                        ];
-                    });
+            ->orderBy('created_at', 'desc')
+            ->limit(50)
+            ->get()
+            ->map(function ($log) {
+                $device = $this->getDeviceInfo($log->user_agent);
+                return [
+                    'ip' => $log->ip_address,
+                    'os' => $device['os'],
+                    'browser' => $device['browser'],
+                    'created_at' => $log->created_at->diffForHumans()
+                ];
+            });
 
         return view('links.show', compact('link', 'logs', 'dailyClicks', 'osDist', 'browserDist', 'clicksToday', 'uniqueVisitors'));
     }
@@ -404,7 +405,7 @@ class LinkController extends Controller
     public function detail($id)
     {
         $link = Link::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
-        
+
         $allLogs = LinkLog::where('link_id', $link->id)->get();
         $clicksToday = $allLogs->filter(fn($l) => $l->created_at->isToday())->count();
         $uniqueVisitors = $allLogs->pluck('ip_address')->unique()->count();
@@ -443,9 +444,9 @@ class LinkController extends Controller
             'thumbnail' => 'nullable|url'
         ];
         $request->validate($rules);
-        
+
         $link = Link::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
-        
+
         $data = $request->only(['url', 'expires_at', 'click_limit', 'title', 'description', 'thumbnail']);
         if (isset($data['url'])) {
             $data['original_url'] = $data['url'];
