@@ -22,11 +22,23 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { inter: ['Inter', 'sans-serif'] },
+                    fontFamily: { 
+                        inter: ['Inter', 'sans-serif'],
+                        vietnam: ['"Be Vietnam Pro"', 'sans-serif']
+                    },
                     colors: { 
                         'brand-blue': '#2563eb', 
+                        'brand-indigo': '#4f46e5',
                         'brand-green': '#059669', 
-                        'bg-soft': '#eef4ff'
+                        'bg-soft': '#f8fafc',
+                    },
+                    borderRadius: {
+                        '4xl': '2rem',
+                        '5xl': '3rem',
+                    },
+                    boxShadow: {
+                        'premium': '0 20px 50px -12px rgba(37, 99, 235, 0.12)',
+                        'glass': 'inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
                     }
                 }
             }
@@ -36,11 +48,24 @@
         @layer utilities {
             .no-scrollbar::-webkit-scrollbar { display: none; }
             .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            .glass { 
+                @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-premium;
+            }
+            .glass-dark {
+                @apply bg-slate-900/80 backdrop-blur-xl border border-slate-700/30 shadow-2xl;
+            }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     @stack('styles')
 </head>
-<body class="font-inter min-h-screen text-slate-900 bg-blue-50" data-auth="{{ Auth::check() ? '1' : '0' }}">
+<body class="font-vietnam min-h-screen text-slate-900 bg-white selection:bg-blue-100 selection:text-brand-blue" data-auth="{{ Auth::check() ? '1' : '0' }}">
+    {{-- Background Blobs --}}
+    <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+        <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-blue-100/40 rounded-full blur-[120px] animate-pulse"></div>
+        <div class="absolute top-[20%] -right-[10%] w-[35%] h-[45%] bg-indigo-50/40 rounded-full blur-[100px] animate-pulse delay-700"></div>
+        <div class="absolute -bottom-[10%] left-[20%] w-[50%] h-[30%] bg-sky-50/50 rounded-full blur-[120px]"></div>
+    </div>
     <!-- Thanh điều hướng (Navbar) -->
     <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-sm transition-all duration-300">
         <nav class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center transition-all">

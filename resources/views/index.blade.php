@@ -130,14 +130,39 @@
 
     @else
     {{-- === LAYOUT CHO KHÁCH === --}}
-    <div class="container mx-auto px-6 max-w-6xl">
-        @include('components.hero')
+    
+    {{-- Nền màu xanh nhạt cho phần Hero để tạo độ tương phản vắt vẻo --}}
+    <div class="bg-[#eef6fc] pt-4 pb-36 border-b border-blue-50">
+        <div class="container mx-auto">
+            @include('components.hero')
+        </div>
     </div>
 
-    {{-- Phần giới thiệu nền trắng, tràn viền --}}
-    <div class="bg-white border-t border-slate-100 relative w-full pt-20 pb-32">
-        @include('components.features')
+    <div class="bg-white relative flow-root">
+        {{-- Cách thức hoạt động --}}
+        @include('components.stats')
+
+        {{-- Bento Features --}}
+        <div class="relative w-full pt-16 pb-24">
+            @include('components.features')
+        </div>
     </div>
+
+    {{-- Câu hỏi thường gặp --}}
+    @include('components.faq')
+
+    {{-- Final Call to Action --}}
+    <section class="py-24 bg-slate-900 overflow-hidden relative">
+        <div class="absolute inset-0 opacity-20" style="background-image: url('data:image/svg+xml,%3Csvg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M0 0h20L0 20z\" fill=\"%232563eb\" fill-opacity=\"0.4\"/%3E%3C/svg%3E');"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 class="font-vietnam text-3xl md:text-5xl font-black text-white mb-8 tracking-tight italic">Sẵn sàng để "Snap" <br class="md:hidden"> liên kết đầu tiên?</h2>
+            <p class="text-blue-200 font-medium text-lg mb-12 max-w-2xl mx-auto uppercase tracking-widest text-xs md:text-sm">Tham gia cùng hàng nghìn người dùng đang quản lý link chuyên nghiệp mỗi ngày.</p>
+            <div class="flex flex-wrap justify-center gap-6">
+                <button onclick="Modal.open('registerModal')" class="px-12 py-5 bg-white text-slate-900 rounded-3xl font-black text-sm uppercase tracking-widest hover:bg-brand-blue hover:text-white transition-all transform hover:scale-105 active:scale-95 shadow-2xl">Đăng ký hoàn toàn miễn phí</button>
+                <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="px-12 py-5 bg-transparent text-white border-2 border-white/20 rounded-3xl font-black text-sm uppercase tracking-widest hover:border-white transition-all active:scale-95 italic">Trải nghiệm ngay &uarr;</button>
+            </div>
+        </div>
+    </section>
     @endauth
 
 </main>

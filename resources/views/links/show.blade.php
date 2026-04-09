@@ -7,117 +7,128 @@
     <div class="max-w-7xl mx-auto px-4 md:px-6">
 
         {{-- Header Section --}}
-        <div class="bg-white/40 backdrop-blur-sm rounded-[32px] p-6 md:p-8 border border-white shadow-sm mb-10 flex flex-col md:flex-row md:items-center justify-between gap-6 animate-in fade-in duration-500">
-            <div class="space-y-2">
-                <nav class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
+        <div class="bg-white/70 backdrop-blur-xl rounded-[40px] p-8 md:p-10 border border-white shadow-premium mb-10 flex flex-col md:flex-row md:items-center justify-between gap-10 animate-in fade-in slide-in-from-top-4 duration-1000">
+            <div class="space-y-4">
+                <nav class="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">
                     <a href="/" class="hover:text-brand-blue transition-colors">Dashboard</a>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
-                    <a href="/links" class="hover:text-brand-blue transition-colors">Danh sách liên kết</a>
+                    <a href="/links" class="hover:text-brand-blue transition-colors font-black">Links</a>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
-                    <span class="text-slate-600 truncate max-w-[120px]">Thống kê liên kết</span>
+                    <span class="text-brand-blue/60 italic">Details</span>
                 </nav>
-                <h1 class="text-2xl md:text-4xl font-black text-slate-800 tracking-tight">Thống kê liên kết</h1>
-                {{-- Short URL display --}}
-                <div class="flex items-center gap-3 pt-1">
-                    <a href="{{ url($link->short_code) }}" target="_blank"
-                       class="text-brand-blue font-black text-base md:text-xl hover:underline underline-offset-4 decoration-2 break-all">
-                        {{ str_replace(['http://', 'https://'], '', url($link->short_code)) }}
-                    </a>
-                    <button onclick="Utils.copyToClipboard('{{ url($link->short_code) }}', this)"
-                            title="Sao chép"
-                            class="shrink-0 bg-blue-50 text-brand-blue p-2 rounded-xl border border-blue-100 hover:bg-brand-blue hover:text-white transition-all active:scale-90">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                    </button>
+                <div class="space-y-1">
+                    <h1 class="font-vietnam text-3xl md:text-5xl font-black text-slate-900 tracking-tight">Thống kê liên kết</h1>
+                    {{-- Short URL display --}}
+                    <div class="flex items-center gap-3 pt-2">
+                        <div class="px-4 py-2 bg-blue-50 rounded-2xl flex items-center gap-3 border border-blue-100/50 group hover:border-brand-blue/30 transition-all">
+                            <a href="{{ url($link->short_code) }}" target="_blank"
+                               class="text-brand-blue font-vietnam font-black text-lg md:text-2xl decoration-brand-blue/30 underline decoration-2 underline-offset-8 hover:decoration-brand-blue transition-all break-all">
+                                {{ str_replace(['http://', 'https://'], '', url($link->short_code)) }}
+                            </a>
+                            <button onclick="Utils.copyToClipboard('{{ url($link->short_code) }}', this)"
+                                    title="Sao chép"
+                                    class="shrink-0 text-brand-blue/40 hover:text-brand-blue transition-all active:scale-90">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="flex items-center gap-2 shrink-0">
+            <div class="flex items-center gap-3 shrink-0">
                 <button onclick="LinkManager.showQR('{{ url($link->short_code) }}')"
-                        class="flex items-center gap-2 px-5 py-3 bg-white text-slate-600 font-black text-xs uppercase tracking-widest rounded-2xl border-2 border-slate-100 shadow-sm hover:border-brand-blue/30 hover:text-brand-blue transition-all active:scale-95">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+                        class="flex items-center gap-2 px-8 py-4 bg-white text-slate-600 font-vietnam font-black text-xs uppercase tracking-[0.2em] rounded-3xl border-2 border-slate-100 shadow-sm hover:border-brand-blue/30 hover:text-brand-blue transition-all active:scale-[0.98]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
                     Mã QR
                 </button>
                 <button onclick="LinkManager.deleteLink('{{ $link->id }}')"
-                        class="flex items-center gap-2 px-5 py-3 bg-rose-50 text-rose-500 font-black text-xs uppercase tracking-widest rounded-2xl border-2 border-rose-100 hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all active:scale-95">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        class="flex items-center gap-2 px-8 py-4 bg-rose-50 text-rose-500 font-vietnam font-black text-xs uppercase tracking-[0.2em] rounded-3xl border-2 border-rose-100 hover:bg-rose-500 hover:text-white transition-all active:scale-[0.98]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                     Xoá
                 </button>
             </div>
         </div>
 
-        {{-- ====== METRIC CARDS ====== --}}
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-100">
+        {{-- ====== PREMIUM METRIC CARDS ====== --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
             {{-- Tổng click --}}
-            <div class="bg-white rounded-[24px] p-6 border border-slate-100 shadow-sm hover:shadow-lg transition-all group relative overflow-hidden">
-                <div class="absolute -top-4 -right-4 w-20 h-20 bg-blue-50 rounded-full opacity-60 group-hover:opacity-100 transition-opacity"></div>
-                <div class="relative">
-                    <div class="w-10 h-10 bg-blue-50 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-brand-blue group-hover:text-white transition-all text-brand-blue">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" /></svg>
+            <div class="bg-white rounded-[40px] p-8 border border-white shadow-premium group hover:-translate-y-2 transition-all duration-500">
+                <div class="flex items-center gap-6">
+                    <div class="w-16 h-16 bg-blue-50 rounded-[28px] flex items-center justify-center text-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-all duration-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" /></svg>
                     </div>
-                    <p class="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 mb-1">Tổng click</p>
-                    <p class="text-3xl md:text-4xl font-black text-slate-800 leading-none">{{ number_format($link->clicks) }}</p>
+                    <div>
+                        <div class="font-vietnam text-3xl font-black text-slate-800 tracking-tighter">{{ number_format($link->clicks) }}</div>
+                        <div class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mt-1">Tổng click</div>
+                    </div>
                 </div>
             </div>
 
             {{-- Click hôm nay --}}
-            <div class="bg-white rounded-[24px] p-6 border border-slate-100 shadow-sm hover:shadow-lg transition-all group relative overflow-hidden">
-                <div class="absolute -top-4 -right-4 w-20 h-20 bg-emerald-50 rounded-full opacity-60 group-hover:opacity-100 transition-opacity"></div>
-                <div class="relative">
-                    <div class="w-10 h-10 bg-emerald-50 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-emerald-500 group-hover:text-white transition-all text-emerald-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+            <div class="bg-white rounded-[40px] p-8 border border-white shadow-premium group hover:-translate-y-2 transition-all duration-500">
+                <div class="flex items-center gap-6">
+                    <div class="w-16 h-16 bg-emerald-50 rounded-[28px] flex items-center justify-center text-emerald-600 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                     </div>
-                    <p class="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 mb-1">Hôm nay</p>
-                    <p class="text-3xl md:text-4xl font-black text-slate-800 leading-none">{{ number_format($clicksToday) }}</p>
+                    <div>
+                        <div class="font-vietnam text-3xl font-black text-slate-800 tracking-tighter">{{ number_format($clicksToday) }}</div>
+                        <div class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mt-1">Hôm nay</div>
+                    </div>
                 </div>
             </div>
 
             {{-- Unique visitors --}}
-            <div class="bg-white rounded-[24px] p-6 border border-slate-100 shadow-sm hover:shadow-lg transition-all group relative overflow-hidden">
-                <div class="absolute -top-4 -right-4 w-20 h-20 bg-violet-50 rounded-full opacity-60 group-hover:opacity-100 transition-opacity"></div>
-                <div class="relative">
-                    <div class="w-10 h-10 bg-violet-50 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-violet-500 group-hover:text-white transition-all text-violet-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <div class="bg-white rounded-[40px] p-8 border border-white shadow-premium group hover:-translate-y-2 transition-all duration-500">
+                <div class="flex items-center gap-6">
+                    <div class="w-16 h-16 bg-violet-50 rounded-[28px] flex items-center justify-center text-violet-500 group-hover:bg-violet-500 group-hover:text-white transition-all duration-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     </div>
-                    <p class="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 mb-1">IP duy nhất</p>
-                    <p class="text-3xl md:text-4xl font-black text-slate-800 leading-none">{{ number_format($uniqueVisitors) }}</p>
+                    <div>
+                        <div class="font-vietnam text-3xl font-black text-slate-800 tracking-tighter">{{ number_format($uniqueVisitors) }}</div>
+                        <div class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mt-1">IP Duy nhất</div>
+                    </div>
                 </div>
             </div>
 
-            {{-- Ngày tạo --}}
-            <div class="bg-white rounded-[24px] p-6 border border-slate-100 shadow-sm hover:shadow-lg transition-all group relative overflow-hidden">
-                <div class="absolute -top-4 -right-4 w-20 h-20 bg-amber-50 rounded-full opacity-60 group-hover:opacity-100 transition-opacity"></div>
-                <div class="relative">
-                    <div class="w-10 h-10 bg-amber-50 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-amber-400 group-hover:text-white transition-all text-amber-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            {{-- Create Date --}}
+            <div class="bg-slate-900 rounded-[40px] p-8 border border-slate-800 shadow-premium group hover:-translate-y-2 transition-all duration-500">
+                <div class="flex items-center gap-6">
+                    <div class="w-16 h-16 bg-white/10 rounded-[28px] flex items-center justify-center text-white/80 group-hover:bg-brand-blue group-hover:text-white transition-all duration-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     </div>
-                    <p class="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 mb-1">Tạo lúc</p>
-                    <p class="text-base md:text-lg font-black text-slate-800 leading-tight">{{ $link->created_at->format('d/m/Y') }}</p>
-                    <p class="text-[10px] text-slate-400 font-bold mt-0.5">{{ $link->created_at->diffForHumans() }}</p>
+                    <div>
+                        <div class="font-vietnam text-xl font-black text-white tracking-tighter">{{ $link->created_at->format('d/m/Y') }}</div>
+                        <div class="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-500 mt-1 italic">{{ $link->created_at->diffForHumans() }}</div>
+                    </div>
                 </div>
             </div>
         </div>
 
         {{-- ====== MAIN GRID ====== --}}
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
             {{-- LEFT: URL Info + Chart + Distribution --}}
-            <div class="lg:col-span-2 space-y-6">
+            <div class="lg:col-span-2 space-y-8">
 
                 {{-- Original URL Info FIRST --}}
-                <div class="bg-white rounded-[28px] p-6 md:p-8 border border-slate-100 shadow-sm animate-in fade-in duration-500 delay-100">
-                    <h3 class="text-sm font-black text-slate-700 uppercase tracking-widest mb-4">Thông tin liên kết</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1.5">Link gốc</p>
+                <div class="bg-white rounded-[40px] p-8 md:p-10 border border-slate-100 shadow-premium animate-in fade-in duration-700 delay-300">
+                    <h3 class="font-vietnam text-sm font-black text-slate-700 uppercase tracking-[0.2em] mb-6 flex items-center gap-3">
+                        <span class="w-1.5 h-4 bg-brand-blue rounded-full"></span>
+                        Thông tin liên kết
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100/50">
+                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Link gốc</p>
                             <a href="{{ $link->original_url }}" target="_blank"
-                               class="text-sm font-bold text-slate-700 hover:text-brand-blue transition-colors break-all leading-relaxed">
+                               class="text-sm md:text-base font-bold text-slate-700 hover:text-brand-blue transition-colors break-all leading-relaxed flex items-center gap-2 group">
                                 {{ $link->original_url }}
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                             </a>
                         </div>
-                        <div class="border-t border-slate-100 pt-4">
-                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1.5">Link rút gọn</p>
+                        <div class="bg-blue-50/50 p-6 rounded-3xl border border-blue-100/30">
+                            <p class="text-[10px] font-black uppercase tracking-widest text-brand-blue/60 mb-2">Link rút gọn</p>
                             <a href="{{ url($link->short_code) }}" target="_blank"
-                               class="text-sm font-black text-brand-blue hover:underline underline-offset-4 break-all">
+                               class="text-base md:text-lg font-black text-brand-blue hover:underline underline-offset-8 break-all">
                                 {{ url($link->short_code) }}
                             </a>
                         </div>
@@ -126,9 +137,12 @@
 
                 {{-- Advanced Configurations --}}
                 @if($link->password || $link->expires_at || $link->click_limit || $link->title || $link->description)
-                <div class="bg-white/60 rounded-[28px] p-6 md:p-8 border border-white shadow-sm animate-in fade-in duration-500 delay-125">
-                    <h3 class="text-sm font-black text-slate-700 uppercase tracking-widest mb-4">Cấu hình nâng cao</h3>
-                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-white/60 backdrop-blur-sm rounded-[40px] p-8 md:p-10 border border-white shadow-premium animate-in fade-in duration-700 delay-400">
+                    <h3 class="font-vietnam text-sm font-black text-slate-700 uppercase tracking-[0.2em] mb-6 flex items-center gap-3">
+                        <span class="w-1.5 h-4 bg-indigo-500 rounded-full"></span>
+                        Cấu hình nâng cao
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @if($link->password)
                         @php
                             try {
@@ -137,70 +151,73 @@
                                 $decryptedPwd = '[Đã mã hóa 1 chiều]';
                             }
                         @endphp
-                        <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-center gap-2">
-                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> Mật khẩu</p>
+                        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm transition-all hover:shadow-md">
+                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-1.5 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> Mật khẩu</p>
                             <div class="flex items-center gap-2">
                                 <form id="pwdUpdateForm" onsubmit="LinkApi.updatePwd(event, '{{ $link->id }}')" class="relative flex-1 group" style="display:none;">
                                     @csrf
-                                    <input type="text" name="password" required class="w-full bg-white border-2 border-brand-blue md:rounded-xl rounded-lg text-xs font-bold text-slate-700 px-3 py-1.5 pr-20 focus:ring-0 focus:outline-none transition-all">
+                                    <input type="text" name="password" required class="w-full bg-white border-2 border-brand-blue rounded-xl text-xs font-bold text-slate-700 px-4 py-2 pr-16 focus:ring-0 focus:outline-none transition-all">
                                     <button type="submit" class="absolute right-1 top-1 bottom-1 px-3 bg-brand-blue text-white text-[10px] font-black uppercase rounded-lg hover:bg-blue-600 transition-all">Lưu</button>
                                 </form>
                                 <div id="pwdDisplayArea" class="relative flex-1 group">
-                                    <input type="password" id="displayPassword" value="{{ $decryptedPwd }}" readonly class="w-full bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold text-brand-blue px-3 py-1.5 pr-8 focus:ring-0 focus:outline-none transition-all cursor-pointer" onclick="this.select()">
-                                    <button type="button" onclick="const p=document.getElementById('displayPassword'); p.type=p.type==='password'?'text':'password'; this.classList.toggle('text-brand-blue')" class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-brand-blue transition-colors">
+                                    <input type="password" id="displayPassword" value="{{ $decryptedPwd }}" readonly class="w-full bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold text-brand-blue px-4 py-2 pr-10 focus:ring-0 focus:outline-none transition-all cursor-pointer" onclick="this.select()">
+                                    <button type="button" onclick="const p=document.getElementById('displayPassword'); p.type=p.type==='password'?'text':'password'; this.classList.toggle('text-brand-blue')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 hover:text-brand-blue transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                                     </button>
                                 </div>
-                                <button type="button" id="pwdEditBtn" onclick="document.getElementById('pwdDisplayArea').style.display='none'; document.getElementById('pwdUpdateForm').style.display='block'; this.style.display='none';" class="p-1.5 shrink-0 bg-slate-50 text-slate-400 hover:text-brand-blue hover:bg-blue-50 border border-slate-100 rounded-lg transition-all" title="Chỉnh sửa">
+                                <button type="button" id="pwdEditBtn" onclick="document.getElementById('pwdDisplayArea').style.display='none'; document.getElementById('pwdUpdateForm').style.display='block'; this.style.display='none';" class="p-2 shrink-0 bg-slate-50 text-slate-400 hover:text-brand-blue border border-slate-100 rounded-xl transition-all" title="Chỉnh sửa">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                                 </button>
                             </div>
                         </div>
                         @else
-                        <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-center gap-2">
-                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> Mật khẩu</p>
+                        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-center gap-1 transition-all hover:shadow-md">
+                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-1.5 mb-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> Mật khẩu</p>
                             <form id="pwdUpdateForm" onsubmit="LinkApi.updatePwd(event, '{{ $link->id }}')" class="relative flex-1 group">
                                 @csrf
-                                <input type="text" name="password" placeholder="Chưa thiết lập..." class="w-full bg-slate-50 border border-slate-100 md:rounded-xl rounded-lg text-xs font-bold text-slate-700 px-3 py-1.5 pr-14 focus:ring-0 focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
-                                <button type="submit" class="absolute right-1.5 top-1.5 bottom-1.5 px-3 bg-brand-blue text-white text-[9px] font-black uppercase rounded-lg hover:bg-blue-600 transition-all opacity-0 focus-within:opacity-100 hover:opacity-100">Lưu</button>
+                                <input type="text" name="password" placeholder="Chưa thiết lập..." class="w-full bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold text-slate-700 px-4 py-2 pr-14 focus:ring-0 focus:outline-none focus:border-brand-blue focus:shadow-inner transition-all">
+                                <button type="submit" class="absolute right-1.5 top-1.5 bottom-1.5 px-3 bg-brand-blue text-white text-[9px] font-black uppercase rounded-lg hover:bg-blue-600 transition-all opacity-0 group-focus-within:opacity-100 hover:opacity-100">Lưu</button>
                             </form>
                         </div>
                         @endif
+
                         @if($link->expires_at)
-                        <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm relative overflow-hidden flex flex-col justify-center">
+                        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden flex flex-col justify-center transition-all hover:shadow-md">
                             @if($link->expires_at->isPast())
-                                <div class="absolute inset-0 bg-rose-50/50"></div>
+                                <div class="absolute inset-0 bg-rose-50/30"></div>
                             @endif
                             <div class="relative">
-                                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1.5 flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg> Hết hạn</p>
-                                <p class="text-xs font-black {{ $link->expires_at->isPast() ? 'text-rose-500' : 'text-slate-700' }}">{{ $link->expires_at->format('H:i d/m/Y') }}</p>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg> Hết hạn</p>
+                                <p class="text-xs font-black {{ $link->expires_at->isPast() ? 'text-rose-500' : 'text-slate-800' }} tracking-tight">{{ $link->expires_at->format('H:i d/m/Y') }}</p>
                                 @if($link->expires_at->isPast())
-                                    <p class="text-[9px] font-black uppercase tracking-widest text-rose-500 mt-1">Đã hết hạn</p>
+                                    <p class="text-[9px] font-black uppercase tracking-widest text-rose-500 mt-1 italic">Đã hết hạn</p>
                                 @endif
                             </div>
                         </div>
                         @endif
+
                         @if($link->click_limit)
-                        <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-center">
-                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1.5 flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" /></svg> Giới hạn Click</p>
-                            <p class="text-xs font-black text-slate-700">{{ $link->click_limit }} lượt</p>
+                        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-center transition-all hover:shadow-md">
+                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" /></svg> Giới hạn Click</p>
+                            <p class="text-xs font-black text-slate-800 tracking-tight">{{ $link->click_limit }} lượt</p>
                             @if($link->clicks >= $link->click_limit)
-                                <p class="text-[9px] font-black uppercase tracking-widest text-rose-500 mt-1">Đã đạt mức tối đa</p>
+                                <p class="text-[9px] font-black uppercase tracking-widest text-rose-500 mt-1 italic">Đã đạt mức tối đa</p>
                             @endif
                         </div>
                         @endif
+
                         @if($link->title || $link->description)
-                        <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm lg:col-span-3">
-                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg> Social Preview</p>
-                            <div class="flex flex-col md:flex-row gap-4 items-start">
+                        <div class="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm lg:col-span-3 hover:shadow-md transition-all">
+                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg> Social Preview</p>
+                            <div class="flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left">
                                 @if($link->thumbnail)
-                                    <div class="shrink-0 p-1 bg-white rounded-2xl border border-slate-100 shadow-sm">
-                                        <img src="{{ $link->thumbnail }}" alt="Thumb" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded-[14px]">
+                                    <div class="shrink-0 p-1.5 bg-blue-50/50 rounded-3xl border border-blue-100 shadow-sm">
+                                        <img src="{{ $link->thumbnail }}" alt="Thumb" class="w-20 h-20 md:w-24 md:h-24 object-cover rounded-[22px]">
                                     </div>
                                 @endif
-                                <div class="space-y-1">
-                                    @if($link->title)<p class="text-sm font-black text-brand-blue">{{ $link->title }}</p>@endif
-                                    @if($link->description)<p class="text-xs font-bold text-slate-500 leading-relaxed">{{ $link->description }}</p>@endif
+                                <div class="space-y-2">
+                                    @if($link->title)<p class="font-vietnam text-base md:text-xl font-black text-brand-blue leading-tight">{{ $link->title }}</p>@endif
+                                    @if($link->description)<p class="text-xs md:text-sm font-bold text-slate-500 leading-relaxed max-w-xl">{{ $link->description }}</p>@endif
                                 </div>
                             </div>
                         </div>
@@ -210,31 +227,31 @@
                 @endif
 
                 {{-- Area Chart --}}
-                <div class="bg-white rounded-[28px] p-6 md:p-8 border border-slate-100 shadow-sm animate-in fade-in slide-in-from-bottom-4 duration-500 delay-150">
-                    <div class="flex items-center justify-between mb-6">
+                <div class="bg-white rounded-[40px] p-8 md:p-12 border border-blue-50/30 shadow-premium animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
+                    <div class="flex items-center justify-between mb-8">
                         <div>
-                            <h2 class="text-lg font-black text-slate-800">Lịch sử click</h2>
-                            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-0.5">14 ngày gần nhất</p>
+                            <h2 class="font-vietnam text-xl md:text-2xl font-black text-slate-900 leading-none">Lịch sử click</h2>
+                            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mt-2">14 ngày gần nhất</p>
                         </div>
-                        <div class="flex items-center gap-2 bg-blue-50 px-3 py-2 rounded-2xl">
-                            <span class="w-2 h-2 bg-brand-blue rounded-full"></span>
-                            <span class="text-[10px] font-black uppercase tracking-widest text-brand-blue">Clicks</span>
+                        <div class="flex items-center gap-3 bg-blue-50/50 px-5 py-3 rounded-2xl border border-blue-100/30">
+                            <span class="w-2.5 h-2.5 bg-brand-blue rounded-full shadow-[0_0_10px_rgba(37,99,235,0.4)] animate-pulse"></span>
+                            <span class="text-[11px] font-black uppercase tracking-widest text-brand-blue">Real-time Activity</span>
                         </div>
                     </div>
-                    <div class="h-64 w-full">
+                    <div class="h-80 w-full">
                         <canvas id="linkClicksChart"></canvas>
                     </div>
                 </div>
 
                 {{-- Distribution Row --}}
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-200">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-600 pb-10">
                     {{-- OS Distribution --}}
-                    <div class="bg-white rounded-[28px] p-6 border border-slate-100 shadow-sm">
-                        <h3 class="text-sm font-black text-slate-800 mb-1">Hệ điều hành</h3>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-5">Phân bố người dùng</p>
+                    <div class="bg-white rounded-[40px] p-8 md:p-10 border border-slate-100 shadow-premium">
+                        <h3 class="font-vietnam text-base font-black text-slate-900 mb-1">Hệ điều hành</h3>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-8">Phân bố thiết bị truy cập</p>
                         @if(count($osDist) > 0)
                             @php $total = array_sum($osDist); @endphp
-                            <div class="space-y-3">
+                            <div class="space-y-5">
                                 @foreach($osDist as $os => $count)
                                 @php
                                     $pct = $total > 0 ? round($count / $total * 100) : 0;
@@ -244,28 +261,28 @@
                                     $bar = $colors[$os] ?? 'bg-slate-400';
                                 @endphp
                                 <div>
-                                    <div class="flex items-center justify-between mb-1.5">
-                                        <span class="text-xs font-black text-slate-700 flex items-center gap-1.5">{{ $icon }} {{ $os }}</span>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs md:text-sm font-black text-slate-700 flex items-center gap-2.5">{{ $icon }} {{ $os }}</span>
                                         <span class="text-[10px] font-black text-slate-400">{{ $count }} ({{ $pct }}%)</span>
                                     </div>
-                                    <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
-                                        <div class="{{ $bar }} h-full rounded-full transition-all duration-700" @style(['width' => $pct . '%'])></div>
+                                    <div class="h-2.5 bg-slate-50 rounded-full overflow-hidden">
+                                        <div class="{{ $bar }} h-full rounded-full transition-all duration-1000 ease-out shadow-sm" @style(['width' => $pct . '%'])></div>
                                     </div>
                                 </div>
                                 @endforeach
                             </div>
                         @else
-                            <div class="py-8 text-center text-slate-300 text-xs font-black uppercase tracking-widest">Chưa có dữ liệu</div>
+                            <div class="py-12 text-center text-slate-300 text-xs font-black uppercase tracking-widest italic opacity-60">Chưa có dữ liệu thống kê</div>
                         @endif
                     </div>
 
                     {{-- Browser Distribution --}}
-                    <div class="bg-white rounded-[28px] p-6 border border-slate-100 shadow-sm">
-                        <h3 class="text-sm font-black text-slate-800 mb-1">Trình duyệt</h3>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-5">Phân bố trình duyệt</p>
+                    <div class="bg-white rounded-[40px] p-8 md:p-10 border border-slate-100 shadow-premium">
+                        <h3 class="font-vietnam text-base font-black text-slate-900 mb-1">Trình duyệt</h3>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-8">Phân bố trình duyệt web</p>
                         @if(count($browserDist) > 0)
                             @php $total = array_sum($browserDist); @endphp
-                            <div class="space-y-3">
+                            <div class="space-y-5">
                                 @foreach($browserDist as $browser => $count)
                                 @php
                                     $pct = $total > 0 ? round($count / $total * 100) : 0;
@@ -275,35 +292,35 @@
                                     $bar = $bColors[$browser] ?? 'bg-slate-400';
                                 @endphp
                                 <div>
-                                    <div class="flex items-center justify-between mb-1.5">
-                                        <span class="text-xs font-black text-slate-700 flex items-center gap-1.5">{{ $icon }} {{ $browser }}</span>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs md:text-sm font-black text-slate-700 flex items-center gap-2.5">{{ $icon }} {{ $browser }}</span>
                                         <span class="text-[10px] font-black text-slate-400">{{ $count }} ({{ $pct }}%)</span>
                                     </div>
-                                    <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
-                                        <div class="{{ $bar }} h-full rounded-full transition-all duration-700" @style(['width' => $pct . '%'])></div>
+                                    <div class="h-2.5 bg-slate-50 rounded-full overflow-hidden">
+                                        <div class="{{ $bar }} h-full rounded-full transition-all duration-1000 ease-out shadow-sm" @style(['width' => $pct . '%'])></div>
                                     </div>
                                 </div>
                                 @endforeach
                             </div>
                         @else
-                            <div class="py-8 text-center text-slate-300 text-xs font-black uppercase tracking-widest">Chưa có dữ liệu</div>
+                            <div class="py-12 text-center text-slate-300 text-xs font-black uppercase tracking-widest italic opacity-60">Chưa có dữ liệu thống kê</div>
                         @endif
                     </div>
                 </div>
             </div>
 
             {{-- RIGHT: Recent Activity --}}
-            <div class="space-y-6">
-                <div class="bg-white rounded-[28px] border border-slate-100 shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500 delay-100 sticky top-6">
-                    <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
+            <div class="space-y-8 animate-in fade-in slide-in-from-right-8 duration-1000 delay-300">
+                <div class="bg-white/80 backdrop-blur-md rounded-[40px] border border-white shadow-premium overflow-hidden sticky top-8">
+                    <div class="px-8 py-7 border-b border-slate-100/50 flex items-center justify-between bg-white/40">
                         <div>
-                            <h3 class="text-sm font-black text-slate-800">Nhật ký truy cập</h3>
-                            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-0.5">{{ count($logs) }} bản ghi gần nhất</p>
+                            <h3 class="font-vietnam text-sm font-black text-slate-900 uppercase tracking-widest">Nhật ký truy cập</h3>
+                            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1.5">{{ count($logs) }} bản ghi mới nhất</p>
                         </div>
-                        <div class="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse"></div>
+                        <div class="w-3 h-3 bg-emerald-400 rounded-full shadow-[0_0_12px_rgba(52,211,153,0.6)] animate-pulse"></div>
                     </div>
 
-                    <div class="overflow-y-auto max-h-[600px] divide-y divide-slate-50">
+                    <div class="overflow-y-auto max-h-[720px] divide-y divide-slate-100/50 scrollbar-hide">
                         @forelse($logs as $log)
                         @php
                             $osIcons = ['Windows'=>'🪟','MacOS'=>'🍎','Linux'=>'🐧','Android'=>'🤖','iOS'=>'📱'];
@@ -311,30 +328,34 @@
                             $osIcon = $osIcons[$log['os']] ?? '💻';
                             $bIcon = $bIcons[$log['browser']] ?? '🌍';
                         @endphp
-                        <div class="px-5 py-4 hover:bg-slate-50/60 transition-colors">
-                            <div class="flex items-start justify-between gap-3 mb-2.5">
-                                <span class="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2.5 py-1.5 rounded-xl border border-emerald-100 font-mono">
+                        <div class="px-8 py-6 hover:bg-blue-50/30 transition-all duration-300 group">
+                            <div class="flex items-start justify-between gap-4 mb-4">
+                                <span class="text-[11px] font-mono font-black text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-100 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
                                     {{ $log['ip'] }}
                                 </span>
-                                <span class="text-[9px] font-bold text-slate-400 whitespace-nowrap pt-1">{{ $log['created_at'] }}</span>
+                                <span class="text-[9px] font-bold text-slate-400 whitespace-nowrap pt-1 uppercase italic tracking-tighter">{{ $log['created_at'] }}</span>
                             </div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-[10px] font-bold text-slate-600 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <span class="text-[10px] font-black text-slate-600 bg-white border border-slate-100 px-3 py-1.5 rounded-xl shadow-sm flex items-center gap-1.5">
                                     {{ $osIcon }} {{ $log['os'] }}
                                 </span>
-                                <span class="text-[10px] font-bold text-slate-600 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-xl">
+                                <span class="text-[10px] font-black text-slate-600 bg-white border border-slate-100 px-3 py-1.5 rounded-xl shadow-sm flex items-center gap-1.5">
                                     {{ $bIcon }} {{ $log['browser'] }}
                                 </span>
                             </div>
                         </div>
                         @empty
-                        <div class="py-20 text-center">
-                            <div class="w-14 h-14 bg-slate-50 rounded-[20px] flex items-center justify-center mx-auto mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        <div class="py-24 text-center px-8">
+                            <div class="w-20 h-20 bg-slate-50 rounded-[32px] flex items-center justify-center mx-auto mb-6 border border-slate-100 shadow-inner">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-slate-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             </div>
-                            <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest">Chưa có dữ liệu truy cập</p>
+                            <p class="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em]">Hiện tại chưa có dữ liệu <br> truy cập nào</p>
                         </div>
                         @endforelse
+                    </div>
+
+                    <div class="p-6 bg-slate-50/50 border-t border-slate-100/50 text-center">
+                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Dữ liệu được cập nhật thời gian thực</p>
                     </div>
                 </div>
             </div>

@@ -177,8 +177,8 @@ class LinkController extends Controller
             });
         }
 
-        $links = $query->orderBy('created_at', 'desc')
-                    ->get()
+                     ->limit(4)
+                     ->get()
                     ->map(function ($link) {
                         return [
                             'id' => $link->id,
@@ -207,7 +207,7 @@ class LinkController extends Controller
                     })
                     ->with('link')
                     ->orderBy('created_at', 'desc')
-                    ->limit(15)
+                    ->limit(5)
                     ->get()
                     ->map(function ($log) {
                         $device = $this->getDeviceInfo($log->user_agent);

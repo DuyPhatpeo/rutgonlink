@@ -20,7 +20,7 @@
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('input[name="_token"]')?.value || '{{ csrf_token() }}',
-                    ...options.headers
+                    ...(options.headers || {})
                 }
             };
             if (options.body && typeof options.body === 'object') {
@@ -1002,5 +1002,27 @@
                 }
             });
         }
+        
+        // Shortcut: Cmd+K hoặc / để focus input URL
+        document.addEventListener('keydown', (e) => {
+            const isK = (e.ctrlKey || e.metaKey) && e.code === 'KeyK';
+            const isSlash = e.code === 'Slash' || e.code === 'IntlRo';
+
+            if (isK || isSlash) {
+                // Nếu đang gõ trong một input/textarea khác thì vẫn cho phép dùng Cmd+K để nhảy 
+                // nhưng / thì nên để yên để người dùng gõ / vào input hiện tại
+                if (isSlash && ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+                    return;
+                }
+
+                const urlInput = document.getElementById('url');
+                if (urlInput) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    urlInput.focus();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+        });
     });
 </script>

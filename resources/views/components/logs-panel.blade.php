@@ -13,7 +13,7 @@
             {{-- Skeleton loading rows --}}
             <div class="animate-pulse">
                 @for ($i = 0; $i < 4; $i++)
-                <div class="p-5 md:p-6 flex items-start gap-4 border-b border-slate-100 last:border-0">
+                    <div class="p-5 md:p-6 flex items-start gap-4 border-b border-slate-100 last:border-0">
                     {{-- Icon skeleton --}}
                     <div class="w-9 h-9 bg-slate-100 rounded-2xl shrink-0 mt-0.5"></div>
                     <div class="flex-1 space-y-2.5">
@@ -30,9 +30,9 @@
                     </div>
                     {{-- Time skeleton --}}
                     <div class="h-4 bg-slate-100 rounded-full w-20 shrink-0"></div>
-                </div>
-                @endfor
             </div>
+            @endfor
         </div>
     </div>
+</div>
 </div>
