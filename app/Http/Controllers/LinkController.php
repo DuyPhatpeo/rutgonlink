@@ -33,7 +33,13 @@ class LinkController extends Controller
                         $fail('Mã tùy chỉnh này thuộc hệ thống, vui lòng chọn mã khác.');
                     }
                 },
-            ] : ['prohibited']
+            ] : ['prohibited'],
+            'password' => 'nullable|string|min:4',
+            'expires_at' => 'nullable|date|after:now',
+            'click_limit' => 'nullable|integer|min:1',
+            'title' => 'nullable|string|max:100',
+            'description' => 'nullable|string|max:255',
+            'thumbnail' => 'nullable|url'
         ];
 
         $messages = [
@@ -44,6 +50,9 @@ class LinkController extends Controller
             'custom_code.prohibited' => 'Vui lòng đăng nhập để sử dụng tính năng mã tùy chỉnh.',
             'custom_code.regex' => 'Mã tùy chỉnh chỉ được chứa chữ cái và số, không có ký tự đặc biệt.',
             'custom_code.unique' => 'Mã tùy chỉnh này đã được sử dụng, vui lòng chọn mã khác.',
+            'password.min' => 'Mật khẩu phải có ít nhất 4 ký tự.',
+            'expires_at.after' => 'Thời gian hết hạn phải ở tương lai.',
+            'thumbnail.url' => 'Link ảnh thumbnail không hợp lệ.'
         ];
 
         $request->validate($rules, $messages);
@@ -61,6 +70,12 @@ class LinkController extends Controller
             'user_id' => Auth::id(),
             'original_url' => $request->url,
             'short_code' => $shortCode,
+            'password' => $request->password ? \Illuminate\Support\Facades\Crypt::encryptString($request->password) : null,
+            'expires_at' => $request->expires_at,
+            'click_limit' => $request->click_limit,
+            'title' => $request->title,
+            'description' => $request->description,
+            'thumbnail' => $request->thumbnail,
             'clicks' => 0
         ]);
 
@@ -83,6 +98,22 @@ class LinkController extends Controller
             return redirect('/')->with('error', "Xin lỗi, liên kết '{$short_code}' không tồn tại hoặc đã bị xóa.");
         }
 
+        // 1. Kiểm tra thời gian hết hạn
+        if ($link->expires_at && $link->expires_at->isPast()) {
+            return redirect('/')->with('error', "Liên kết này đã hết hạn vào lúc " . $link->expires_at->format('H:i d/m/Y') . ".");
+        }
+
+        // 2. Kiểm tra giới hạn lượt click
+        if ($link->click_limit && $link->clicks >= $link->click_limit) {
+            return redirect('/')->with('error', "Liên kết này đã đạt giới hạn lượt truy cập tối đa ({$link->click_limit}).");
+        }
+
+        // 3. Kiểm tra mật khẩu (Nếu có)
+        // Nếu người dùng đã nhập pass đúng trước đó (lưu trong session), thì bỏ qua check
+        if ($link->password && !session()->has("auth_link_{$link->id}")) {
+            return view('links.password', compact('link'));
+        }
+
         // Tăng click count
         $link->increment('clicks');
 
@@ -93,7 +124,37 @@ class LinkController extends Controller
             'user_agent' => request()->userAgent()
         ]);
 
+        // Nếu có tùy chỉnh Social Preview, hiển thị trang chờ để Crawler bắt được Meta Tags
+        if ($link->title || $link->description || $link->thumbnail) {
+            return view('links.redirecting', compact('link'));
+        }
+
         return redirect()->away($link->original_url);
+    }
+
+    /**
+     * Xác thực mật khẩu link.
+     */
+    public function verifyPassword(Request $request, $id)
+    {
+        $link = Link::findOrFail($id);
+        
+        try {
+            $decrypted = \Illuminate\Support\Facades\Crypt::decryptString($link->password);
+            if ($request->password !== $decrypted) {
+                return back()->with('error', 'Mật khẩu không chính xác, vui lòng thử lại.');
+            }
+        } catch (\Exception $e) {
+            // Fallback for old bcrypt hashes
+            if (!password_verify($request->password, $link->password)) {
+                return back()->with('error', 'Mật khẩu không chính xác, vui lòng thử lại.');
+            }
+        }
+
+        // Lưu vào session để không phải nhập lại trong phiên làm việc này
+        session()->put("auth_link_{$link->id}", true);
+
+        return redirect('/' . $link->short_code);
     }
 
     /**
@@ -371,9 +432,33 @@ class LinkController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate(['url' => 'required|url']);
+        $rules = [
+            'url' => 'sometimes|required|url',
+            'password' => 'nullable|string|min:4',
+            'remove_password' => 'nullable|boolean',
+            'expires_at' => 'nullable|date',
+            'click_limit' => 'nullable|integer|min:1',
+            'title' => 'nullable|string|max:100',
+            'description' => 'nullable|string|max:255',
+            'thumbnail' => 'nullable|url'
+        ];
+        $request->validate($rules);
+        
         $link = Link::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
-        $link->update(['original_url' => $request->url]);
+        
+        $data = $request->only(['url', 'expires_at', 'click_limit', 'title', 'description', 'thumbnail']);
+        if (isset($data['url'])) {
+            $data['original_url'] = $data['url'];
+            unset($data['url']);
+        }
+
+        if ($request->remove_password) {
+            $data['password'] = null;
+        } elseif ($request->filled('password')) {
+            $data['password'] = \Illuminate\Support\Facades\Crypt::encryptString($request->password);
+        }
+
+        $link->update($data);
         return response()->json(['success' => true, 'link' => $link]);
     }
 

@@ -16,7 +16,17 @@ class Link extends Model
         'user_id',
         'original_url',
         'short_code',
-        'clicks'
+        'clicks',
+        'password',
+        'expires_at',
+        'click_limit',
+        'title',
+        'description',
+        'thumbnail'
+    ];
+
+    protected $casts = [
+        'expires_at' => 'datetime',
     ];
 
     /**

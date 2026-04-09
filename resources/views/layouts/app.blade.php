@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'LinkSnap - Hệ thống rút gọn link chuyên nghiệp')</title>
+    
+    <!-- Dynamic Social Preview (OG Tags) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@yield('og_title', 'LinkSnap - URL Shortener')">
+    <meta property="og:description" content="@yield('og_description', 'Rút gọn liên kết nhanh chóng và bảo mật.')">
+    <meta property="og:image" content="@yield('og_image', asset('logo.png'))">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('og_title', 'LinkSnap - URL Shortener')">
+    <meta name="twitter:description" content="@yield('og_description', 'Rút gọn liên kết nhanh chóng và bảo mật.')">
+    <meta name="twitter:image" content="@yield('og_image', asset('logo.png'))">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>

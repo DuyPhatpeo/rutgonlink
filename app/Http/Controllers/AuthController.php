@@ -29,6 +29,7 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
+        $request->session()->flash('success', 'Đăng ký thành công!');
 
         return response()->json([
             'message' => 'Đăng ký thành công!',
@@ -48,6 +49,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            $request->session()->flash('success', 'Đăng nhập thành công!');
 
             return response()->json([
                 'message' => 'Đăng nhập thành công!',

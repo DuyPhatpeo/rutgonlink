@@ -14,11 +14,10 @@ LinkSnap là giải pháp quản lý liên kết toàn diện, giúp biến các
 
 - **Rút gọn thông minh**: Tạo link ngắn tức thì, hỗ trợ mã tùy chỉnh (Custom Alias) cho người dùng đã đăng nhập.
 - **Phân tích chuyên sâu (Deep Analytics)**:
-  - Biểu đồ tăng trưởng 14 ngày (Area Chart).
-  - Thống kê tỷ lệ Hệ điều hành (Windows, MacOS, Android, iOS...) và Trình duyệt.
-  - Chỉ số thời gian thực: Tổng click, Click trong ngày, Visitors duy nhất (IP).
+    - Biểu đồ tăng trưởng 14 ngày (Area Chart).
+    - Thống kê tỷ lệ Hệ điều hành (Windows, MacOS, Android, iOS...) và Trình duyệt.
+    - Chỉ số thời gian thực: Tổng click, Click trong ngày, Visitors duy nhất (IP).
 - **Quản lý Link nâng cao**: Tìm kiếm thời gian thực, xóa liên kết, cập nhật URL gốc và Reset thống kê.
-- **Trải nghiệm Premium**: Giao diện Glassmorphism (kính mờ), Header Sticky, và hệ thống phân trang tùy chỉnh mượt mà.
 - **Mã QR thông minh**: Tự động tạo và hỗ trợ tải về mã QR cho mỗi liên kết.
 
 ## ● Tech Stack
@@ -35,17 +34,17 @@ LinkSnap là giải pháp quản lý liên kết toàn diện, giúp biến các
 
 ## ● API Design
 
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `POST` | `/api/shorten` | Tạo liên kết rút gọn mới |
-| `GET` | `/api/stats` | Lấy danh sách link (có hỗ trợ search) |
-| `GET` | `/api/logs` | Lấy 15 nhật ký truy cập toàn cục gần nhất |
-| `GET` | `/api/chart` | Dữ liệu biểu đồ & metric tổng quan Dashboard |
-| `GET` | `/api/links/{id}` | Lấy chi tiết thống kê JSON của 1 link |
-| `PATCH` | `/api/links/{id}` | Cập nhật URL gốc của liên kết |
-| `POST` | `/api/links/{id}/reset` | Xóa sạch thống kê và nhật ký của link |
-| `DELETE` | `/api/delete/{id}` | Xóa vĩnh viễn liên kết |
-| `GET` | `/{short_code}` | Engine điều hướng (Redirect Service) |
+| Method   | Endpoint                | Description                                  |
+| :------- | :---------------------- | :------------------------------------------- |
+| `POST`   | `/api/shorten`          | Tạo liên kết rút gọn mới                     |
+| `GET`    | `/api/stats`            | Lấy danh sách link (có hỗ trợ search)        |
+| `GET`    | `/api/logs`             | Lấy 15 nhật ký truy cập toàn cục gần nhất    |
+| `GET`    | `/api/chart`            | Dữ liệu biểu đồ & metric tổng quan Dashboard |
+| `GET`    | `/api/links/{id}`       | Lấy chi tiết thống kê JSON của 1 link        |
+| `PATCH`  | `/api/links/{id}`       | Cập nhật URL gốc của liên kết                |
+| `POST`   | `/api/links/{id}/reset` | Xóa sạch thống kê và nhật ký của link        |
+| `DELETE` | `/api/delete/{id}`      | Xóa vĩnh viễn liên kết                       |
+| `GET`    | `/{short_code}`         | Engine điều hướng (Redirect Service)         |
 
 ## ● Data Model
 
@@ -62,4 +61,5 @@ LinkSnap là giải pháp quản lý liên kết toàn diện, giúp biến các
 5. **Chạy ứng dụng**: `php artisan serve`.
 
 ---
-*© 2024 LinkSnap - Phát triển với sự tâm huyết bởi **Trần Duy Phát***
+
+\*© 2024 LinkSnap - Phát triển với sự tâm huyết bởi **Trần Duy Phát\***

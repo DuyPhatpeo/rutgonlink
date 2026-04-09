@@ -14,6 +14,9 @@ Route::post('/api/register', [AuthController::class, 'register']);
 Route::post('/api/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/logout', [AuthController::class, 'logout']); // Backward compatibility
 
+// Password Verification
+Route::post('/links/{id}/verify', [LinkController::class, 'verifyPassword'])->name('links.verify');
+
 
 
 // Link API Routes

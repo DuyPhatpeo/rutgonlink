@@ -47,6 +47,69 @@
                 </form>
             </div>
 
+            {{-- Nút Toggle Tùy Chọn Nâng Cao --}}
+            <div class="flex justify-center mt-6">
+                <button type="button" onclick="LinkManager.toggleAdvanced()" class="flex items-center gap-2 group">
+                    <span class="text-[10px] font-black text-slate-400 group-hover:text-brand-blue uppercase tracking-[0.2em] transition-all">Tùy chọn nâng cao</span>
+                    <div class="w-6 h-6 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:border-brand-blue group-hover:text-brand-blue transition-all">
+                        <svg id="advancedIcon" xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </button>
+            </div>
+
+            {{-- Panel Tùy Chọn Nâng Cao (Ẩn định) --}}
+            <div id="advancedPanel" class="hidden animate-in slide-in-from-top-4 duration-500 mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {{-- Bảo mật --}}
+                <div class="bg-white/60 p-6 rounded-3xl border border-white shadow-sm space-y-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="p-2 bg-blue-50 rounded-lg text-brand-blue">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                        </div>
+                        <span class="text-xs font-black text-slate-700 uppercase tracking-widest">Bảo mật</span>
+                    </div>
+                    <div>
+                        <input type="password" id="linkPassword" placeholder="Đặt mật khẩu bảo vệ..." 
+                            class="w-full bg-white border border-slate-100 py-3 px-4 rounded-xl text-xs font-bold text-slate-800 focus:border-brand-blue outline-none transition-all">
+                    </div>
+                </div>
+
+                {{-- Giới hạn --}}
+                <div class="bg-white/60 p-6 rounded-3xl border border-white shadow-sm space-y-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="p-2 bg-amber-50 rounded-lg text-amber-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <span class="text-xs font-black text-slate-700 uppercase tracking-widest">Giới hạn</span>
+                    </div>
+                    <div class="space-y-3">
+                        <input type="datetime-local" id="expiresAt" title="Ngày giờ hết hạn"
+                            class="w-full bg-white border border-slate-100 py-3 px-4 rounded-xl text-xs font-bold text-slate-800 focus:border-brand-blue outline-none transition-all cursor-pointer">
+                        <input type="number" id="clickLimit" placeholder="Giới hạn lượt click (số)" 
+                            class="w-full bg-white border border-slate-100 py-3 px-4 rounded-xl text-xs font-bold text-slate-800 focus:border-brand-blue outline-none transition-all">
+                    </div>
+                </div>
+
+                {{-- Social Preview --}}
+                <div class="bg-white/60 p-6 rounded-3xl border border-white shadow-sm space-y-4 lg:col-span-1">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="p-2 bg-emerald-50 rounded-lg text-emerald-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>
+                        </div>
+                        <span class="text-xs font-black text-slate-700 uppercase tracking-widest">Social Preview</span>
+                    </div>
+                    <div class="space-y-3">
+                        <input type="text" id="metaTitle" placeholder="Tiêu đề (OG Title)" 
+                            class="w-full bg-white border border-slate-100 py-3 px-4 rounded-xl text-xs font-bold text-slate-800 focus:border-brand-blue outline-none transition-all">
+                        <input type="text" id="metaDescription" placeholder="Mô tả ngắn" 
+                            class="w-full bg-white border border-slate-100 py-3 px-4 rounded-xl text-xs font-bold text-slate-800 focus:border-brand-blue outline-none transition-all">
+                        <input type="url" id="metaThumbnail" placeholder="Link ảnh thumbnail..." 
+                            class="w-full bg-white border border-slate-100 py-3 px-4 rounded-xl text-xs font-bold text-slate-800 focus:border-brand-blue outline-none transition-all">
+                    </div>
+                </div>
+            </div>
+
         </section>
 
     {{-- Nền xám trắng từ widget xuống --}}

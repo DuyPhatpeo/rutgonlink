@@ -13,9 +13,12 @@
                 <label class="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-4 transition group-focus-within:text-brand-blue">Email</label>
                 <input type="email" name="email" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-3.5 md:py-4 px-5 md:px-6 outline-none focus:border-brand-blue focus:bg-white transition-all mt-1.5 md:mt-2 text-sm">
             </div>
-            <div class="group">
+            <div class="group relative">
                 <label class="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-4 transition group-focus-within:text-brand-blue">Mật khẩu</label>
-                <input type="password" name="password" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-3.5 md:py-4 px-5 md:px-6 outline-none focus:border-brand-blue focus:bg-white transition-all mt-1.5 md:mt-2 text-sm">
+                <input type="password" id="loginPwd" name="password" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-3.5 md:py-4 px-5 pr-12 md:px-6 md:pr-12 outline-none focus:border-brand-blue focus:bg-white transition-all mt-1.5 md:mt-2 text-sm">
+                <button type="button" onclick="const p=document.getElementById('loginPwd'); p.type=p.type==='password'?'text':'password'; this.classList.toggle('text-brand-blue')" class="absolute right-4 bottom-3.5 md:bottom-4 text-slate-400 hover:text-slate-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                </button>
             </div>
             <button type="submit" class="w-full bg-slate-900 hover:bg-black text-white font-black py-4 md:py-5 rounded-2xl transition-all shadow-xl shadow-slate-200 uppercase tracking-widest mt-4 md:mt-6 text-xs md:text-sm">Xác nhận</button>
             <p class="text-center text-[10px] md:text-xs text-slate-500 font-medium">Chưa có tài khoản? <button type="button" onclick="Modal.switch('loginModal', 'registerModal')" class="text-brand-blue font-bold hover:underline underline-offset-4 decoration-2">Đăng ký ngay</button></p>
@@ -41,13 +44,19 @@
                 <label class="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-4">Email</label>
                 <input type="email" name="email" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-3.5 md:py-4 px-5 md:px-6 outline-none focus:border-brand-blue focus:bg-white transition-all text-sm">
             </div>
-            <div class="group">
+            <div class="group relative">
                 <label class="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-4">Mật khẩu</label>
-                <input type="password" name="password" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-3.5 md:py-4 px-5 md:px-6 outline-none focus:border-brand-blue focus:bg-white transition-all text-sm">
+                <input type="password" id="regPwd" name="password" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-3.5 md:py-4 px-5 pr-12 md:px-6 md:pr-12 outline-none focus:border-brand-blue focus:bg-white transition-all text-sm">
+                <button type="button" onclick="const p=document.getElementById('regPwd'); p.type=p.type==='password'?'text':'password'; this.classList.toggle('text-brand-blue')" class="absolute right-4 bottom-3.5 md:bottom-4 text-slate-400 hover:text-slate-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                </button>
             </div>
-            <div class="group">
+            <div class="group relative">
                 <label class="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-4">Xác nhận</label>
-                <input type="password" name="password_confirmation" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-3.5 md:py-4 px-5 md:px-6 outline-none focus:border-brand-blue focus:bg-white transition-all text-sm">
+                <input type="password" id="regPwdConfirm" name="password_confirmation" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-3.5 md:py-4 px-5 pr-12 md:px-6 md:pr-12 outline-none focus:border-brand-blue focus:bg-white transition-all text-sm">
+                <button type="button" onclick="const p=document.getElementById('regPwdConfirm'); p.type=p.type==='password'?'text':'password'; this.classList.toggle('text-brand-blue')" class="absolute right-4 bottom-3.5 md:bottom-4 text-slate-400 hover:text-slate-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                </button>
             </div>
             <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-black py-4 md:py-5 rounded-2xl transition-all shadow-xl shadow-blue-100 uppercase tracking-widest mt-4 md:mt-6 text-xs md:text-sm">Đăng ký hoàn tất</button>
             <p class="text-center text-[10px] md:text-xs text-slate-500 font-medium">Đã có tài khoản? <button type="button" onclick="Modal.switch('registerModal', 'loginModal')" class="text-brand-blue font-bold hover:underline underline-offset-4 decoration-2">Đăng nhập ngay</button></p>

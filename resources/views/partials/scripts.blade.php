@@ -11,8 +11,8 @@
      */
     const Api = {
         async fetch(url, options = {}) {
-            // Chuẩn hóa URL sang dạng tương đối để tránh lỗi 404 trên các môi trường khác nhau
-            const cleanUrl = url.startsWith('/') ? url.substring(1) : url;
+            // Đảm bảo URL bắt đầu bằng dấu / để luôn gọi từ root, tránh lỗi đường dẫn tương đối
+            const cleanUrl = url.startsWith('/') ? url : `/${url}`;
 
             const config = {
                 ...options,
@@ -339,6 +339,20 @@
     const LinkManager = {
         isShortened: false,
 
+        toggleAdvanced() {
+            const panel = document.getElementById('advancedPanel');
+            const icon = document.getElementById('advancedIcon');
+            if (panel.classList.contains('hidden')) {
+                panel.classList.remove('hidden');
+                panel.classList.add('grid');
+                icon.classList.add('rotate-180');
+            } else {
+                panel.classList.add('hidden');
+                panel.classList.remove('grid');
+                icon.classList.remove('rotate-180');
+            }
+        },
+
         async handleShorten(e) {
             e.preventDefault();
             const input = document.getElementById('url');
@@ -369,7 +383,15 @@
             btn.innerHTML = '✨ SNAPPING...';
 
             try {
-                const body = { url: input.value };
+                const body = { 
+                    url: input.value,
+                    password: document.getElementById('linkPassword')?.value,
+                    expires_at: document.getElementById('expiresAt')?.value,
+                    click_limit: document.getElementById('clickLimit')?.value,
+                    title: document.getElementById('metaTitle')?.value,
+                    description: document.getElementById('metaDescription')?.value,
+                    thumbnail: document.getElementById('metaThumbnail')?.value,
+                };
                 if (customInput) body.custom_code = customInput.value;
 
                 const data = await Api.fetch('api/shorten', {
@@ -444,6 +466,12 @@
             if (input) input.value = '';
             if (stickyInput) stickyInput.value = '';
             if (customInput) customInput.value = '';
+
+            // Reset Advanced Fields
+            ['linkPassword', 'expiresAt', 'clickLimit', 'metaTitle', 'metaDescription', 'metaThumbnail'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
             
             if (clearBtn) clearBtn.classList.add('hidden');
             if (stickyClearBtn) stickyClearBtn.classList.add('hidden');
