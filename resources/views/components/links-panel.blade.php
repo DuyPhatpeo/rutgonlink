@@ -1,6 +1,6 @@
 {{-- Panel: Liên kết gần đây --}}
 <div class="flex flex-col gap-4">
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 px-1">
+    <div class="flex items-center justify-between px-1">
         <div class="space-y-1">
             <span class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] block">My Shortcuts</span>
             <h3 class="text-xl font-black text-slate-800 tracking-tight flex items-center gap-2">
@@ -8,17 +8,22 @@
                 Liên kết gần đây
             </h3>
         </div>
-
-        {{-- Ô tìm kiếm --}}
-        <div class="relative group max-w-xs w-full">
-            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-brand-blue transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-            </div>
-            <input type="text" id="searchLinks" placeholder="Tìm URL hoặc mã..."
-                class="w-full bg-white border border-slate-200 rounded-2xl py-2 pl-10 pr-4 text-[11px] font-bold text-slate-600 outline-none focus:border-brand-blue focus:ring-4 focus:ring-blue-50 transition-all placeholder:text-slate-300">
+        <a href="{{ route('links.index') }}" class="text-[11px] font-bold text-brand-blue hover:text-blue-700 transition-colors uppercase tracking-wider flex items-center gap-1">
+            Tất cả
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+        </a>
+    </div>
+    {{-- Ô tìm kiếm --}}
+    <div class="relative group w-full px-1">
+        <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-brand-blue transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
         </div>
+        <input type="text" id="searchLinks" placeholder="Tìm kiếm liên kết của bạn..."
+            class="w-full bg-white shadow-sm border border-slate-200 rounded-2xl py-2.5 pl-11 pr-4 text-[12px] font-bold text-slate-600 outline-none focus:border-brand-blue focus:ring-4 focus:ring-blue-50 transition-all placeholder:text-slate-300">
     </div>
 
     <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
@@ -39,6 +44,7 @@
             </div>
             @endfor
         </div>
+        </div>
     </div>
-</div>
+
 </div>
