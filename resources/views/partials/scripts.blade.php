@@ -943,6 +943,17 @@
 
     // Khởi tạo các sự kiện khi trang đã tải xong (DOMContentLoaded)
     document.addEventListener('DOMContentLoaded', () => {
+        // Tự động focus vào ô rút gọn link nếu có query param focus=url
+        if (window.location.search.includes('focus=url')) {
+            const urlInput = document.getElementById('url');
+            if (urlInput) {
+                // Delay xíu để tránh header che hoặc chưa kịp render mượt
+                setTimeout(() => urlInput.focus(), 300);
+            }
+            // Xoá param ra khỏi URL cho sạch
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+
         // Nếu đã đăng nhập, tự động tải danh sách link
         if (IS_AUTHENTICATED) {
             LinkManager.loadStats();
@@ -1003,7 +1014,21 @@
             });
         }
         
-        // Shortcut: Cmd+K hoặc / để focus input URL
+        // Hành động toàn cục: Luôn nhảy về form rút gọn link
+        window.globalActionShortcut = function() {
+            const urlInput = document.getElementById('url');
+            
+            if (urlInput) {
+                // Nếu đang ở trang có form rút gọn, cuộn lên đầu và focus
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                urlInput.focus();
+            } else {
+                // Nếu đang ở trang khác (ví dụ: danh sách link /links), chuyển hướng về trang chủ
+                window.location.href = '/?focus=url';
+            }
+        };
+
+        // Shortcut: Cmd+K hoặc / để focus input URL hoặc Search
         document.addEventListener('keydown', (e) => {
             const isK = (e.ctrlKey || e.metaKey) && e.code === 'KeyK';
             const isSlash = e.code === 'Slash' || e.code === 'IntlRo';
@@ -1015,13 +1040,9 @@
                     return;
                 }
 
-                const urlInput = document.getElementById('url');
-                if (urlInput) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    urlInput.focus();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
+                e.preventDefault();
+                e.stopPropagation();
+                window.globalActionShortcut();
             }
         });
     });

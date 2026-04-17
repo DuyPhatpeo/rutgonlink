@@ -26,8 +26,11 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm link hoặc mã..." 
-                        class="w-full bg-white/80 border-2 border-slate-100 py-3.5 pl-14 pr-6 rounded-2xl outline-none focus:border-brand-blue/30 focus:shadow-xl focus:shadow-blue-100/50 transition-all font-bold text-slate-700 text-sm">
+                    <input type="text" name="search" id="searchInput" value="{{ request('search') }}" placeholder="Tìm kiếm link hoặc mã..." 
+                        class="w-full bg-white/80 border-2 border-slate-100 py-3.5 pl-14 pr-16 rounded-2xl outline-none focus:border-brand-blue/30 focus:shadow-xl focus:shadow-blue-100/50 transition-all font-bold text-slate-700 text-sm">
+                    <div class="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none hidden md:flex items-center">
+                        <span class="bg-slate-50 border border-slate-200/60 shadow-sm text-slate-400 font-bold text-[10px] px-2 py-1 rounded-lg uppercase tracking-widest leading-none">Ctrl K</span>
+                    </div>
                 </form>
             </div>
         </div>

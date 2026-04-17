@@ -79,6 +79,17 @@
         <nav class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center transition-all">
             <div class="text-2xl md:text-3xl font-black text-brand-blue tracking-tighter select-none cursor-pointer hover:opacity-80 active:scale-95 transition-all" onclick="window.location.assign('/')">LinkSnap</div>
             <div class="flex items-center gap-2 md:gap-6">
+                <!-- Nút Gọi ý Ctrl K (toàn cục) -->
+                <button onclick="window.globalActionShortcut && window.globalActionShortcut()" class="hidden md:flex items-center justify-between w-56 lg:w-64 px-3.5 py-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 rounded-2xl text-slate-400 transition-all shadow-sm group active:scale-[0.98]" title="Rút gọn link nhanh">
+                    <div class="flex items-center gap-2.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400 group-hover:text-brand-blue transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        <span class="text-[11px] font-bold text-slate-500 group-hover:text-slate-700 transition-colors">Rút gọn nhanh...</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <kbd class="text-[9px] font-black font-sans text-slate-400 bg-white border border-slate-200 px-1.5 py-0.5 rounded-md shadow-sm group-hover:text-brand-blue group-hover:border-blue-200 transition-all tracking-widest">CTRL</kbd>
+                        <kbd class="text-[9px] font-black font-sans text-slate-400 bg-white border border-slate-200 px-1.5 py-0.5 rounded-md shadow-sm group-hover:text-brand-blue group-hover:border-blue-200 transition-all tracking-widest">K</kbd>
+                    </div>
+                </button>
                 @auth
                     <div class="flex items-center gap-3 md:gap-4">
                         <span class="text-slate-500 font-semibold hidden md:inline">Chào, <span class="text-slate-800 font-bold">{{ Auth::user()->name }}</span>!</span>
