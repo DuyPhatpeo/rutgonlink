@@ -38,10 +38,10 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-50/50 border-b border-slate-100">
-                            <th class="px-8 py-6 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Thông tin liên kết</th>
-                            <th class="px-8 py-6 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 text-center">Lượt Click</th>
-                            <th class="px-8 py-6 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 text-center">Ngày tạo</th>
-                            <th class="px-8 py-6 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 text-right">Thao tác</th>
+                            <th class="px-8 py-6 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 whitespace-nowrap">Thông tin liên kết</th>
+                            <th class="px-8 py-6 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 text-center whitespace-nowrap">Lượt Click</th>
+                            <th class="px-8 py-6 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 text-center whitespace-nowrap">Ngày tạo</th>
+                            <th class="px-8 py-6 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 text-right whitespace-nowrap">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50">

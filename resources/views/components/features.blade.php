@@ -24,7 +24,7 @@
         <div class="flex flex-col gap-8">
             
             {{-- Card: Analytics --}}
-            <div class="bg-slate-50 rounded-[40px] p-8 md:p-12 border border-slate-100 flex flex-col md:flex-row items-center gap-10 overflow-hidden group hover:shadow-2xl hover:shadow-blue-100/50 transition-all duration-500">
+            <div class="bg-slate-50 rounded-3xl md:rounded-[40px] p-6 md:p-12 border border-slate-100 flex flex-col md:flex-row items-center gap-10 overflow-hidden group hover:shadow-2xl hover:shadow-blue-100/50 transition-all duration-500">
                 <div class="flex-1 space-y-6">
                     <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-brand-blue shadow-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -37,8 +37,8 @@
                     </p>
                     <p class="text-slate-500 font-medium">Theo dõi biểu đồ click 14 ngày, phân tích Hệ điều hành và Trình duyệt người dùng một cách trực quan nhất.</p>
                 </div>
-                <div class="flex-1 relative min-h-[240px]">
-                    <div class="absolute inset-0 bg-white rounded-3xl shadow-xl p-6 transform rotate-3 group-hover:rotate-0 transition-transform duration-700">
+                <div class="flex-1 w-full relative min-h-[240px]">
+                    <div class="absolute inset-0 mx-auto max-w-sm w-full bg-white rounded-3xl shadow-xl p-6 transform rotate-3 group-hover:rotate-0 transition-transform duration-700">
                         <div class="h-full flex flex-col">
                             <div class="flex items-center justify-between mb-6">
                                 <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Live Activity</span>
@@ -68,7 +68,7 @@
             </div>
 
             {{-- Card: QR Code --}}
-            <div class="bg-indigo-600 rounded-[40px] p-8 md:p-12 flex flex-col md:flex-row-reverse items-center justify-between gap-10 text-white group hover:shadow-2xl hover:shadow-indigo-200 transition-all duration-500">
+            <div class="bg-indigo-600 rounded-3xl md:rounded-[40px] p-6 md:p-12 flex flex-col md:flex-row-reverse items-center justify-between gap-10 text-white group hover:shadow-2xl hover:shadow-indigo-200 transition-all duration-500">
                 <div class="flex-1 space-y-6">
                     <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-white shadow-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -87,7 +87,7 @@
             </div>
 
             {{-- Card: Advanced Options --}}
-            <div class="bg-white rounded-[40px] p-8 md:p-12 border border-slate-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-10 group hover:border-brand-blue/30 transition-all duration-500">
+            <div class="bg-white rounded-3xl md:rounded-[40px] p-6 md:p-12 border border-slate-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-10 group hover:border-brand-blue/30 transition-all duration-500">
                 <div class="flex-1 space-y-6">
                     <div class="flex gap-2">
                          <div class="px-3 py-1 bg-amber-50 text-amber-600 text-[10px] font-black uppercase tracking-widest rounded-full">Premium</div>
@@ -117,7 +117,7 @@
             </div>
 
             {{-- Card: Custom Branding --}}
-            <div class="bg-brand-blue rounded-[40px] p-8 md:p-12 text-white relative overflow-hidden group hover:shadow-2xl hover:shadow-blue-200 transition-all duration-500">
+            <div class="bg-brand-blue rounded-3xl md:rounded-[40px] p-6 md:p-12 text-white relative overflow-hidden group hover:shadow-2xl hover:shadow-blue-200 transition-all duration-500">
                 <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
                 
                 <div class="relative z-10 flex flex-col md:flex-row gap-8 items-center">
