@@ -1,65 +1,78 @@
-# 🚀 LinkSnap v3.1 Premium - URL Shortener & Analytics
+# LinkSnap - URL Shortener & Analytics
 
-Hệ thống rút gọn liên kết hiện đại với trải nghiệm người dùng cao cấp và khả năng phân tích dữ liệu chuyên sâu.
+LinkSnap là công cụ rút gọn liên kết hiện đại, được xây dựng nhằm mục đích giúp người dùng dễ dàng quản lý, bảo mật và theo dõi hiệu năng của các liên kết trực tuyến. Hệ thống cung cấp các bộ công cụ phân tích dữ liệu chuyên sâu và các tùy chọn bảo mật nâng cao cho liên kết.
 
-**🌐 Live Demo:** [https://linksnap.free.laravel.cloud/](https://linksnap.free.laravel.cloud/)
+![Project Preview](public/screenshots/preview.png)
+
+
+## 🛠 Tech Stack
+
+Dự án được phát triển dựa trên các công nghệ mới nhất:
+- **Backend**: Laravel 13 (PHP 8.3+)
+- **Frontend**: Tailwind CSS v4, Vite, Vanilla JavaScript
+- **Database**: MySQL
+- **Charts**: Chart.js (Theo dõi dữ liệu trực quan)
+- **Integrations**: QR Server API (Tích hợp tạo mã QR)
+
+## ✨ Các tính năng nổi bật
+
+Dự án cung cấp một hệ sinh thái quản lý liên kết toàn diện, từ việc rút gọn đơn giản đến các công cụ phân tích dữ liệu chuyên sâu:
+
+### 🔗 Giải pháp Rút gọn Thông minh
+*   **Chuyển đổi tức thì**: Rút gọn URL chỉ với một cú click, tạo mã định danh ngắn gọn (6 ký tự).
+*   **Custom Snippets**: Tùy chỉnh mã rút gọn theo thương hiệu hoặc sở thích cá nhân (Dành cho Member).
+*   **Branding Control**: Thiết lập Tiêu đề và Mô tả riêng để cá nhân hóa liên kết khi chia sẻ.
+
+### 🛡️ Bảo mật & Kiểm soát Tuyệt đối
+*   **Bảo vệ bằng mật khẩu**: Kiểm soát quyền truy cập, chỉ những người có mật khẩu mới có thể xem nội dung gốc.
+*   **Hạn dùng linh hoạt**: Thiết lập thời gian hết hạn tự động cho link, giúp quản lý các chiến dịch ngắn hạn.
+*   **Giới hạn truy cập**: Tự động khóa liên kết sau khi đạt đủ số lượt click mong muốn.
+*   **Quản lý trạng thái**: Bật hoặc tạm dừng hoạt động của liên kết bất cứ lúc nào.
+
+### 📊 Phân tích & Thống kê Chuyên sâu
+*   **Dashboard trực quan**: Theo dõi biểu đồ tăng trưởng lượt tương tác trong 14 ngày gần nhất.
+*   **User Insights**: Phân tích chi tiết Hệ điều hành, Trình duyệt và thiết bị của người truy cập.
+*   **Tracking Logs**: Ghi lại chi tiết IP, User Agent và dòng thời gian thực cho mỗi lần click.
+*   **Unique Reach**: Hệ thống tự động phân biệt tổng lượt click và lượt khách truy cập thực tế (Unique Visitors).
+
+### 🎁 Tiện ích Nâng cao
+*   **Mã QR Generator**: Tự động tạo mã QR chất lượng cao cho mỗi link, hỗ trợ tải về để sử dụng trên các ấn phẩm truyền thông.
+*   **Social Preview**: Tùy chọn Thumbnail và Metadata giúp liên kết hiển thị bắt mắt trên Facebook, Zalo, Telegram.
+*   **Universal Management**: Công cụ tìm kiếm mạnh mẽ, hỗ trợ sửa URL gốc, xóa link hoặc làm sạch dữ liệu thống kê (Reset stats).
+
+
+## 🚀 Hướng dẫn cài đặt
+
+Để chạy dự án LinkSnap trên môi trường local, hãy thực hiện theo các bước sau:
+
+1. **Clone dự án:**
+   ```bash
+   git clone https://github.com/DuyPhatpeo/rutgonlink.git
+   cd rutgonlink
+   ```
+
+2. **Cài đặt các thư viện: (Backend & Frontend)**
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. **Cấu hình môi trường:**
+   - Tạo file `.env` từ file mẫu: `cp .env.example .env` (hoặc copy thủ công trên Windows).
+   - Cập nhật thông tin kết nối **MySQL** trong file `.env`.
+   - Tạo Key cho ứng dụng: `php artisan key:generate`.
+
+4. **Khởi tạo Database:**
+   ```bash
+   php artisan migrate
+   ```
+
+5. **Chạy ứng dụng:**
+   - Chạy đồng thời Server và Vite (Frontend):
+     ```bash
+     npm run dev
+     ```
+   - Hoặc chạy lẻ: `php artisan serve` và `npm run dev`.
 
 ---
-
-## ● Project Overview
-
-LinkSnap là giải pháp quản lý liên kết toàn diện, giúp biến các URL dài thành các mã ngắn gọn. Hệ thống tích hợp bộ công cụ phân tích thời gian thực để theo dõi hiệu quả click, đối tượng truy cập và xu hướng tăng trưởng.
-
-## ● Features Implemented
-
-- **Rút gọn thông minh**: Tạo link ngắn tức thì, hỗ trợ mã tùy chỉnh (Custom Alias) cho người dùng đã đăng nhập.
-- **Phân tích chuyên sâu (Deep Analytics)**:
-  - Biểu đồ tăng trưởng 14 ngày (Area Chart).
-  - Thống kê tỷ lệ Hệ điều hành (Windows, MacOS, Android, iOS...) và Trình duyệt.
-  - Chỉ số thời gian thực: Tổng click, Click trong ngày, Visitors duy nhất (IP).
-- **Quản lý Link nâng cao**: Tìm kiếm thời gian thực, xóa liên kết, cập nhật URL gốc và Reset thống kê.
-- **Mã QR thông minh**: Tự động tạo và hỗ trợ tải về mã QR cho mỗi liên kết.
-
-## ● Tech Stack
-
-- **Backend**: Laravel 11.x (PHP 8.2+).
-- **Frontend**: Tailwind CSS, Vanilla JavaScript (ES6+), Chart.js (Biểu đồ).
-- **Database**: MySQL / MariaDB.
-- **Integrations**: QR Server API.
-
-## ● Architecture Overview
-
-- **Mô hình**: MVC (Model-View-Controller) chuẩn Laravel.
-- **Presentation Layer**: Sử dụng Blade Components và Partials để tối ưu mã nguồn giao diện.
-
-## ● API Design
-
-| Method   | Endpoint                | Description                                  |
-| :------- | :---------------------- | :------------------------------------------- |
-| `POST`   | `/api/shorten`          | Tạo liên kết rút gọn mới                     |
-| `GET`    | `/api/stats`            | Lấy danh sách link (có hỗ trợ search)        |
-| `GET`    | `/api/logs`             | Lấy 15 nhật ký truy cập toàn cục gần nhất    |
-| `GET`    | `/api/chart`            | Dữ liệu biểu đồ & metric tổng quan Dashboard |
-| `GET`    | `/api/links/{id}`       | Lấy chi tiết thống kê JSON của 1 link        |
-| `PATCH`  | `/api/links/{id}`       | Cập nhật URL gốc của liên kết                |
-| `POST`   | `/api/links/{id}/reset` | Xóa sạch thống kê và nhật ký của link        |
-| `DELETE` | `/api/delete/{id}`      | Xóa vĩnh viễn liên kết                       |
-| `GET`    | `/{short_code}`         | Engine điều hướng (Redirect Service)         |
-
-## ● Data Model
-
-- **Users**: Lưu trữ thông tin định danh và tài khoản.
-- **Links**: Lưu URL gốc, mã rút gọn và quan hệ với người dùng.
-- **LinkLogs**: Lưu vết chi tiết mỗi lần click (IP, thiết bị, trình duyệt) gắn với Link.
-
-## ● How to Run
-
-1. **Clone Repo**: `https://github.com/DuyPhatpeo/rutgonlink.git`
-2. **Cài đặt**: `composer install`
-3. **Cấu hình**: Tạo `.env`, cập nhật thông tin Database và chạy `php artisan key:generate`.
-4. **Khởi tạo bảng**: `php artisan migrate`.
-5. **Chạy ứng dụng**: `php artisan serve`.
-
----
-
-\*© 2024 LinkSnap - Phát triển với sự tâm huyết bởi **Trần Duy Phát\***
+*Dự án được phát triển bởi **Trần Duy Phát***
