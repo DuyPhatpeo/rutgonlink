@@ -20,11 +20,11 @@
             </p>
         </div>
 
-        {{-- Bento Grid --}}
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        {{-- Bento Grid -> Stacked Rows --}}
+        <div class="flex flex-col gap-8">
             
-            {{-- Big Card: Analytics --}}
-            <div class="md:col-span-8 bg-slate-50 rounded-[40px] p-8 md:p-12 border border-slate-100 flex flex-col md:flex-row gap-10 overflow-hidden group hover:shadow-2xl hover:shadow-blue-100/50 transition-all duration-500">
+            {{-- Card: Analytics --}}
+            <div class="bg-slate-50 rounded-[40px] p-8 md:p-12 border border-slate-100 flex flex-col md:flex-row items-center gap-10 overflow-hidden group hover:shadow-2xl hover:shadow-blue-100/50 transition-all duration-500">
                 <div class="flex-1 space-y-6">
                     <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-brand-blue shadow-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -67,43 +67,57 @@
                 </div>
             </div>
 
-            {{-- Sidebar Card: QR Code --}}
-            <div class="md:col-span-4 bg-indigo-600 rounded-[40px] p-10 flex flex-col justify-between text-white group hover:shadow-2xl hover:shadow-indigo-200 transition-all duration-500">
-                <div class="space-y-4">
-                    <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-white">
+            {{-- Card: QR Code --}}
+            <div class="bg-indigo-600 rounded-[40px] p-8 md:p-12 flex flex-col md:flex-row-reverse items-center justify-between gap-10 text-white group hover:shadow-2xl hover:shadow-indigo-200 transition-all duration-500">
+                <div class="flex-1 space-y-6">
+                    <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-white shadow-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
                         </svg>
                     </div>
-                    <h3 class="font-vietnam text-2xl font-black leading-tight">Mã QR tự động & <br>Tùy chỉnh.</h3>
+                    <h3 class="font-vietnam text-2xl md:text-3xl font-black leading-tight">Mã QR tự động & <br>Tùy chỉnh.</h3>
+                    <p class="text-indigo-100 font-medium text-lg max-w-sm">Tự động tạo mã QR cho mỗi link. Lưu lại và chia sẻ tức thì lên in ấn hoặc mạng xã hội. Nhanh chóng và chuyên nghiệp.</p>
                 </div>
-                <div class="relative py-8 flex justify-center">
-                    <div class="w-32 h-32 bg-white p-3 rounded-2xl shadow-xl transform group-hover:scale-110 transition-transform duration-500">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=premium" class="w-full h-full opacity-90" alt="QR">
+                <div class="flex-1 w-full flex justify-center md:justify-start">
+                    <div class="w-48 h-48 md:w-64 md:h-64 bg-white p-4 rounded-3xl shadow-2xl transform group-hover:-rotate-3 group-hover:scale-105 transition-all duration-700 relative">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=premium" class="w-full h-full opacity-90 rounded-xl" alt="QR">
+                        <div class="absolute -bottom-4 -right-4 bg-brand-blue text-white text-[10px] uppercase font-black tracking-widest px-4 py-2 rounded-xl shadow-lg transform rotate-6">Ready to scan</div>
                     </div>
                 </div>
-                <p class="text-indigo-100 text-sm font-medium">Tự động tạo mã QR cho mỗi link. Lưu lại và chia sẻ tức thì lên in ấn hoặc mạng xã hội.</p>
             </div>
 
             {{-- Card: Advanced Options --}}
-            <div class="md:col-span-5 bg-white rounded-[40px] p-8 md:p-10 border border-slate-100 shadow-sm flex flex-col justify-between group hover:border-brand-blue/30 transition-all duration-500">
-                <div class="space-y-6">
+            <div class="bg-white rounded-[40px] p-8 md:p-12 border border-slate-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-10 group hover:border-brand-blue/30 transition-all duration-500">
+                <div class="flex-1 space-y-6">
                     <div class="flex gap-2">
                          <div class="px-3 py-1 bg-amber-50 text-amber-600 text-[10px] font-black uppercase tracking-widest rounded-full">Premium</div>
-                         <div class="px-3 py-1 bg-blue-50 text-brand-blue text-[10px] font-black uppercase tracking-widest rounded-full">New</div>
+                         <div class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-widest rounded-full">Security</div>
                     </div>
-                    <h3 class="font-vietnam text-2xl font-black text-slate-900 leading-tight">Mật khẩu & Hạn dùng.</h3>
-                    <p class="text-slate-500 font-medium">Bảo vệ liên kết của bạn bằng mật khẩu mạnh mẽ. Thiết lập ngày giờ hết hạn hoặc giới hạn tổng số lượt click để kiểm soát truy cập tuyệt đối.</p>
+                    <h3 class="font-vietnam text-2xl md:text-3xl font-black text-slate-900 leading-tight">Mật khẩu & Hạn dùng.</h3>
+                    <p class="text-slate-500 font-medium text-lg leading-relaxed max-w-sm">Bảo vệ liên kết của bạn bằng mật khẩu mạnh mẽ. Thiết lập ngày giờ hết hạn hoặc giới hạn tổng số lượt click để kiểm soát truy cập tuyệt đối.</p>
                 </div>
-                <div class="mt-8 flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg></div>
-                    <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
-                    <div class="h-px flex-1 bg-slate-100"></div>
+                <div class="flex-1 w-full bg-slate-50/50 p-8 rounded-3xl border border-slate-100 shadow-inner">
+                    <div class="flex flex-col gap-4 max-w-xs mx-auto">
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 transform group-hover:-translate-y-1 transition-transform">
+                            <div class="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center text-rose-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg></div>
+                            <div class="flex-1">
+                                <div class="h-2.5 w-1/2 bg-slate-200 rounded-full mb-2"></div>
+                                <div class="h-2 w-3/4 bg-slate-100 rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 transform group-hover:-translate-y-1 transition-transform delay-75">
+                            <div class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center text-amber-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                            <div class="flex-1">
+                                <div class="h-2.5 w-2/3 bg-slate-200 rounded-full mb-2"></div>
+                                <div class="h-2 w-1/2 bg-slate-100 rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             {{-- Card: Custom Branding --}}
-            <div class="md:col-span-7 bg-brand-blue rounded-[40px] p-8 md:p-12 text-white relative overflow-hidden group hover:shadow-2xl hover:shadow-blue-200 transition-all duration-500">
+            <div class="bg-brand-blue rounded-[40px] p-8 md:p-12 text-white relative overflow-hidden group hover:shadow-2xl hover:shadow-blue-200 transition-all duration-500">
                 <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
                 
                 <div class="relative z-10 flex flex-col md:flex-row gap-8 items-center">

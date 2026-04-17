@@ -60,7 +60,7 @@
             </div>
 
             {{-- Panel Tùy Chọn Nâng Cao (Ẩn định) --}}
-            <div id="advancedPanel" class="animate-in slide-in-from-top-4 duration-500 mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style="display: none;">
+            <div id="advancedPanel" class="animate-in slide-in-from-top-4 duration-500 mt-6 hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {{-- Bảo mật --}}
                 <div class="bg-white/60 p-6 rounded-3xl border border-white shadow-sm space-y-4">
                     <div class="flex items-center gap-2 mb-2">

@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     // New Management APIs
     Route::get('/api/links/{id}', [LinkController::class, 'detail']);
     Route::patch('/api/links/{id}', [LinkController::class, 'update']);
+    Route::patch('/api/links/{id}/toggle-status', [LinkController::class, 'toggleStatus']);
     Route::post('/api/links/{id}/reset', [LinkController::class, 'reset']);
 
     // Web Routes

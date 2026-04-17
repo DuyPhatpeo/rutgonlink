@@ -10,14 +10,19 @@
         <div class="bg-white/70 backdrop-blur-xl rounded-[40px] p-8 md:p-10 border border-white shadow-premium mb-10 flex flex-col md:flex-row md:items-center justify-between gap-10 animate-in fade-in slide-in-from-top-4 duration-1000">
             <div class="space-y-4">
                 <nav class="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">
-                    <a href="/" class="hover:text-brand-blue transition-colors">Dashboard</a>
+                    <a href="/" class="hover:text-brand-blue transition-colors">Trang chủ</a>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
-                    <a href="/links" class="hover:text-brand-blue transition-colors font-black">Links</a>
+                    <a href="/links" class="hover:text-brand-blue transition-colors font-black">Liên kết</a>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
-                    <span class="text-brand-blue/60 italic">Details</span>
+                    <span class="text-brand-blue/60 italic">Chi tiết</span>
                 </nav>
                 <div class="space-y-1">
-                    <h1 class="font-vietnam text-3xl md:text-5xl font-black text-slate-900 tracking-tight">Thống kê liên kết</h1>
+                    <div class="flex items-center gap-4">
+                        <h1 class="font-vietnam text-3xl md:text-5xl font-black text-slate-900 tracking-tight">Thống kê liên kết</h1>
+                        @if(!$link->is_active)
+                            <span class="px-3 py-1 bg-rose-50 border border-rose-200 text-rose-500 text-xs font-black uppercase tracking-widest rounded-xl shadow-sm">Đã khóa</span>
+                        @endif
+                    </div>
                     {{-- Short URL display --}}
                     <div class="flex items-center gap-3 pt-2">
                         <div class="px-4 py-2 bg-blue-50 rounded-2xl flex items-center gap-3 border border-blue-100/50 group hover:border-brand-blue/30 transition-all">
@@ -35,14 +40,27 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-3 shrink-0">
+            <div class="flex flex-wrap items-center gap-3 shrink-0">
+                <button onclick="LinkManager.toggleStatus('{{ $link->id }}')"
+                        class="flex items-center gap-2 px-6 py-4 mr-2 bg-white {{ $link->is_active ? 'text-slate-600' : 'text-rose-500 border-rose-100 bg-rose-50/50' }} font-vietnam font-black text-xs uppercase tracking-[0.2em] rounded-3xl border-2 border-slate-100 shadow-sm hover:border-brand-blue/30 hover:text-brand-blue transition-all active:scale-[0.98]">
+                    @if($link->is_active)
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                        Khóa
+                    @else
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" /></svg>
+                        Mở Khóa
+                    @endif
+                </button>
+                
+                <div class="hidden md:block w-px h-8 bg-slate-200 mr-2"></div>
+
                 <button onclick="LinkManager.showQR('{{ url($link->short_code) }}')"
-                        class="flex items-center gap-2 px-8 py-4 bg-white text-slate-600 font-vietnam font-black text-xs uppercase tracking-[0.2em] rounded-3xl border-2 border-slate-100 shadow-sm hover:border-brand-blue/30 hover:text-brand-blue transition-all active:scale-[0.98]">
+                        class="flex items-center gap-2 px-6 py-4 bg-white text-slate-600 font-vietnam font-black text-xs uppercase tracking-[0.2em] rounded-3xl border-2 border-slate-100 shadow-sm hover:border-brand-blue/30 hover:text-brand-blue transition-all active:scale-[0.98]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
-                    Mã QR
+                    QR
                 </button>
                 <button onclick="LinkManager.deleteLink('{{ $link->id }}')"
-                        class="flex items-center gap-2 px-8 py-4 bg-rose-50 text-rose-500 font-vietnam font-black text-xs uppercase tracking-[0.2em] rounded-3xl border-2 border-rose-100 hover:bg-rose-500 hover:text-white transition-all active:scale-[0.98]">
+                        class="flex items-center gap-2 px-6 py-4 bg-rose-50 text-rose-500 font-vietnam font-black text-xs uppercase tracking-[0.2em] rounded-3xl border-2 border-rose-100 hover:bg-rose-500 hover:text-white transition-all active:scale-[0.98]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                     Xoá
                 </button>
@@ -208,7 +226,7 @@
 
                         @if($link->title || $link->description)
                         <div class="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm lg:col-span-3 hover:shadow-md transition-all">
-                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg> Social Preview</p>
+                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg> Hiển thị trên mạng xã hội</p>
                             <div class="flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left">
                                 @if($link->thumbnail)
                                     <div class="shrink-0 p-1.5 bg-blue-50/50 rounded-3xl border border-blue-100 shadow-sm">
@@ -235,7 +253,7 @@
                         </div>
                         <div class="flex items-center gap-3 bg-blue-50/50 px-5 py-3 rounded-2xl border border-blue-100/30">
                             <span class="w-2.5 h-2.5 bg-brand-blue rounded-full shadow-[0_0_10px_rgba(37,99,235,0.4)] animate-pulse"></span>
-                            <span class="text-[11px] font-black uppercase tracking-widest text-brand-blue">Real-time Activity</span>
+                            <span class="text-[11px] font-black uppercase tracking-widest text-brand-blue">Cập nhật trực tiếp</span>
                         </div>
                     </div>
                     <div class="h-80 w-full">

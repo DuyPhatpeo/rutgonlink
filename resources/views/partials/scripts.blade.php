@@ -919,6 +919,33 @@
                 Toast.show(msg, 'error');
                 console.error('Delete error', e);
             }
+        },
+
+        async toggleStatus(id, btnElement = null) {
+            try {
+                const res = await Api.fetch(`api/links/${id}/toggle-status`, {
+                    method: 'PATCH'
+                });
+                if (res.success) {
+                    Toast.show(res.is_active ? 'Đã bật lại liên kết!' : 'Đã tạm khóa liên kết!', 'success');
+                    if (btnElement) {
+                        if (res.is_active) {
+                            btnElement.className = "p-2.5 rounded-xl bg-emerald-50 text-emerald-500 hover:bg-emerald-500 hover:text-white transition-all shadow-sm active:scale-90 mr-3";
+                            btnElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" /></svg>`;
+                            btnElement.title = "Đang hoạt động (Nhấn để khóa)";
+                        } else {
+                            btnElement.className = "p-2.5 rounded-xl bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white transition-all shadow-sm active:scale-90 mr-3";
+                            btnElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>`;
+                            btnElement.title = "Bị khóa (Nhấn để bật)";
+                        }
+                    } else {
+                        window.location.reload();
+                    }
+                }
+            } catch (e) {
+                Toast.show('Không thể thay đổi trạng thái lúc này.', 'error');
+                console.error('Toggle status error', e);
+            }
         }
     };
 

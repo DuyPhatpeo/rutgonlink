@@ -22,11 +22,13 @@ class Link extends Model
         'click_limit',
         'title',
         'description',
-        'thumbnail'
+        'thumbnail',
+        'is_active'
     ];
 
     protected $casts = [
         'expires_at' => 'datetime',
+        'is_active' => 'boolean',
     ];
 
     /**

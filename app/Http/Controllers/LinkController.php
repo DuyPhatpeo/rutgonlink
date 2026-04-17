@@ -98,6 +98,11 @@ class LinkController extends Controller
             return redirect('/')->with('error', "Xin lỗi, liên kết '{$short_code}' không tồn tại hoặc đã bị xóa.");
         }
 
+        // 0. Kiểm tra trạng thái kích hoạt
+        if (!$link->is_active) {
+            return redirect('/')->with('error', "Liên kết này hiện đang bị tạm khóa.");
+        }
+
         // 1. Kiểm tra thời gian hết hạn
         if ($link->expires_at && $link->expires_at->isPast()) {
             return redirect('/')->with('error', "Liên kết này đã hết hạn vào lúc " . $link->expires_at->format('H:i d/m/Y') . ".");
@@ -472,5 +477,15 @@ class LinkController extends Controller
         $link->logs()->delete();
         $link->update(['clicks' => 0]);
         return response()->json(['success' => true]);
+    }
+
+    /**
+     * API: Bật/Tắt trạng thái liên kết.
+     */
+    public function toggleStatus($id)
+    {
+        $link = Link::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $link->update(['is_active' => !$link->is_active]);
+        return response()->json(['success' => true, 'is_active' => $link->is_active]);
     }
 }

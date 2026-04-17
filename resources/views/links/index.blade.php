@@ -10,9 +10,9 @@
         <div class="bg-white/40 backdrop-blur-sm rounded-[32px] p-6 md:p-8 border border-white shadow-sm mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="space-y-2">
                 <nav class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                    <a href="/" class="hover:text-brand-blue transition-colors">Dashboard</a>
+                    <a href="/" class="hover:text-brand-blue transition-colors">Trang chủ</a>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
-                    <span class="text-slate-600">Danh sách liên kết</span>
+                    <span class="text-slate-600 font-black">Liên kết</span>
                 </nav>
                 <h1 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight">Danh sách liên kết</h1>
                 <p class="text-slate-500 font-medium italic">Quản lý và theo dõi hiệu quả các liên kết đã rút gọn.</p>
@@ -27,10 +27,7 @@
                         </svg>
                     </div>
                     <input type="text" name="search" id="searchInput" value="{{ request('search') }}" placeholder="Tìm kiếm link hoặc mã..." 
-                        class="w-full bg-white/80 border-2 border-slate-100 py-3.5 pl-14 pr-16 rounded-2xl outline-none focus:border-brand-blue/30 focus:shadow-xl focus:shadow-blue-100/50 transition-all font-bold text-slate-700 text-sm">
-                    <div class="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none hidden md:flex items-center">
-                        <span class="bg-slate-50 border border-slate-200/60 shadow-sm text-slate-400 font-bold text-[10px] px-2 py-1 rounded-lg uppercase tracking-widest leading-none">Ctrl K</span>
-                    </div>
+                        class="w-full bg-white/80 border-2 border-slate-100 py-3.5 pl-14 pr-6 rounded-2xl outline-none focus:border-brand-blue/30 focus:shadow-xl focus:shadow-blue-100/50 transition-all font-bold text-slate-700 text-sm">
                 </form>
             </div>
         </div>
@@ -78,6 +75,14 @@
                             </td>
                             <td class="px-8 py-6">
                                 <div class="flex items-center justify-end gap-2">
+                                    <button onclick="LinkManager.toggleStatus('{{ $link->id }}', this)" class="p-2.5 rounded-xl transition-all shadow-sm active:scale-90 mr-3 {{ $link->is_active ? 'bg-emerald-50 text-emerald-500 hover:bg-emerald-500 hover:text-white' : 'bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white' }}" title="{{ $link->is_active ? 'Đang hoạt động (Nhấn để khóa)' : 'Bị khóa (Nhấn để bật)' }}">
+                                        @if($link->is_active)
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" /></svg>
+                                        @else
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                                        @endif
+                                    </button>
+                                    <div class="w-px h-6 bg-slate-200 mr-1"></div>
                                     <a href="{{ route('links.show', $link->id) }}" class="p-2.5 rounded-xl bg-slate-100 text-slate-500 hover:bg-brand-blue hover:text-white transition-all shadow-sm active:scale-90" title="Thống kê">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                                     </a>
