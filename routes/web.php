@@ -14,6 +14,10 @@ Route::post('/api/register', [AuthController::class, 'register']);
 Route::post('/api/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/logout', [AuthController::class, 'logout']); // Backward compatibility
 
+// Google Social Login Routes
+Route::get('/auth/google', [\App\Http\Controllers\GoogleAuthController::class, 'redirect'])->name('google.login');
+Route::get('/auth/google/callback', [\App\Http\Controllers\GoogleAuthController::class, 'callback'])->name('google.callback');
+
 // Password Verification
 Route::post('/links/{id}/verify', [LinkController::class, 'verifyPassword'])->name('links.verify');
 
