@@ -9,16 +9,109 @@
     {{-- === LAYOUT CHO USER ĐÃ ĐĂNG NHẬP === --}}
     {{-- Viewport đầu tiên: Hero + Form + Widget biểu đồ --}}
     <div class="flex flex-col px-4 md:px-6 max-w-6xl mx-auto">
-        {{-- Hero compact --}}
-        <section class="animate-in fade-in duration-700 bg-white/40 backdrop-blur-sm rounded-[32px] p-6 md:p-8 border border-white shadow-sm mt-4 md:mt-8 mb-6">
-            <p class="text-base md:text-lg font-black tracking-tight text-slate-700 leading-tight">
-                <span class="bg-gradient-to-r from-brand-blue to-indigo-500 bg-clip-text text-transparent italic block md:inline mb-1 md:mb-0">Rút gọn link miễn phí.</span>
-                <span class="text-slate-400 font-semibold text-xs md:text-sm md:ml-2">Tạo link ngắn, truy cập tức thì.</span>
-            </p>
+        <section class="animate-in fade-in duration-700 mt-4 md:mt-8 mb-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="px-2.5 py-1 bg-blue-50 text-brand-blue text-[9px] font-black uppercase tracking-[0.2em] rounded-full border border-blue-100/50">Dashboard</span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight italic leading-none">
+                        Chào mừng trở lại, <span class="bg-gradient-to-r from-brand-blue to-indigo-600 bg-clip-text text-transparent">{{ auth()->user()->name }}!</span> 
+                    </h2>
+                    <p class="text-slate-400 font-bold text-xs md:text-sm uppercase tracking-widest mt-2 opacity-80">Hôm nay bạn muốn rút gọn link hay quản lý trang Bio?</p>
+                </div>
+                
+                <div class="hidden md:flex items-center gap-3 bg-white p-2 rounded-2xl border border-slate-100 shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    </div>
+                    <div class="pr-4">
+                        <p class="text-[9px] font-black text-slate-300 uppercase tracking-widest">Ngày hiện tại</p>
+                        <p class="text-[11px] font-black text-slate-700 italic">{{ now()->translatedFormat('d F, Y') }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- Feature Spotlight: Bio Pages --}}
+        <section class="mb-8 animate-in slide-in-from-bottom-5 duration-700 delay-75">
+            <div class="relative bg-gradient-to-br from-indigo-600 via-indigo-700 to-blue-800 rounded-[40px] p-8 md:p-10 overflow-hidden shadow-2xl shadow-indigo-200">
+                {{-- Decorative background elements --}}
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-12 translate-x-12 blur-3xl"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-indigo-400/20 rounded-full translate-y-12 -translate-x-12 blur-2xl"></div>
+                
+                <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="max-w-xl text-center md:text-left">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full border border-white/30 mb-6">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span class="text-[10px] font-black text-white uppercase tracking-[0.2em]">Tính năng mới</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight italic mb-4 leading-tight">
+                            Nâng tầm thương hiệu <br class="hidden md:block"> với Bio Pages
+                        </h2>
+                        <p class="text-indigo-100 font-bold text-sm md:text-base leading-relaxed opacity-90 mb-8 px-4 md:px-0">
+                            Tạo một trang Profile duy nhất cho toàn bộ mạng xã hội của bạn. Tiết kiệm không gian, chuyên nghiệp hóa thương hiệu và theo dõi lượt click hiệu quả.
+                        </p>
+                        <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                            <a href="{{ route('bio.index') }}" class="bg-white text-indigo-700 font-black px-8 py-4 rounded-2xl shadow-xl transition-all hover:scale-105 active:scale-95 text-xs uppercase tracking-widest flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" /></svg>
+                                Bắt đầu ngay
+                            </a>
+                            <button onclick="window.scrollTo({top: 1500, behavior: 'smooth'})" class="bg-indigo-500/30 text-white border border-white/20 backdrop-blur-sm font-black px-8 py-4 rounded-2xl transition-all hover:bg-indigo-500/50 text-xs uppercase tracking-widest">
+                                Xem chi tiết
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden lg:block w-72 h-72 relative">
+                        <div class="absolute inset-0 bg-white/5 rounded-full border-4 border-white/10 animate-ping duration-[3000ms]"></div>
+                        <div class="absolute inset-4 bg-white/10 rounded-full border border-white/20 flex items-center justify-center">
+                            <div class="bg-white w-48 h-48 rounded-[44px] shadow-2xl flex flex-col items-center justify-center p-6 -rotate-6 transition-transform hover:rotate-0 duration-500">
+                                <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                                </div>
+                                <div class="space-y-2 w-full">
+                                    <div class="h-2 w-full bg-slate-100 rounded-full"></div>
+                                    <div class="h-2 w-2/3 bg-slate-50 rounded-full"></div>
+                                    <div class="h-2 w-1/2 bg-blue-50 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- Quick Intro / Action Cards --}}
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 animate-in slide-in-from-bottom-4 duration-700 delay-200">
+            <div class="group bg-white p-6 rounded-[32px] border border-slate-100 shadow-sm hover:shadow-xl hover:border-brand-blue/20 transition-all cursor-pointer">
+                <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-brand-blue mb-4 transition-transform group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.826a4 4 0 015.656 0l4 4a4 4 0 01-5.656 5.656l-1.1-1.1" /></svg>
+                </div>
+                <h3 class="text-sm font-black text-slate-800 uppercase tracking-widest mb-1 italic">Rút gọn link</h3>
+                <p class="text-[10px] text-slate-400 font-bold leading-relaxed">Tạo liên kết ngắn chuyên nghiệp với mã QR và bảo mật nâng cao.</p>
+            </div>
+
+            <a href="{{ route('bio.index') }}" class="group bg-white p-6 rounded-[32px] border border-slate-100 shadow-sm hover:shadow-xl hover:border-indigo-100 transition-all">
+                <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-500 mb-4 transition-transform group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </div>
+                <h3 class="text-sm font-black text-slate-800 uppercase tracking-widest mb-1 italic">Bio Pages</h3>
+                <p class="text-[10px] text-slate-400 font-bold leading-relaxed">Xây dựng trang landing page cá nhân tối ưu cho Instagram, TikTok.</p>
+            </a>
+
+            <div class="group bg-white p-6 rounded-[32px] border border-slate-100 shadow-sm hover:shadow-xl hover:border-emerald-100 transition-all opacity-80 cursor-not-allowed">
+                <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-500 mb-4 transition-transform group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                </div>
+                <h3 class="text-sm font-black text-slate-800 uppercase tracking-widest mb-1 italic">Insights</h3>
+                <p class="text-[10px] text-slate-400 font-bold leading-relaxed">Phân tích chi tiết lượt truy cập, thiết bị và địa lý (Sắp ra mắt).</p>
+            </div>
         </section>
 
         {{-- Khu vực Nhập Link & Kết quả --}}
-        <section class="max-w-6xl w-full animate-in slide-in-from-bottom-6 duration-700 delay-100 pb-6 md:pb-10 relative">
+        <section class="max-w-6xl w-full animate-in slide-in-from-bottom-6 duration-700 delay-200 pb-6 md:pb-10 relative">
             {{-- Form chính luôn chiếm 100% --}}
             <div class="bg-white rounded-[32px] md:rounded-[44px] p-2 md:p-3 shadow-xl shadow-blue-100/60 border border-white/80 relative overflow-hidden group">
                 <div class="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity"></div>
@@ -144,9 +237,79 @@
         @include('components.stats')
 
         {{-- Bento Features --}}
-        <div class="relative w-full pt-16 pb-24">
+        <div class="relative w-full pt-16 pb-12">
             @include('components.features')
         </div>
+
+        {{-- NEW: Giới thiệu Bio Pages cho Khách (Moved Down & Fixed Clipping) --}}
+        <section class="py-24 relative bg-white">
+            {{-- Decorative accent --}}
+            <div class="absolute top-1/2 left-0 w-64 h-64 bg-blue-50/50 rounded-full blur-3xl -translate-y-1/2 -translate-x-32"></div>
+            
+            <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+                <div class="order-2 lg:order-1 flex justify-center">
+                    {{-- Mockup Bio Page --}}
+                    <div class="relative group">
+                        <div class="absolute inset-0 bg-blue-400 blur-2xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                        <div class="relative w-[280px] md:w-[320px] bg-slate-900 rounded-[50px] p-2.5 shadow-2xl border-4 border-slate-800 transform -rotate-3 hover:rotate-0 transition-transform duration-700">
+                             <div class="bg-white h-[560px] md:h-[620px] rounded-[42px] overflow-hidden relative p-6 flex flex-col items-center">
+                                 <div class="w-16 h-16 rounded-full bg-slate-100 border border-slate-200 mb-4 overflow-hidden">
+                                     <img src="{{ asset('logo.png') }}" class="w-full h-full object-cover grayscale opacity-50">
+                                 </div>
+                                 <div class="h-4 w-32 bg-slate-100 rounded-full mb-2"></div>
+                                 <div class="h-2 w-24 bg-slate-50 rounded-full mb-10"></div>
+                                 
+                                 <div class="w-full space-y-3">
+                                     @foreach([1, 2, 3, 4] as $i)
+                                     <div class="w-full h-12 bg-slate-50 rounded-2xl border border-slate-100 flex items-center px-4 gap-3">
+                                         <div class="w-6 h-6 bg-slate-100 rounded-lg"></div>
+                                         <div class="h-2 flex-1 bg-slate-200 rounded-full opacity-50"></div>
+                                     </div>
+                                     @endforeach
+                                 </div>
+                                 
+                                 <div class="mt-auto h-1 w-20 bg-slate-100 rounded-full mb-2"></div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-1 lg:order-2 space-y-8 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full border border-blue-100">
+                        <span class="text-[10px] font-black text-brand-blue uppercase tracking-widest italic">Link-in-Bio</span>
+                    </div>
+                    <h2 class="font-vietnam text-3xl md:text-5xl font-black text-slate-800 tracking-tight leading-[1.2] italic py-2">
+                        Trang cá nhân <br class="hidden md:block"> <span class="bg-gradient-to-r from-brand-blue to-indigo-600 bg-clip-text text-transparent border-b-[6px] border-blue-100/50 pb-1 pr-2">toàn diện nhất</span>
+                    </h2>
+                    <p class="text-slate-500 font-bold text-sm md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
+                        Thay thế những đường dẫn dài và thô kệch bằng một trang Bio Profile chuyên nghiệp. Hiển thị toàn bộ mạng xã hội của bạn ngay trên một liên kết duy nhất.
+                    </p>
+                    <ul class="space-y-4 inline-block text-left">
+                        <li class="flex items-center gap-3 text-slate-600 font-bold text-sm">
+                            <div class="w-6 h-6 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
+                            </div>
+                            Tự động nhận diện Icon mạng xã hội
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-600 font-bold text-sm">
+                            <div class="w-6 h-6 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
+                            </div>
+                            Chỉnh sửa & Xem trực tiếp (Live Preview)
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-600 font-bold text-sm">
+                            <div class="w-6 h-6 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
+                            </div>
+                            Giao diện Glassmorphism đỉnh cao
+                        </li>
+                    </ul>
+                    <div class="pt-4">
+                        <button onclick="Modal.open('registerModal')" class="bg-brand-blue hover:bg-blue-700 text-white font-black px-10 py-5 rounded-3xl shadow-xl shadow-blue-100 transition-all hover:scale-105 active:scale-95 text-sm uppercase tracking-widest italic">Khám phá ngay &rarr;</button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     {{-- Câu hỏi thường gặp --}}

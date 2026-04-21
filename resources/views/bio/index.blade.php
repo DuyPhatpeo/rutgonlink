@@ -6,15 +6,23 @@
 <div class="bg-slate-50 min-h-screen pt-8 pb-32">
     <div class="max-w-6xl mx-auto px-4 md:px-6">
         {{-- Header --}}
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8 md:mb-12">
-            <div class="space-y-1">
-                <h1 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight italic">Bio Pages</h1>
-                <p class="text-slate-500 font-medium uppercase tracking-widest text-[10px] md:text-xs">Tạo trang landing page chuyên nghiệp cho mạng xã hội của bạn.</p>
+        <div class="mb-10 animate-in fade-in duration-700">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="px-2.5 py-1 bg-indigo-50 text-indigo-600 text-[9px] font-black uppercase tracking-[0.2em] rounded-full border border-indigo-100/50">My Bio Pages</span>
+                <div class="h-px w-8 bg-indigo-100"></div>
             </div>
-            <button onclick="BioManager.openCreateModal()" class="w-full sm:w-auto flex items-center justify-center gap-3 bg-brand-blue hover:bg-blue-700 text-white font-black px-10 py-5 rounded-3xl shadow-xl shadow-blue-100 transition-all active:scale-95 text-xs uppercase tracking-[0.2em] whitespace-nowrap">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" /></svg>
-                Tạo Bio Page mới
-            </button>
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div class="space-y-1">
+                    <h1 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight italic leading-none">
+                        Chào <span class="text-indigo-600">{{ auth()->user()->name }}</span>,
+                    </h1>
+                    <p class="text-slate-400 font-bold text-xs md:text-sm uppercase tracking-widest mt-3 opacity-80">Đây là các trang Profile chuyên nghiệp của bạn.</p>
+                </div>
+                <button onclick="BioManager.openCreateModal()" class="w-full md:w-auto flex items-center justify-center gap-3 bg-brand-blue hover:bg-blue-700 text-white font-black px-10 py-5 rounded-3xl shadow-xl shadow-blue-100 transition-all active:scale-95 text-xs uppercase tracking-[0.2em] whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" /></svg>
+                    Tạo Bio Page mới
+                </button>
+            </div>
         </div>
 
         {{-- List --}}
@@ -97,11 +105,12 @@
                 </div>
                 <div>
                     <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">Đường dẫn Custom (Slug)</label>
-                    <div class="relative group">
-                        <span id="slugPrefix" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs hidden sm:block">{{ request()->getHttpHost() }}/b/</span>
-                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs sm:hidden">/b/</span>
+                    <div class="flex items-stretch bg-slate-50 border border-slate-100 rounded-2xl overflow-hidden focus-within:border-brand-blue focus-within:bg-white transition-all shadow-sm">
+                        <div class="px-4 bg-slate-100/50 border-r border-slate-100 flex items-center justify-center">
+                            <span class="text-slate-400 font-bold text-[10px] sm:text-xs whitespace-nowrap">{{ request()->getHttpHost() }}/b/</span>
+                        </div>
                         <input type="text" name="slug" placeholder="username" required
-                            class="w-full bg-slate-50 border border-slate-100 py-4 pl-12 sm:pl-36 pr-6 rounded-2xl text-slate-800 font-bold focus:bg-white focus:border-brand-blue outline-none transition-all">
+                            class="flex-1 bg-transparent py-4 px-4 text-slate-800 font-bold outline-none placeholder:text-slate-300">
                     </div>
                 </div>
                 <div>

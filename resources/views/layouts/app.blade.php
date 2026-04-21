@@ -140,27 +140,20 @@
         @yield('content')
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-200/60 bg-white">
-        <div class="max-w-6xl mx-auto px-4 md:px-6 py-12 flex flex-col items-center gap-6 animate-in fade-in duration-1000 delay-500">
-            {{-- Logo Mark --}}
-            <div class="flex items-center gap-2.5 cursor-pointer select-none group" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                <img src="{{ asset('logo.png') }}" alt="LinkSnap" class="w-9 h-9 rounded-xl shadow-md shadow-blue-200 transition-all active:scale-90">
-                <span class="text-xl font-black text-slate-800 tracking-tight">LinkSnap</span>
+    <!-- Simplified Footer -->
+    <footer class="border-t border-slate-100 bg-white py-8 relative z-10">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <img src="{{ asset('logo.png') }}" alt="LinkSnap" class="w-6 h-6 rounded-lg shadow-sm">
+                <span class="text-xs font-black text-slate-800 tracking-tight italic">LinkSnap</span>
+                <span class="text-slate-300 mx-2 hidden sm:inline">|</span>
+                <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest hidden sm:inline-block">Dịch vụ rút gọn link & Bio Page</p>
             </div>
             
-            {{-- Copyright --}}
-            <div class="flex flex-col items-center gap-2">
-                <p class="text-slate-400 text-xs font-semibold">
-                    Hệ thống rút gọn link minh bạch, nhanh chóng và miễn phí.
-                </p>
-                <div class="flex items-center gap-2 text-slate-300 text-[10px] font-black uppercase tracking-[0.2em] mt-2">
-                    <span>&copy; {{ date('Y') }}</span>
-                    <span class="w-1 h-1 bg-slate-200 rounded-full"></span>
-                    <span>LinkSnap</span>
-                    <span class="w-1 h-1 bg-slate-200 rounded-full"></span>
-                    <span>Tác giả: Trần Duy Phát</span>
-                </div>
+            <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+                <p class="text-slate-400 text-[9px] font-black uppercase tracking-[0.2em]">Tác giả: Trần Duy Phát</p>
+                <div class="h-1 w-1 bg-slate-200 rounded-full"></div>
+                <p class="text-slate-400 text-[9px] font-black uppercase tracking-[0.2em]">&copy; {{ date('Y') }}</p>
             </div>
         </div>
     </footer>
