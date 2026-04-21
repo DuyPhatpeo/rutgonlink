@@ -123,6 +123,42 @@
             this.open(newId);
         }
     };
+    
+    /**
+     * Navbar Management
+     */
+    const Navbar = {
+        openMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const backdrop = document.getElementById('mobileMenuBackdrop');
+            const drawer = document.getElementById('mobileMenuDrawer');
+            
+            if (!menu || !backdrop || !drawer) return;
+
+            menu.classList.remove('invisible', 'pointer-events-none');
+            setTimeout(() => {
+                backdrop.classList.add('opacity-100');
+                drawer.classList.remove('translate-x-full');
+            }, 10);
+            
+            document.body.style.overflow = 'hidden';
+        },
+        closeMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const backdrop = document.getElementById('mobileMenuBackdrop');
+            const drawer = document.getElementById('mobileMenuDrawer');
+            
+            if (!menu || !backdrop || !drawer) return;
+
+            backdrop.classList.remove('opacity-100');
+            drawer.classList.add('translate-x-full');
+            
+            setTimeout(() => {
+                menu.classList.add('invisible', 'pointer-events-none');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+    };
 
     // Khởi tạo tính năng đóng khi nhấn nền
     Modal.init();

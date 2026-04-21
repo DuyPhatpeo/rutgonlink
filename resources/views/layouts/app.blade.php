@@ -90,15 +90,19 @@
                         <kbd class="text-[9px] font-black font-sans text-slate-400 bg-white border border-slate-200 px-1.5 py-0.5 rounded-md shadow-sm group-hover:text-brand-blue group-hover:border-blue-200 transition-all tracking-widest">K</kbd>
                     </div>
                 </button>
+
                 @auth
-                    <div class="flex items-center gap-4 md:gap-8 mr-2 md:mr-6 border-r border-slate-200/60 pr-4 md:pr-8">
-                        <a href="/" class="text-[10px] md:text-xs font-black {{ Request::is('/') ? 'text-brand-blue' : 'text-slate-400' }} hover:text-brand-blue transition-all uppercase tracking-widest">Links</a>
-                        <a href="/bio" class="text-[10px] md:text-xs font-black {{ Request::is('bio*') ? 'text-brand-blue' : 'text-slate-400' }} hover:text-brand-blue transition-all uppercase tracking-widest">Bio Pages</a>
+                    {{-- Desktop Links --}}
+                    <div class="hidden md:flex items-center gap-8 mr-6 border-r border-slate-200/60 pr-8">
+                        <a href="/" class="text-xs font-black {{ Request::is('/') ? 'text-brand-blue' : 'text-slate-400' }} hover:text-brand-blue transition-all uppercase tracking-widest">Links</a>
+                        <a href="/bio" class="text-xs font-black {{ Request::is('bio*') ? 'text-brand-blue' : 'text-slate-400' }} hover:text-brand-blue transition-all uppercase tracking-widest">Bio Pages</a>
                     </div>
-                    <div class="flex items-center gap-3 md:gap-4">
+                    
+                    {{-- Desktop User Info & Logout --}}
+                    <div class="hidden md:flex items-center gap-4">
                         <div class="flex flex-col items-end">
                             <span class="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">Owner</span>
-                            <span class="text-slate-800 font-bold text-sm hidden md:inline leading-none">{{ Auth::user()->name }}</span>
+                            <span class="text-slate-800 font-bold text-sm leading-none">{{ Auth::user()->name }}</span>
                         </div>
                         <form action="/api/logout" method="POST" class="inline">
                             @csrf
@@ -107,10 +111,18 @@
                             </button>
                         </form>
                     </div>
+
+                    {{-- Mobile Hamburger --}}
+                    <button onclick="Navbar.openMobileMenu()" class="flex md:hidden p-2 text-slate-400 hover:text-brand-blue hover:bg-blue-50 rounded-xl transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
                 @else
+                    {{-- Guest Buttons --}}
                     <div class="flex items-center gap-2 md:gap-4">
                         <button onclick="Modal.open('loginModal')" class="text-[10px] md:text-xs font-black bg-brand-blue text-white px-4 md:px-6 py-2.5 md:py-3 rounded-2xl shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all uppercase tracking-widest">Đăng nhập</button>
-                        <button onclick="Modal.open('registerModal')" class="text-[10px] md:text-xs font-black text-slate-400 hover:text-slate-600 px-3 md:px-4 py-2.5 md:py-3 transition-all uppercase tracking-widest">Đăng ký</button>
+                        <button onclick="Modal.open('registerModal')" class="hidden sm:block text-[10px] md:text-xs font-black text-slate-400 hover:text-slate-600 px-3 md:px-4 py-2.5 md:py-3 transition-all uppercase tracking-widest">Đăng ký</button>
                     </div>
                 @endauth
             </div>
@@ -148,6 +160,70 @@
             </div>
         </div>
     </footer>
+    
+    @auth
+    {{-- Mobile Menu Drawer --}}
+    <div id="mobileMenu" class="fixed inset-0 z-[100] invisible pointer-events-none transition-all duration-300">
+        <!-- Backdrop -->
+        <div id="mobileMenuBackdrop" onclick="Navbar.closeMobileMenu()" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+        
+        <!-- Drawer Content -->
+        <div id="mobileMenuDrawer" class="absolute top-0 right-0 h-full w-80 bg-white shadow-2xl translate-x-full transition-transform duration-300 ease-out flex flex-col">
+            {{-- Header --}}
+            <div class="flex items-center justify-between p-6 border-b border-slate-100">
+                <span class="text-xl font-black text-brand-blue tracking-tighter italic">LinkSnap Menu</span>
+                <button onclick="Navbar.closeMobileMenu()" class="p-2 text-slate-400 hover:text-rose-500 bg-slate-50 rounded-xl transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+
+            {{-- Profile Section --}}
+            <div class="p-6 bg-slate-50/50 border-b border-slate-100">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-blue flex items-center justify-center text-white text-xl font-black shadow-lg shadow-blue-100">
+                        {{ substr(Auth::user()->name, 0, 1) }}
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">Authenticated as</p>
+                        <p class="text-slate-800 font-bold text-base leading-none">{{ Auth::user()->name }}</p>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Links --}}
+            <div class="flex-1 p-6 space-y-4">
+                <p class="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em] mb-4">Navigation</p>
+                <a href="/" class="flex items-center justify-between px-5 py-4 rounded-3xl {{ Request::is('/') ? 'bg-brand-blue text-white shadow-lg shadow-blue-100' : 'bg-white text-slate-600 border border-slate-100' }} transition-all group active:scale-95">
+                    <div class="flex items-center gap-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.826a4 4 0 015.656 0l4 4a4 4 0 01-5.656 5.656l-1.1-1.1" /></svg>
+                        <span class="font-black text-xs uppercase tracking-widest">My Links</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
+                </a>
+
+                <a href="/bio" class="flex items-center justify-between px-5 py-4 rounded-3xl {{ Request::is('bio*') ? 'bg-brand-blue text-white shadow-lg shadow-blue-100' : 'bg-white text-slate-600 border border-slate-100' }} transition-all group active:scale-95">
+                    <div class="flex items-center gap-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                        <span class="font-black text-xs uppercase tracking-widest">Bio Pages</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
+                </a>
+            </div>
+
+            {{-- Footer / Logout --}}
+            <div class="p-6 border-t border-slate-100">
+                <form action="/api/logout" method="POST">
+                    @csrf
+                    <button type="submit" class="w-full flex items-center justify-center gap-3 px-6 py-4 bg-rose-50 text-rose-500 rounded-3xl font-black text-xs uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-all shadow-sm active:scale-95">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                        Đăng xuất tài khoản
+                    </button>
+                </form>
+                <p class="text-center text-slate-300 text-[9px] font-bold uppercase tracking-[0.3em] mt-6 italic">Built with snap &bull; v1.2</p>
+            </div>
+        </div>
+    </div>
+    @endauth
 
     <!-- Modals -->
     @include('partials.modals')
