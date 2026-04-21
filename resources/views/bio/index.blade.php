@@ -29,8 +29,12 @@
                 </div>
                 
                 <div class="flex items-center gap-4 mb-6">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-brand-blue shadow-inner">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-center text-brand-blue shadow-inner overflow-hidden shrink-0">
+                        @if($page->profile_image)
+                            <img src="{{ $page->profile_image }}" class="w-full h-full object-cover">
+                        @else
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                        @endif
                     </div>
                     <div>
                         <h3 class="font-black text-slate-800 text-lg leading-tight">{{ $page->title }}</h3>
