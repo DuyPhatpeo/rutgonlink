@@ -229,7 +229,7 @@
                             <div class="flex items-center justify-between p-6 bg-slate-50 rounded-[32px] border border-slate-100">
                                 <div>
                                     <h4 class="font-black text-slate-800 text-sm italic">Đường dẫn Bio</h4>
-                                    <p class="text-brand-blue font-bold text-[11px] mt-1 tracking-tight">linksnap.com/b/{{ $bioPage->slug }}</p>
+                                    <p class="text-brand-blue font-bold text-[11px] mt-1 tracking-tight">{{ request()->getHttpHost() }}/b/{{ $bioPage->slug }}</p>
                                 </div>
                                 <button onclick="Editor.copyBioLink(this)" 
                                     data-url="{{ route('bio.show', $bioPage->slug) }}"
