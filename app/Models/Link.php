@@ -10,6 +10,7 @@ class Link extends Model
 
 
 
+    use \Illuminate\Database\Eloquent\Concerns\HasUlids;
     use HasFactory;
 
     protected $fillable = [
@@ -31,6 +32,16 @@ class Link extends Model
         'expires_at' => 'datetime',
         'is_active' => 'boolean',
     ];
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'short_code';
+    }
 
     /**
      * Get the workspace that owns the link.
@@ -55,5 +66,6 @@ class Link extends Model
     {
         return $this->belongsTo(User::class);
     }
+
 }
 

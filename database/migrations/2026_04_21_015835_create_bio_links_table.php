@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bio_links', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('bio_page_id')->constrained()->onDelete('cascade');
+            $table->ulid('id')->primary();
+            $table->foreignUlid('bio_page_id')->constrained()->onDelete('cascade');
             $table->string('label');
             $table->string('url');
             $table->string('icon')->nullable();

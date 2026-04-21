@@ -41,7 +41,7 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-3 shrink-0">
-                <button onclick="LinkManager.toggleStatus('{{ $link->id }}')"
+                <button onclick="LinkManager.toggleStatus('{{ $link->short_code }}')"
                         class="flex items-center gap-2 px-6 py-4 mr-2 bg-white {{ $link->is_active ? 'text-slate-600' : 'text-rose-500 border-rose-100 bg-rose-50/50' }} font-vietnam font-black text-xs uppercase tracking-[0.2em] rounded-3xl border-2 border-slate-100 shadow-sm hover:border-brand-blue/30 hover:text-brand-blue transition-all active:scale-[0.98]">
                     @if($link->is_active)
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
@@ -59,7 +59,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
                     QR
                 </button>
-                <button onclick="LinkManager.deleteLink('{{ $link->id }}')"
+                <button onclick="LinkManager.deleteLink('{{ $link->short_code }}')"
                         class="flex items-center gap-2 px-6 py-4 bg-rose-50 text-rose-500 font-vietnam font-black text-xs uppercase tracking-[0.2em] rounded-3xl border-2 border-rose-100 hover:bg-rose-500 hover:text-white transition-all active:scale-[0.98]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                     Xoá
@@ -172,7 +172,7 @@
                         <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm transition-all hover:shadow-md">
                             <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-1.5 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> Mật khẩu</p>
                             <div class="flex items-center gap-2">
-                                <form id="pwdUpdateForm" onsubmit="LinkApi.updatePwd(event, '{{ $link->id }}')" class="relative flex-1 group" style="display:none;">
+                                <form id="pwdUpdateForm" onsubmit="LinkApi.updatePwd(event, '{{ $link->short_code }}')" class="relative flex-1 group" style="display:none;">
                                     @csrf
                                     <input type="text" name="password" required class="w-full bg-white border-2 border-brand-blue rounded-xl text-xs font-bold text-slate-700 px-4 py-2 pr-16 focus:ring-0 focus:outline-none transition-all">
                                     <button type="submit" class="absolute right-1 top-1 bottom-1 px-3 bg-brand-blue text-white text-[10px] font-black uppercase rounded-lg hover:bg-blue-600 transition-all">Lưu</button>
@@ -191,7 +191,7 @@
                         @else
                         <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-center gap-1 transition-all hover:shadow-md">
                             <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-1.5 mb-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> Mật khẩu</p>
-                            <form id="pwdUpdateForm" onsubmit="LinkApi.updatePwd(event, '{{ $link->id }}')" class="relative flex-1 group">
+                            <form id="pwdUpdateForm" onsubmit="LinkApi.updatePwd(event, '{{ $link->short_code }}')" class="relative flex-1 group">
                                 @csrf
                                 <input type="text" name="password" placeholder="Chưa thiết lập..." class="w-full bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold text-slate-700 px-4 py-2 pr-14 focus:ring-0 focus:outline-none focus:border-brand-blue focus:shadow-inner transition-all">
                                 <button type="submit" class="absolute right-1.5 top-1.5 bottom-1.5 px-3 bg-brand-blue text-white text-[9px] font-black uppercase rounded-lg hover:bg-blue-600 transition-all opacity-0 group-focus-within:opacity-100 hover:opacity-100">Lưu</button>
@@ -402,7 +402,7 @@ const LinkApi = {
                 body.password = pwdValue;
             }
 
-            await Api.fetch(`/api/links/${linkId}`, {
+            await Api.fetch(`/api/links/${linkId}`, { // Actually linkId here should be short_code if we want true consistency, but let's see where it's called.
                 method: 'PATCH',
                 body: body
             });

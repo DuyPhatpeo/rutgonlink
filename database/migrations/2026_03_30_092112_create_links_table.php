@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('links', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->ulid('id')->primary();
+            $table->foreignUlid('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->text('original_url');
             $table->string('short_code')->unique();
             $table->integer('clicks')->default(0);

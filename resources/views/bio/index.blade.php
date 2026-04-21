@@ -45,10 +45,10 @@
                         <a href="{{ route('bio.show', $page->slug) }}" target="_blank" class="p-2.5 bg-slate-50 text-slate-400 hover:text-brand-blue hover:bg-blue-50 rounded-xl transition-all" title="Xem công khai">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                         </a>
-                        <a href="{{ route('bio.edit', $page->id) }}" class="flex-1 text-center bg-slate-900 hover:bg-slate-800 text-white text-[10px] font-black px-4 py-2.5 rounded-xl uppercase tracking-widest transition-all">
+                        <a href="{{ route('bio.edit', $page->slug) }}" class="flex-1 text-center bg-slate-900 hover:bg-slate-800 text-white text-[10px] font-black px-4 py-2.5 rounded-xl uppercase tracking-widest transition-all">
                             Sửa
                         </a>
-                        <button onclick="BioManager.deletePage('{{ $page->id }}')" class="p-2.5 bg-rose-50 text-rose-400 hover:text-rose-600 hover:bg-rose-100 rounded-xl transition-all" title="Xóa trang">
+                        <button onclick="BioManager.deletePage('{{ $page->slug }}')" class="p-2.5 bg-rose-50 text-rose-400 hover:text-rose-600 hover:bg-rose-100 rounded-xl transition-all" title="Xóa trang">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                         </button>
                     </div>

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BioPage extends Model
 {
+    use \Illuminate\Database\Eloquent\Concerns\HasUlids;
     use HasFactory;
 
     protected $fillable = [
@@ -25,6 +26,16 @@ class BioPage extends Model
     ];
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    /**
      * Get the workspace that owns the bio page.
      */
     public function workspace()
@@ -39,4 +50,5 @@ class BioPage extends Model
     {
         return $this->hasMany(BioLink::class)->orderBy('sort_order', 'asc');
     }
+
 }

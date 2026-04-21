@@ -20,7 +20,7 @@ Route::get('/auth/google', [\App\Http\Controllers\GoogleAuthController::class, '
 Route::get('/auth/google/callback', [\App\Http\Controllers\GoogleAuthController::class, 'callback'])->name('google.callback');
 
 // Password Verification
-Route::post('/links/{id}/verify', [LinkController::class, 'verifyPassword'])->name('links.verify');
+Route::post('/links/{link}/verify', [LinkController::class, 'verifyPassword'])->name('links.verify');
 
 
 
@@ -30,27 +30,27 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/stats', [LinkController::class, 'stats']);
     Route::get('/api/logs', [LinkController::class, 'logs']);
     Route::get('/api/chart', [LinkController::class, 'chart']);
-    Route::delete('/api/delete/{id}', [LinkController::class, 'delete']);
+    Route::delete('/api/delete/{link}', [LinkController::class, 'delete']);
     
     // New Management APIs
-    Route::get('/api/links/{id}', [LinkController::class, 'detail']);
-    Route::patch('/api/links/{id}', [LinkController::class, 'update']);
-    Route::patch('/api/links/{id}/toggle-status', [LinkController::class, 'toggleStatus']);
-    Route::post('/api/links/{id}/reset', [LinkController::class, 'reset']);
+    Route::get('/api/links/{link}', [LinkController::class, 'detail']);
+    Route::patch('/api/links/{link}', [LinkController::class, 'update']);
+    Route::patch('/api/links/{link}/toggle-status', [LinkController::class, 'toggleStatus']);
+    Route::post('/api/links/{link}/reset', [LinkController::class, 'reset']);
 
     // Web Routes
     Route::get('/links', [LinkController::class, 'index'])->name('links.index');
-    Route::get('/links/{id}', [LinkController::class, 'show'])->name('links.show');
+    Route::get('/links/{link}', [LinkController::class, 'show'])->name('links.show');
 
     // Bio Page Routes
     Route::get('/bio', [BioController::class, 'index'])->name('bio.index');
     Route::get('/bio/create', [BioController::class, 'create'])->name('bio.create');
     Route::post('/api/bio', [BioController::class, 'store'])->name('bio.store');
-    Route::get('/bio/{id}/edit', [BioController::class, 'edit'])->name('bio.edit');
-    Route::patch('/api/bio/{id}', [BioController::class, 'update'])->name('bio.update');
-    Route::delete('/api/bio/{id}', [BioController::class, 'destroy'])->name('bio.destroy');
-    Route::post('/api/bio/{id}/links', [BioController::class, 'addLink'])->name('bio.links.add');
-    Route::post('/api/bio/{id}/reorder', [BioController::class, 'reorderLinks'])->name('bio.links.reorder');
+    Route::get('/bio/{bioPage}/edit', [BioController::class, 'edit'])->name('bio.edit');
+    Route::patch('/api/bio/{bioPage}', [BioController::class, 'update'])->name('bio.update');
+    Route::delete('/api/bio/{bioPage}', [BioController::class, 'destroy'])->name('bio.destroy');
+    Route::post('/api/bio/{bioPage}/links', [BioController::class, 'addLink'])->name('bio.links.add');
+    Route::post('/api/bio/{bioPage}/reorder', [BioController::class, 'reorderLinks'])->name('bio.links.reorder');
     Route::patch('/api/bio/links/{link_id}', [BioController::class, 'updateLink'])->name('bio.links.update');
     Route::delete('/api/bio/links/{link_id}', [BioController::class, 'destroyLink'])->name('bio.links.destroy');
 });

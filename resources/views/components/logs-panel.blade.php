@@ -8,7 +8,7 @@
         </h3>
     </div>
 
-    <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+    <div class="bg-white rounded-3xl shadow-sm border border-slate-100">
         <div id="logsBody">
             {{-- Skeleton loading rows --}}
             <div class="animate-pulse">

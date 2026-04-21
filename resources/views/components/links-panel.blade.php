@@ -26,7 +26,7 @@
             class="w-full bg-white shadow-sm border border-slate-200 rounded-2xl py-2.5 pl-11 pr-4 text-[12px] font-bold text-slate-600 outline-none focus:border-brand-blue focus:ring-4 focus:ring-blue-50 transition-all placeholder:text-slate-300">
     </div>
 
-    <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+    <div class="bg-white rounded-3xl shadow-sm border border-slate-100">
         <div id="statsBody">
             {{-- Skeleton loading rows --}}
             <div class="animate-pulse">

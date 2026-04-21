@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('links', function (Blueprint $table) {
-            $table->foreignId('workspace_id')->nullable()->after('user_id')->constrained()->onDelete('cascade');
+            $table->foreignUlid('workspace_id')->nullable()->after('user_id')->constrained()->onDelete('cascade');
         });
     }
 

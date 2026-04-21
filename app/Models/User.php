@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Support\Str;
 
 #[Fillable(['name', 'email', 'password', 'google_id'])]
@@ -17,7 +18,7 @@ use Illuminate\Support\Str;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasUlids;
 
     /**
      * Create a personal workspace for the user.
@@ -54,7 +55,8 @@ class User extends Authenticatable
     public function workspaces()
     {
         return $this->belongsToMany(Workspace::class, 'workspace_user')
-                    ->withPivot('role')
+                    ->using(WorkspaceUser::class)
+                    ->withPivot('id', 'role')
                     ->withTimestamps();
     }
 

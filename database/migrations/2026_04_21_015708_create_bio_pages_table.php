@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bio_pages', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('workspace_id')->constrained()->onDelete('cascade');
+            $table->ulid('id')->primary();
+            $table->foreignUlid('workspace_id')->constrained()->onDelete('cascade');
             $table->string('slug')->unique();
             $table->string('title')->nullable();
             $table->text('bio')->nullable();

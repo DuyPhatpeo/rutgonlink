@@ -531,7 +531,7 @@
                                 
                                 <div id="${menuId}" class="absolute right-0 top-1/2 -translate-y-1/2 mt-8 md:mt-10 w-40 md:w-48 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 hidden z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
                                     <div class="p-1.5 space-y-0.5">
-                                        <a href="/links/${link.id}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[10px] font-black text-slate-600 hover:bg-slate-50 hover:text-brand-blue transition-all uppercase tracking-widest text-left">
+                                        <a href="/links/${link.short_code}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[10px] font-black text-slate-600 hover:bg-slate-50 hover:text-brand-blue transition-all uppercase tracking-widest text-left">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                                             Thống kê
                                         </a>
@@ -543,7 +543,7 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
                                             Mã QR
                                         </button>
-                                        <button onclick="LinkManager.deleteLink('${link.id}')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[10px] font-black text-rose-500 hover:bg-rose-50 transition-all uppercase tracking-widest text-left">
+                                        <button onclick="LinkManager.deleteLink('${link.short_code}')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[10px] font-black text-rose-500 hover:bg-rose-50 transition-all uppercase tracking-widest text-left">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                                             Xoá link
                                         </button>
@@ -902,10 +902,10 @@
             if (iconEl) iconEl.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />';
         },
 
-        async deleteLink(id) {
+        async deleteLink(shortCode) {
             if (!confirm('Xác nhận tiêu hủy liên kết này?')) return;
             try {
-                const res = await Api.fetch(`api/delete/${id}`, {
+                const res = await Api.fetch(`api/delete/${shortCode}`, {
                     method: 'DELETE'
                 });
                 if (res.success) {
@@ -921,9 +921,9 @@
             }
         },
 
-        async toggleStatus(id, btnElement = null) {
+        async toggleStatus(shortCode, btnElement = null) {
             try {
-                const res = await Api.fetch(`api/links/${id}/toggle-status`, {
+                const res = await Api.fetch(`api/links/${shortCode}/toggle-status`, {
                     method: 'PATCH'
                 });
                 if (res.success) {

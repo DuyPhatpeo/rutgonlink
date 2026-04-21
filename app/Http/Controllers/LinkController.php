@@ -140,10 +140,8 @@ class LinkController extends Controller
     /**
      * Xác thực mật khẩu link.
      */
-    public function verifyPassword(Request $request, $id)
+    public function verifyPassword(Request $request, Link $link)
     {
-        $link = Link::findOrFail($id);
-
         try {
             $decrypted = \Illuminate\Support\Facades\Crypt::decryptString($link->password);
             if ($request->password !== $decrypted) {
@@ -310,13 +308,13 @@ class LinkController extends Controller
     /**
      * Xóa link.
      */
-    public function delete($id)
+    public function delete(Link $link)
     {
-        try {
-            $link = Link::where('id', $id)
-                ->where('user_id', Auth::id())
-                ->firstOrFail();
+        if ($link->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
 
+        try {
             // Xóa logs trước để tránh lỗi khóa ngoại (nếu onDelete cascade chưa thiết lập)
             $link->logs()->delete();
             $link->delete();
@@ -350,11 +348,11 @@ class LinkController extends Controller
     /**
      * Chi tiết thống kê một liên kết (View).
      */
-    public function show($id)
+    public function show(Link $link)
     {
-        $link = Link::where('id', $id)
-            ->where('user_id', Auth::id())
-            ->firstOrFail();
+        if ($link->user_id !== Auth::id()) {
+            abort(403);
+        }
 
         // Thống kê click theo ngày (14 ngày gần nhất)
         $dailyClicks = [];
@@ -407,9 +405,11 @@ class LinkController extends Controller
     /**
      * API: Chi tiết thống kê của một liên kết (JSON).
      */
-    public function detail($id)
+    public function detail(Link $link)
     {
-        $link = Link::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        if ($link->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
 
         $allLogs = LinkLog::where('link_id', $link->id)->get();
         $clicksToday = $allLogs->filter(fn($l) => $l->created_at->isToday())->count();
@@ -436,8 +436,12 @@ class LinkController extends Controller
     /**
      * API: Cập nhật URL gốc.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Link $link)
     {
+        if ($link->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
         $rules = [
             'url' => 'sometimes|required|url',
             'password' => 'nullable|string|min:4',
@@ -449,8 +453,6 @@ class LinkController extends Controller
             'thumbnail' => 'nullable|url'
         ];
         $request->validate($rules);
-
-        $link = Link::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
 
         $data = $request->only(['url', 'expires_at', 'click_limit', 'title', 'description', 'thumbnail']);
         if (isset($data['url'])) {
@@ -471,9 +473,12 @@ class LinkController extends Controller
     /**
      * API: Reset thống kê.
      */
-    public function reset($id)
+    public function reset(Link $link)
     {
-        $link = Link::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        if ($link->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
         $link->logs()->delete();
         $link->update(['clicks' => 0]);
         return response()->json(['success' => true]);
@@ -482,9 +487,12 @@ class LinkController extends Controller
     /**
      * API: Bật/Tắt trạng thái liên kết.
      */
-    public function toggleStatus($id)
+    public function toggleStatus(Link $link)
     {
-        $link = Link::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        if ($link->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
         $link->update(['is_active' => !$link->is_active]);
         return response()->json(['success' => true, 'is_active' => $link->is_active]);
     }

@@ -372,7 +372,7 @@
  * Separated to avoid IDE parsing issues with Blade tags inside JS objects
  */
 const CONFIG = {
-    bioPageId: "{{ $bioPage->id }}",
+    bioPageId: "{{ $bioPage->slug }}",
     avatarPlaceholder: "{{ asset('avatar-placeholder.png') }}",
     csrfToken: "{{ csrf_token() }}",
     indexRoute: "{{ route('bio.index') }}"

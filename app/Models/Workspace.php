@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Workspace extends Model
 {
+    use \Illuminate\Database\Eloquent\Concerns\HasUlids;
     use HasFactory;
 
     protected $fillable = [
@@ -35,7 +36,8 @@ class Workspace extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'workspace_user')
-                    ->withPivot('role')
+                    ->using(WorkspaceUser::class)
+                    ->withPivot('id', 'role')
                     ->withTimestamps();
     }
 

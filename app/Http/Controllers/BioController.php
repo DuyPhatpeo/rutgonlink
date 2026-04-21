@@ -66,16 +66,16 @@ class BioController extends Controller
 
         return response()->json([
             'message' => 'Tạo Bio Page thành công!',
-            'redirect' => route('bio.edit', $bioPage->id)
+            'redirect' => route('bio.edit', $bioPage->slug)
         ]);
     }
 
     /**
      * Trang chỉnh sửa Bio Page (vừa sửa info, vừa sửa link).
      */
-    public function edit($id)
+    public function edit(BioPage $bioPage)
     {
-        $bioPage = BioPage::with('links')->findOrFail($id);
+        $bioPage->load('links');
         
         // Check ownership
         if ($bioPage->workspace->owner_id !== Auth::id()) {
@@ -88,10 +88,8 @@ class BioController extends Controller
     /**
      * Cập nhật thông tin Bio Page.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, BioPage $bioPage)
     {
-        $bioPage = BioPage::findOrFail($id);
-        
         if ($bioPage->workspace->owner_id !== Auth::id()) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
@@ -126,10 +124,8 @@ class BioController extends Controller
     /**
      * Thêm link vào Bio Page.
      */
-    public function addLink(Request $request, $id)
+    public function addLink(Request $request, BioPage $bioPage)
     {
-        $bioPage = BioPage::findOrFail($id);
-        
         if ($bioPage->workspace->owner_id !== Auth::id()) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
@@ -182,10 +178,8 @@ class BioController extends Controller
     /**
      * Sắp xếp lại thứ tự link.
      */
-    public function reorderLinks(Request $request, $id)
+    public function reorderLinks(Request $request, BioPage $bioPage)
     {
-        $bioPage = BioPage::findOrFail($id);
-        
         if ($bioPage->workspace->owner_id !== Auth::id()) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
@@ -243,10 +237,8 @@ class BioController extends Controller
     /**
      * Xóa Bio Page.
      */
-    public function destroy($id)
+    public function destroy(BioPage $bioPage)
     {
-        $bioPage = BioPage::findOrFail($id);
-        
         if ($bioPage->workspace->owner_id !== Auth::id()) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
