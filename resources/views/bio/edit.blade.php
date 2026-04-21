@@ -6,34 +6,44 @@
 <div class="bg-[#F8F9FB] min-h-screen">
     {{-- Top Navigation Bar --}}
     <div class="bg-white border-b border-slate-100 sticky top-0 z-30">
-        <div class="max-w-7xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-6">
-                <a href="{{ route('bio.index') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 hover:bg-slate-100 rounded-xl text-slate-400 hover:text-slate-900 transition-all border border-slate-100 group">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 md:gap-6 min-w-0">
+                <a href="{{ route('bio.index') }}" class="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-slate-50 hover:bg-slate-100 rounded-xl text-slate-400 hover:text-slate-900 transition-all border border-slate-100 group shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:-translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" /></svg>
                 </a>
-                <div class="h-8 w-px bg-slate-100"></div>
-                <div>
-                    <h1 class="text-lg font-black text-slate-800 tracking-tight italic">{{ $bioPage->title }}</h1>
-                    <div class="flex items-center gap-2 mt-0.5">
+                <div class="h-8 w-px bg-slate-100 shrink-0"></div>
+                <div class="min-w-0">
+                    <h1 class="text-base md:text-lg font-black text-slate-800 tracking-tight italic truncate">{{ $bioPage->title }}</h1>
+                    <div class="hidden sm:flex items-center gap-2 mt-0.5">
                         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                         <p class="text-slate-400 font-bold uppercase tracking-widest text-[9px]">Biên tập viên trực tiếp</p>
                     </div>
                 </div>
             </div>
 
-            {{-- Tabs Control --}}
-            <div class="hidden md:flex items-center bg-slate-50 p-1.5 rounded-2xl border border-slate-100">
+            {{-- Tabs Control (Desktop only) --}}
+            <div class="hidden md:flex items-center bg-slate-50 p-1.5 rounded-2xl border border-slate-100 shrink-0">
                 <button onclick="Editor.setTab('links')" id="tab-btn-links" class="tab-btn active px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">Liên kết</button>
                 <button onclick="Editor.setTab('appearance')" id="tab-btn-appearance" class="tab-btn px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all text-slate-400 hover:text-slate-600">Giao diện</button>
                 <button onclick="Editor.setTab('settings')" id="tab-btn-settings" class="tab-btn px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all text-slate-400 hover:text-slate-600">Cài đặt</button>
             </div>
 
-            <div class="flex items-center gap-4">
-                <a href="{{ route('bio.show', $bioPage->slug) }}" target="_blank" class="flex items-center gap-2 text-slate-500 hover:text-brand-blue font-black text-[10px] uppercase tracking-widest px-4 py-2 hover:bg-blue-50 rounded-xl transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                    Xem trang
+            <div class="flex items-center gap-2 shrink-0">
+                {{-- View button: icon-only on mobile, full on desktop --}}
+                <a href="{{ route('bio.show', $bioPage->slug) }}" target="_blank" class="flex items-center gap-2 text-slate-500 hover:text-brand-blue font-black text-[10px] uppercase tracking-widest px-3 md:px-4 py-2 hover:bg-blue-50 rounded-xl transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    <span class="hidden md:inline">Xem trang</span>
                 </a>
             </div>
+        </div>
+    </div>
+
+    {{-- Mobile Tab Bar --}}
+    <div class="md:hidden sticky top-16 z-20 bg-white border-b border-slate-100 px-4 py-2">
+        <div class="flex items-center bg-slate-50 p-1 rounded-2xl border border-slate-100">
+            <button onclick="Editor.setTab('links')" id="tab-btn-links-mobile" class="mobile-tab-btn flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all bg-white text-slate-800 shadow-sm">Liên kết</button>
+            <button onclick="Editor.setTab('appearance')" id="tab-btn-appearance-mobile" class="mobile-tab-btn flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all text-slate-400">Giao diện</button>
+            <button onclick="Editor.setTab('settings')" id="tab-btn-settings-mobile" class="mobile-tab-btn flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all text-slate-400">Cài đặt</button>
         </div>
     </div>
 
@@ -310,7 +320,7 @@
 </style>
 
 {{-- Modal Thêm/Sửa Link (Redesigned) --}}
-<div id="linkModal" class="fixed inset-0 z-[100] hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm">
+<div id="linkModal" onclick="if(event.target===this) Editor.closeLinkModal()" class="fixed inset-0 z-[100] hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm">
     <div class="flex min-h-full items-center justify-center p-4">
         <div class="relative w-full max-w-xl bg-white rounded-[44px] shadow-2xl p-8 md:p-12 animate-in zoom-in-95 duration-300">
             <button onclick="Editor.closeLinkModal()" class="absolute top-10 right-10 text-slate-300 hover:text-slate-900 transition-colors bg-slate-50 w-10 h-10 rounded-full flex items-center justify-center">
@@ -425,21 +435,35 @@ const Editor = {
     },
 
     setTab(tab) {
-        document.querySelectorAll(".tab-btn").forEach(btn => {
-            btn.classList.remove("active", "bg-white", "shadow-sm", "text-slate-900");
+        // Reset all tab buttons (desktop and mobile)
+        document.querySelectorAll(".tab-btn, .mobile-tab-btn").forEach(btn => {
+            btn.classList.remove("active", "bg-white", "shadow-sm", "text-slate-900", "text-slate-800");
             btn.classList.add("text-slate-400");
         });
         document.querySelectorAll(".tab-content").forEach(content => content.classList.add("hidden"));
 
+        // Activate desktop tab button
         const targetBtn = document.getElementById(`tab-btn-${tab}`);
-        const targetContent = document.getElementById(`tab-${tab}`);
-        
         if (targetBtn) {
             targetBtn.classList.add("active", "bg-white", "shadow-sm", "text-slate-900");
             targetBtn.classList.remove("text-slate-400");
         }
+
+        // Activate mobile tab button
+        const targetMobileBtn = document.getElementById(`tab-btn-${tab}-mobile`);
+        if (targetMobileBtn) {
+            targetMobileBtn.classList.add("bg-white", "shadow-sm", "text-slate-800");
+            targetMobileBtn.classList.remove("text-slate-400");
+        }
+
+        const targetContent = document.getElementById(`tab-${tab}`);
         if (targetContent) {
             targetContent.classList.remove("hidden");
+        }
+
+        // Scroll to top of content on mobile
+        if (window.innerWidth < 768) {
+            window.scrollTo({ top: 100, behavior: 'smooth' });
         }
     },
 
@@ -508,38 +532,40 @@ const Editor = {
     },
 
     async deleteLink(id) {
-        if (!confirm("Bạn có chắc chắn muốn xóa liên kết này?")) return;
-        try {
-            const response = await fetch(`/api/bio/links/${id}`, {
-                method: "DELETE",
-                headers: { "X-CSRF-TOKEN": CONFIG.csrfToken }
-            });
-            if (response.ok) {
-                Toast.show("Đã xóa liên kết!", "success");
-                location.reload();
+        Confirm.show("Bạn có chắc chắn muốn xóa liên kết này?", async () => {
+            try {
+                const response = await fetch(`/api/bio/links/${id}`, {
+                    method: "DELETE",
+                    headers: { "X-CSRF-TOKEN": CONFIG.csrfToken }
+                });
+                if (response.ok) {
+                    Toast.show("Đã xóa liên kết!", "success");
+                    location.reload();
+                }
+            } catch (err) { 
+                console.error(err);
+                Toast.show("Lỗi xóa link.", "error"); 
             }
-        } catch (err) { 
-            console.error(err);
-            Toast.show("Lỗi xóa link.", "error"); 
-        }
+        }, { title: "Xác nhận xóa liên kết?" });
     },
 
     async deleteBio() {
-        if (!confirm("Hành động này không thể hoàn tác! Bạn có thực sự muốn xóa Bio Page này?")) return;
-        try {
-            const response = await fetch(`/api/bio/${CONFIG.bioPageId}`, {
-                method: "DELETE",
-                headers: { "X-CSRF-TOKEN": CONFIG.csrfToken }
-            });
-            const result = await response.json();
-            if (response.ok) {
-                Toast.show(result.message, "success");
-                window.location.href = CONFIG.indexRoute;
+        Confirm.show("Hành động này không thể hoàn tác! Bạn có thực sự muốn xóa Bio Page này?", async () => {
+            try {
+                const response = await fetch(`/api/bio/${CONFIG.bioPageId}`, {
+                    method: "DELETE",
+                    headers: { "X-CSRF-TOKEN": CONFIG.csrfToken }
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    Toast.show(result.message, "success");
+                    window.location.href = CONFIG.indexRoute;
+                }
+            } catch (err) { 
+                console.error(err);
+                Toast.show("Lỗi xóa Bio Page.", "error"); 
             }
-        } catch (err) { 
-            console.error(err);
-            Toast.show("Lỗi xóa Bio Page.", "error"); 
-        }
+        }, { title: "Xác nhận xóa Bio?" });
     },
 
     refreshPreview() {
@@ -552,9 +578,16 @@ const Editor = {
     async saveInfo(e) {
         e.preventDefault();
         const form = e.target;
+        const btn = form.querySelector('button[type="submit"]');
+        const originalText = btn.innerText;
+
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
+
         try {
+            btn.disabled = true;
+            btn.innerText = "ĐANG LƯU...";
+
             const response = await fetch(`/api/bio/${CONFIG.bioPageId}`, {
                 method: "PATCH",
                 headers: { 
@@ -577,12 +610,18 @@ const Editor = {
         } catch (err) {
             console.error(err);
             Toast.show("Lỗi kết nối máy chủ", "error");
+        } finally {
+            btn.disabled = false;
+            btn.innerText = originalText;
         }
     },
 
     async saveLink(e) {
         e.preventDefault();
         const form = e.target;
+        const btn = form.querySelector('button[type="submit"]');
+        const originalText = btn.innerText;
+
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
         
@@ -595,6 +634,9 @@ const Editor = {
         const method = linkId ? "PATCH" : "POST";
         
         try {
+            btn.disabled = true;
+            btn.innerText = "ĐANG XỬ LÝ...";
+
             const response = await fetch(url, {
                 method: method,
                 headers: { 
@@ -619,6 +661,9 @@ const Editor = {
         } catch (err) {
             console.error(err);
             Toast.show("Lỗi kết nối máy chủ", "error");
+        } finally {
+            btn.disabled = false;
+            btn.innerText = originalText;
         }
     },
 

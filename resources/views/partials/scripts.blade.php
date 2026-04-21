@@ -247,9 +247,6 @@
         }
     };
 
-    /**
-     * Bộ hiển thị thông báo góc dưới màn hình (Toast)
-     */
     const Toast = {
         show(message, type = 'info') {
             // Xóa toast cũ nếu có
@@ -285,6 +282,54 @@
                 toast.classList.add('translate-y-10', 'opacity-0');
                 setTimeout(() => toast.remove(), 300);
             }, 3000);
+        }
+    };
+
+    /**
+     * Bộ chọn xác nhận (Custom Confirm Modal)
+     */
+    const Confirm = {
+        show(message, onConfirm, options = {}) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 z-[200] flex items-center justify-center p-4 animate-in fade-in duration-300';
+            modal.innerHTML = `
+                <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"></div>
+                <div class="bg-white rounded-[40px] p-8 md:p-10 w-full max-w-sm shadow-2xl relative animate-in zoom-in-95 duration-300 text-center">
+                    <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center text-rose-500 mx-auto mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-black text-slate-800 tracking-tight mb-2 uppercase italic">${options.title || 'Xác nhận xóa?'}</h3>
+                    <p class="text-slate-500 font-medium text-sm mb-8">${message}</p>
+                    <div class="flex flex-col gap-3">
+                        <button id="confirmBtn" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-black py-4 rounded-2xl shadow-xl shadow-rose-100 transition-all active:scale-95 uppercase tracking-widest text-xs">
+                            ${options.confirmText || 'Xác nhận xóa'}
+                        </button>
+                        <button id="cancelBtn" class="w-full bg-slate-50 hover:bg-slate-100 text-slate-400 font-black py-4 rounded-2xl transition-all uppercase tracking-widest text-xs">
+                            ${options.cancelText || 'Hủy bỏ'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+
+            const close = () => {
+                modal.classList.add('fade-out');
+                modal.querySelector('div:last-child').classList.add('zoom-out');
+                setTimeout(() => {
+                    modal.remove();
+                    document.body.style.overflow = '';
+                }, 300);
+            };
+
+            modal.querySelector('#confirmBtn').onclick = () => {
+                onConfirm();
+                close();
+            };
+            modal.querySelector('#cancelBtn').onclick = close;
+            modal.onclick = (e) => { if(e.target === modal.querySelector('.absolute')) close(); };
         }
     };
 
@@ -939,22 +984,23 @@
         },
 
         async deleteLink(shortCode) {
-            if (!confirm('Xác nhận tiêu hủy liên kết này?')) return;
-            try {
-                const res = await Api.fetch(`api/delete/${shortCode}`, {
-                    method: 'DELETE'
-                });
-                if (res.success) {
-                    Toast.show('Liên kết đã bị tiêu hủy', 'success');
-                    this.loadStats();
-                    this.loadLogs();
-                    this.loadChart();
+            Confirm.show('Liên kết này sẽ bị tiêu hủy vĩnh viễn và không thể khôi phục.', async () => {
+                try {
+                    const res = await Api.fetch(`api/delete/${shortCode}`, {
+                        method: 'DELETE'
+                    });
+                    if (res.success) {
+                        Toast.show('Liên kết đã bị tiêu hủy', 'success');
+                        this.loadStats();
+                        this.loadLogs();
+                        this.loadChart();
+                    }
+                } catch (err) {
+                    const msg = err.data?.error || err.data?.message || 'Không thể xóa liên kết này. Vui lòng thử lại.';
+                    Toast.show(msg, 'error');
+                    console.error('Delete error', err);
                 }
-            } catch (e) {
-                const msg = e.data?.error || e.data?.message || 'Không thể xóa liên kết này. Vui lòng thử lại.';
-                Toast.show(msg, 'error');
-                console.error('Delete error', e);
-            }
+            }, { title: 'Tiêu hủy liên kết?' });
         },
 
         async toggleStatus(shortCode, btnElement = null) {
