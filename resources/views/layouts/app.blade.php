@@ -18,6 +18,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    {{-- High-Quality Logo Favicon --}}
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
     <script>
         tailwind.config = {
             theme: {
@@ -77,7 +80,10 @@
     <!-- Thanh điều hướng (Navbar) -->
     <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-sm transition-all duration-300">
         <nav class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center transition-all">
-            <div class="text-2xl md:text-3xl font-black text-brand-blue tracking-tighter select-none cursor-pointer hover:opacity-80 active:scale-95 transition-all" onclick="window.location.assign('/')">LinkSnap</div>
+            <div class="flex items-center gap-3 select-none cursor-pointer group active:scale-95 transition-all" onclick="window.location.assign('/')">
+                <img src="{{ asset('logo.png') }}" alt="LinkSnap Logo" class="w-10 h-10 rounded-xl shadow-lg shadow-blue-100 group-hover:shadow-blue-200 transition-all">
+                <span class="text-2xl md:text-3xl font-black text-slate-800 tracking-tighter italic">LinkSnap</span>
+            </div>
             <div class="flex items-center gap-2 md:gap-6">
                 <!-- Nút Gọi ý Ctrl K (toàn cục) -->
                 <button onclick="window.globalActionShortcut && window.globalActionShortcut()" class="hidden md:flex items-center justify-between w-56 lg:w-64 px-3.5 py-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 rounded-2xl text-slate-400 transition-all shadow-sm group active:scale-[0.98]" title="Rút gọn link nhanh">
@@ -138,10 +144,8 @@
     <footer class="border-t border-slate-200/60 bg-white">
         <div class="max-w-6xl mx-auto px-4 md:px-6 py-12 flex flex-col items-center gap-6 animate-in fade-in duration-1000 delay-500">
             {{-- Logo Mark --}}
-            <div class="flex items-center gap-2 cursor-pointer select-none" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-blue to-indigo-500 flex items-center justify-center text-white font-black text-lg shadow-md shadow-blue-200">
-                    L
-                </div>
+            <div class="flex items-center gap-2.5 cursor-pointer select-none group" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <img src="{{ asset('logo.png') }}" alt="LinkSnap" class="w-9 h-9 rounded-xl shadow-md shadow-blue-200 transition-all active:scale-90">
                 <span class="text-xl font-black text-slate-800 tracking-tight">LinkSnap</span>
             </div>
             
@@ -171,7 +175,10 @@
         <div id="mobileMenuDrawer" class="absolute top-0 right-0 h-full w-80 bg-white shadow-2xl translate-x-full transition-transform duration-300 ease-out flex flex-col">
             {{-- Header --}}
             <div class="flex items-center justify-between p-6 border-b border-slate-100">
-                <span class="text-xl font-black text-brand-blue tracking-tighter italic">LinkSnap Menu</span>
+            <div class="flex items-center gap-3">
+                <img src="{{ asset('logo.png') }}" alt="Logo" class="w-9 h-9 rounded-xl shadow-lg shadow-blue-100">
+                <span class="text-xl font-black text-slate-800 tracking-tighter italic">LinkSnap Menu</span>
+            </div>
                 <button onclick="Navbar.closeMobileMenu()" class="p-2 text-slate-400 hover:text-rose-500 bg-slate-50 rounded-xl transition-all">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>

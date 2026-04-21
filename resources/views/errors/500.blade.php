@@ -48,7 +48,7 @@
         {{-- Big Title --}}
         <div class="relative mb-10">
             <h1 class="text-9xl font-black text-slate-100 select-none tracking-tighter opacity-70 absolute left-1/2 -translate-x-1/2 -top-10">500</h1>
-            <h2 class="text-4xl md:text-5xl font-black text-slate-800 tracking-tight relative z-10 italic">
+            <h2 class="text-4xl md:text-5xl font-black text-slate-800 tracking-tight relative z-10 italic pt-6">
                 Máy chủ <br> <span class="text-brand-blue">đang mệt.</span>
             </h2>
         </div>

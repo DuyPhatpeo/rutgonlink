@@ -4,6 +4,12 @@
     {{-- Hero Text --}}
     <section class="relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000">
         <div class="max-w-4xl mx-auto text-center px-4 md:px-6">
+            {{-- Brand Badge --}}
+            <div class="inline-flex items-center gap-2.5 px-4 py-2 bg-blue-50/50 backdrop-blur-sm text-brand-blue rounded-2xl mb-8 border border-blue-100/50 shadow-sm animate-in zoom-in duration-1000">
+                <img src="{{ asset('logo.png') }}" alt="L" class="w-6 h-6 rounded-lg shadow-sm">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em]">LinkSnap Platform</span>
+            </div>
+
             <h1 class="font-vietnam text-4xl md:text-7xl font-black text-slate-900 leading-[1.1] tracking-tight mb-6">
                 Snap Your Links, <br class="hidden md:block">
                 <span class="bg-gradient-to-r from-brand-blue via-indigo-600 to-violet-600 bg-clip-text text-transparent italic">Control Everything.</span>

@@ -3,7 +3,9 @@
 <!-- Modal Đăng nhập -->
 <div id="loginModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 items-center justify-center p-4 hidden animate-in fade-in duration-300">
     <div class="bg-white rounded-[40px] p-8 md:p-12 w-full max-w-md shadow-2xl relative">
-        <div class="text-center mb-8 md:mb-10">
+        <div class="flex flex-col items-center mb-8 md:mb-10">
+            {{-- Logo Mark --}}
+            <img src="{{ asset('logo.png') }}" alt="Logo" class="w-16 h-16 rounded-[20px] shadow-xl shadow-blue-100 mb-6">
             <h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-3 tracking-tight">Chào mừng!</h2>
             <p class="text-slate-400 font-semibold text-xs md:text-sm italic">Đăng nhập để quản lý link snaps.</p>
         </div>
@@ -42,7 +44,9 @@
 <!-- Modal Đăng ký -->
 <div id="registerModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 items-center justify-center p-4 hidden animate-in fade-in duration-300">
     <div class="bg-white rounded-[40px] p-8 md:p-12 w-full max-w-md shadow-2xl relative">
-        <div class="text-center mb-8 md:mb-10">
+        <div class="flex flex-col items-center mb-8 md:mb-10">
+            {{-- Logo Mark --}}
+            <img src="{{ asset('logo.png') }}" alt="Logo" class="w-16 h-16 rounded-[20px] shadow-xl shadow-blue-100 mb-6">
             <h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-3 tracking-tight">Tham gia ngay</h2>
             <p class="text-slate-400 font-semibold text-xs md:text-sm italic">Quản lý link Snap chuyên nghiệp nhất.</p>
         </div>
