@@ -1,7 +1,7 @@
 <!-- Hệ thống Cửa sổ Modal (Đăng nhập / Đăng ký) -->
 
 <!-- Modal Đăng nhập -->
-<div id="loginModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 items-center justify-center p-4 hidden animate-in fade-in duration-300">
+<div id="loginModal" onclick="if(event.target===this) Modal.close('loginModal')" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden animate-in fade-in duration-300">
     <div class="bg-white rounded-[40px] p-8 md:p-12 w-full max-w-md shadow-2xl relative">
         <div class="flex flex-col items-center mb-8 md:mb-10">
             {{-- Logo Mark --}}
@@ -42,7 +42,7 @@
 </div>
 
 <!-- Modal Đăng ký -->
-<div id="registerModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 items-center justify-center p-4 hidden animate-in fade-in duration-300">
+<div id="registerModal" onclick="if(event.target===this) Modal.close('registerModal')" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden animate-in fade-in duration-300">
     <div class="bg-white rounded-[40px] p-8 md:p-12 w-full max-w-md shadow-2xl relative">
         <div class="flex flex-col items-center mb-8 md:mb-10">
             {{-- Logo Mark --}}
@@ -93,7 +93,7 @@
     </div>
 </div>
 <!-- Modal Hiển thị Mã QR -->
-<div id="qrModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 items-center justify-center p-4 hidden animate-in zoom-in duration-300">
+<div id="qrModal" onclick="if(event.target===this) Modal.close('qrModal')" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden animate-in zoom-in duration-300">
     <div class="bg-white rounded-[40px] p-8 md:p-10 w-full max-w-sm shadow-2xl relative flex flex-col items-center text-center gap-6">
         <div class="space-y-1">
             <h3 class="text-xl font-black text-slate-800 tracking-tight uppercase">Mã QR của bạn</h3>

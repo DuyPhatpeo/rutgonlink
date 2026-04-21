@@ -6,12 +6,12 @@
 <div class="bg-slate-50 min-h-screen pt-8 pb-32">
     <div class="max-w-6xl mx-auto px-4 md:px-6">
         {{-- Header --}}
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 md:mb-12">
-            <div>
-                <h1 class="text-2xl md:text-4xl font-black text-slate-800 tracking-tight italic">Bio Pages</h1>
-                <p class="text-slate-500 font-medium mt-1 md:mt-2 uppercase tracking-widest text-[10px] md:text-xs">Tạo trang landing page chuyên nghiệp cho mạng xã hội của bạn.</p>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8 md:mb-12">
+            <div class="space-y-1">
+                <h1 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight italic">Bio Pages</h1>
+                <p class="text-slate-500 font-medium uppercase tracking-widest text-[10px] md:text-xs">Tạo trang landing page chuyên nghiệp cho mạng xã hội của bạn.</p>
             </div>
-            <button onclick="BioManager.openCreateModal()" class="flex items-center gap-2 bg-brand-blue hover:bg-blue-700 text-white font-black px-8 py-4 rounded-2xl shadow-lg shadow-blue-100 transition-all active:scale-95 text-xs uppercase tracking-widest whitespace-nowrap">
+            <button onclick="BioManager.openCreateModal()" class="w-full sm:w-auto flex items-center justify-center gap-3 bg-brand-blue hover:bg-blue-700 text-white font-black px-10 py-5 rounded-3xl shadow-xl shadow-blue-100 transition-all active:scale-95 text-xs uppercase tracking-[0.2em] whitespace-nowrap">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" /></svg>
                 Tạo Bio Page mới
             </button>
@@ -78,8 +78,8 @@
 </div>
 
 {{-- Modal tạo Bio Page --}}
-<div id="createBioModal" onclick="if(event.target===this) BioManager.closeCreateModal()" class="fixed inset-0 z-[100] hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm">
-    <div class="flex min-h-full items-center justify-center p-4">
+<div id="createBioModal" class="fixed inset-0 z-[100] hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm">
+    <div onclick="if(event.target===this) BioManager.closeCreateModal()" class="flex min-h-full items-center justify-center p-4">
         <div class="relative w-full max-w-xl bg-white rounded-[44px] shadow-2xl p-8 md:p-12 animate-in zoom-in-95 duration-300">
             <button onclick="BioManager.closeCreateModal()" class="absolute top-8 right-8 text-slate-300 hover:text-slate-900 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" /></svg>

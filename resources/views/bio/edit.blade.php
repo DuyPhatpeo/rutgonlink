@@ -44,6 +44,7 @@
             <button onclick="Editor.setTab('links')" id="tab-btn-links-mobile" class="mobile-tab-btn flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all bg-white text-slate-800 shadow-sm">Liên kết</button>
             <button onclick="Editor.setTab('appearance')" id="tab-btn-appearance-mobile" class="mobile-tab-btn flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all text-slate-400">Giao diện</button>
             <button onclick="Editor.setTab('settings')" id="tab-btn-settings-mobile" class="mobile-tab-btn flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all text-slate-400">Cài đặt</button>
+            <button onclick="Editor.setTab('preview')" id="tab-btn-preview-mobile" class="mobile-tab-btn flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all text-slate-400">Xem trước</button>
         </div>
     </div>
 
@@ -55,13 +56,13 @@
                 
                 {{-- TAB: LINKS --}}
                 <div id="tab-links" class="tab-content transition-all duration-300">
-                    <div class="flex items-center justify-between mb-8">
-                        <div>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-10">
+                        <div class="space-y-1">
                             <h2 class="text-2xl font-black text-slate-800 tracking-tight italic">Quản lý liên kết</h2>
-                            <p class="text-slate-400 font-bold text-xs mt-1">Dễ dàng thêm, sửa hoặc thay đổi vị trí các liên kết của bạn.</p>
+                            <p class="text-slate-400 font-bold text-xs">Dễ dàng thêm, sửa hoặc thay đổi vị trí các liên kết của bạn.</p>
                         </div>
-                        <button onclick="Editor.openLinkModal()" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-black px-6 py-4 rounded-2xl shadow-xl shadow-slate-200 transition-all active:scale-95 text-[10px] uppercase tracking-widest">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" /></svg>
+                        <button onclick="Editor.openLinkModal()" class="w-full sm:w-auto flex items-center justify-center gap-3 bg-slate-900 hover:bg-slate-800 text-white font-black px-10 py-5 rounded-3xl shadow-xl shadow-slate-200 transition-all active:scale-95 text-[11px] uppercase tracking-[0.2em]">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" /></svg>
                             Thêm link mới
                         </button>
                     </div>
@@ -256,6 +257,28 @@
                         </div>
                     </section>
                 </div>
+
+                {{-- TAB: PREVIEW (Mobile Only) --}}
+                <div id="tab-preview" class="tab-content hidden md:hidden animate-in fade-in slide-in-from-bottom-4 duration-300">
+                    <div class="bg-white rounded-[44px] p-6 shadow-sm border border-slate-100">
+                        <div class="mb-6 flex items-center justify-between">
+                            <div>
+                                <h2 class="text-xl font-black text-slate-800 tracking-tight italic">Xem trước</h2>
+                                <p class="text-slate-400 font-bold text-[10px] mt-1 uppercase tracking-widest">Cách trang của bạn hiển thị trên di động</p>
+                            </div>
+                            <button onclick="Editor.refreshPreview()" class="p-3 bg-slate-50 text-slate-400 hover:text-brand-blue rounded-xl transition-all">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                            </button>
+                        </div>
+                        
+                        {{-- Mobile Preview Frame --}}
+                        <div class="relative mx-auto rounded-[40px] overflow-hidden border-8 border-slate-900 shadow-2xl" style="height: 600px; max-width: 320px;">
+                            <iframe id="previewFrameMobile" src="{{ route('bio.show', $bioPage->slug) }}" 
+                                class="w-full h-full border-none">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {{-- Preview Mobile bên phải --}}
@@ -320,8 +343,8 @@
 </style>
 
 {{-- Modal Thêm/Sửa Link (Redesigned) --}}
-<div id="linkModal" onclick="if(event.target===this) Editor.closeLinkModal()" class="fixed inset-0 z-[100] hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm">
-    <div class="flex min-h-full items-center justify-center p-4">
+<div id="linkModal" class="fixed inset-0 z-[100] hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm">
+    <div onclick="if(event.target===this) Editor.closeLinkModal()" class="flex min-h-full items-center justify-center p-4">
         <div class="relative w-full max-w-xl bg-white rounded-[44px] shadow-2xl p-8 md:p-12 animate-in zoom-in-95 duration-300">
             <button onclick="Editor.closeLinkModal()" class="absolute top-10 right-10 text-slate-300 hover:text-slate-900 transition-colors bg-slate-50 w-10 h-10 rounded-full flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -569,9 +592,14 @@ const Editor = {
     },
 
     refreshPreview() {
-        const frame = document.getElementById("previewFrame");
-        if (frame && frame.contentWindow) {
-            frame.contentWindow.location.reload();
+        const desktopFrame = document.getElementById("previewFrame");
+        const mobileFrame = document.getElementById("previewFrameMobile");
+        
+        if (desktopFrame && desktopFrame.contentWindow) {
+            desktopFrame.contentWindow.location.reload();
+        }
+        if (mobileFrame && mobileFrame.contentWindow) {
+            mobileFrame.contentWindow.location.reload();
         }
     },
 

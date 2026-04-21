@@ -1,78 +1,105 @@
-# LinkSnap - URL Shortener & Analytics
+<p align="center">
+  <img src="public/logo.png" width="120" height="120" alt="LinkSnap Logo">
+</p>
 
-LinkSnap là công cụ rút gọn liên kết hiện đại, được xây dựng nhằm mục đích giúp người dùng dễ dàng quản lý, bảo mật và theo dõi hiệu năng của các liên kết trực tuyến. Hệ thống cung cấp các bộ công cụ phân tích dữ liệu chuyên sâu và các tùy chọn bảo mật nâng cao cho liên kết.
+# 🚀 LinkSnap - URL Shortener & Bio Page Builder
 
-![Project Preview](public/screenshots/preview.png)
+**LinkSnap** là một nền tảng quản lý liên kết toàn diện, kết hợp giữa công cụ rút gọn URL mạnh mẽ và trình xây dựng trang Bio (Link-in-Bio) hiện đại. Được thiết kế với giao diện **Premium UI**, tối ưu hóa trải nghiệm người dùng và cung cấp các hệ thống thống kê chuyên sâu.
 
+[![Laravel Version](https://img.shields.io/badge/Laravel-13.x-red.svg)](https://laravel.com)
+[![PHP Version](https://img.shields.io/badge/PHP-8.3-blue.svg)](https://php.net)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC.svg)](https://tailwindcss.com)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## 🛠 Tech Stack
+---
 
-Dự án được phát triển dựa trên các công nghệ mới nhất:
-- **Backend**: Laravel 13 (PHP 8.3+)
-- **Frontend**: Tailwind CSS v4, Vite, Vanilla JavaScript
-- **Database**: MySQL
-- **Charts**: Chart.js (Theo dõi dữ liệu trực quan)
-- **Integrations**: QR Server API (Tích hợp tạo mã QR)
+## ✨ Tính năng nổi bật
 
-## ✨ Các tính năng nổi bật
+### 🔗 1. Hệ thống Rút gọn Link Thông minh
+*   **Rút gọn tức thì**: Tạo liên kết ngắn gọn chỉ trong 1 giây.
+*   **Custom Slugs**: Tùy chỉnh đường dẫn theo thương hiệu cá nhân.
+*   **Bảo mật nâng cao**: Hỗ trợ đặt mật khẩu (Password Protected) và ngày hết hạn cho liên kết.
+*   **Giới hạn lượt click**: Tự động khóa link sau khi đạt số lượt truy cập nhất định.
+*   **Mã QR**: Tự động tạo mã QR đẹp mắt cho từng liên kết, hỗ trợ tải về.
 
-Dự án cung cấp một hệ sinh thái quản lý liên kết toàn diện, từ việc rút gọn đơn giản đến các công cụ phân tích dữ liệu chuyên sâu:
+### 📱 2. Trình xây dựng Bio Page (Link-in-Bio)
+*   **Live Preview**: Chỉnh sửa và xem thay đổi trực tiếp ngay trên màn hình.
+*   **Editor Tabbed**: Giao diện quản lý phân chia rõ ràng (Giao diện, Liên kết, Cài đặt).
+*   **Avatar & Social Icons**: Tùy chỉnh ảnh đại diện, phát hiện icon mạng xã hội tự động qua AI.
+*   **Thứ tự linh hoạt**: Thay đổi thứ tự các link trên Bio Page bằng cách kéo thả.
+*   **Responsive**: Tối ưu hoàn hảo cho các thiết bị di động với Bottom Tab Bar tiện lợi.
 
-### 🔗 Giải pháp Rút gọn Thông minh
-*   **Chuyển đổi tức thì**: Rút gọn URL chỉ với một cú click, tạo mã định danh ngắn gọn (6 ký tự).
-*   **Custom Snippets**: Tùy chỉnh mã rút gọn theo thương hiệu hoặc sở thích cá nhân (Dành cho Member).
-*   **Branding Control**: Thiết lập Tiêu đề và Mô tả riêng để cá nhân hóa liên kết khi chia sẻ.
+### 📊 3. Phân tích & Thống kê Real-time
+*   **Interactive Charts**: Biểu đồ tương tác (Chart.js) theo dõi lượt click hàng ngày.
+*   **User Insights**: Thống kê chi tiết trình duyệt, hệ điều hành và thiết bị của người dùng.
+*   **Click Logs**: Nhật ký truy cập chi tiết kèm địa chỉ IP và thời gian thực.
+*   **Unique Visitors**: Phân biệt giữa tổng lượt click và lượt người dùng thực tế.
 
-### 🛡️ Bảo mật & Kiểm soát Tuyệt đối
-*   **Bảo vệ bằng mật khẩu**: Kiểm soát quyền truy cập, chỉ những người có mật khẩu mới có thể xem nội dung gốc.
-*   **Hạn dùng linh hoạt**: Thiết lập thời gian hết hạn tự động cho link, giúp quản lý các chiến dịch ngắn hạn.
-*   **Giới hạn truy cập**: Tự động khóa liên kết sau khi đạt đủ số lượt click mong muốn.
-*   **Quản lý trạng thái**: Bật hoặc tạm dừng hoạt động của liên kết bất cứ lúc nào.
+### 🛡️ 4. Xác thực & Bảo mật
+*   **Google OAuth**: Đăng nhập nhanh chóng và an toàn qua Google Socialite.
+*   **Session Security**: Bảo mật phiên làm việc với CSRF Protection.
 
-### 📊 Phân tích & Thống kê Chuyên sâu
-*   **Dashboard trực quan**: Theo dõi biểu đồ tăng trưởng lượt tương tác trong 14 ngày gần nhất.
-*   **User Insights**: Phân tích chi tiết Hệ điều hành, Trình duyệt và thiết bị của người truy cập.
-*   **Tracking Logs**: Ghi lại chi tiết IP, User Agent và dòng thời gian thực cho mỗi lần click.
-*   **Unique Reach**: Hệ thống tự động phân biệt tổng lượt click và lượt khách truy cập thực tế (Unique Visitors).
+---
 
-### 🎁 Tiện ích Nâng cao
-*   **Mã QR Generator**: Tự động tạo mã QR chất lượng cao cho mỗi link, hỗ trợ tải về để sử dụng trên các ấn phẩm truyền thông.
-*   **Social Preview**: Tùy chọn Thumbnail và Metadata giúp liên kết hiển thị bắt mắt trên Facebook, Zalo, Telegram.
-*   **Universal Management**: Công cụ tìm kiếm mạnh mẽ, hỗ trợ sửa URL gốc, xóa link hoặc làm sạch dữ liệu thống kê (Reset stats).
+## 🛠 Công nghệ sử dụng
 
+*   **Core**: Laravel 13 & PHP 8.3
+*   **Frontend**: Tailwind CSS (Glassmorphism UI), Vanilla JavaScript
+*   **Database**: MySQL
+*   **Charts**: Chart.js
+*   **Icons**: Lucide Icons / Heroicons (SVG)
+*   **Auth**: Laravel Fortify / Socialite
+
+---
 
 ## 🚀 Hướng dẫn cài đặt
 
-Để chạy dự án LinkSnap trên môi trường local, hãy thực hiện theo các bước sau:
+### Yêu cầu hệ thống
+*   PHP >= 8.3
+*   Composer
+*   Node.js & NPM
+*   MySQL
 
-1. **Clone dự án:**
+### Các bước cài đặt
+
+1. **Clone repository:**
    ```bash
    git clone https://github.com/DuyPhatpeo/rutgonlink.git
    cd rutgonlink
    ```
 
-2. **Cài đặt các thư viện: (Backend & Frontend)**
+2. **Cài đặt Dependencies:**
    ```bash
    composer install
    npm install
    ```
 
 3. **Cấu hình môi trường:**
-   - Tạo file `.env` từ file mẫu: `cp .env.example .env` (hoặc copy thủ công trên Windows).
-   - Cập nhật thông tin kết nối **MySQL** trong file `.env`.
-   - Tạo Key cho ứng dụng: `php artisan key:generate`.
+   - Sao chép file mẫu: `cp .env.example .env`
+   - Cập nhật thông tin **DB_DATABASE**, **DB_USERNAME**, **DB_PASSWORD** trong `.env`.
+   - Cấu hình Google Client ID/Secret (nếu dùng Google Login).
 
-4. **Khởi tạo Database:**
+4. **Khởi tạo ứng dụng:**
    ```bash
+   php artisan key:generate
    php artisan migrate
    ```
 
 5. **Chạy ứng dụng:**
-   - Chạy đồng thời Server và Vite (Frontend):
-     ```bash
-     npm run dev
-     ```
-   - Hoặc chạy lẻ: `php artisan serve` và `npm run dev`.
+   - Mở 2 terminal chạy song song:
+   ```bash
+   php artisan serve
+   npm run dev
+   ```
 
 ---
-*Dự án được phát triển bởi **Trần Duy Phát***
+
+## 🎨 Giao diện & Trải nghiệm
+Dự án được xây dựng với triết lý thiết kế **Modern & Clean**:
+- **Glassmorphism**: Các thành phần giao diện mờ ảo, hiện đại.
+- **Micro-animations**: Hiệu ứng chuyển động mượt mà khi tương tác.
+- **Dark Mode Ready**: Cấu trúc dễ dàng mở rộng sang chế độ tối.
+
+---
+
+*Phát triển và duy trì bởi **[Trần Duy Phát](https://github.com/DuyPhatpeo)***
