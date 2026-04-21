@@ -28,6 +28,8 @@ class AuthController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
+        $user->createPersonalWorkspace();
+
         Auth::login($user);
         $request->session()->flash('success', 'Đăng ký thành công!');
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LinkController;
+use App\Http\Controllers\BioController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -40,7 +41,23 @@ Route::middleware('auth')->group(function () {
     // Web Routes
     Route::get('/links', [LinkController::class, 'index'])->name('links.index');
     Route::get('/links/{id}', [LinkController::class, 'show'])->name('links.show');
+
+    // Bio Page Routes
+    Route::get('/bio', [BioController::class, 'index'])->name('bio.index');
+    Route::get('/bio/create', [BioController::class, 'create'])->name('bio.create');
+    Route::post('/api/bio', [BioController::class, 'store'])->name('bio.store');
+    Route::get('/bio/{id}/edit', [BioController::class, 'edit'])->name('bio.edit');
+    Route::patch('/api/bio/{id}', [BioController::class, 'update'])->name('bio.update');
+    Route::delete('/api/bio/{id}', [BioController::class, 'destroy'])->name('bio.destroy');
+    Route::post('/api/bio/{id}/links', [BioController::class, 'addLink'])->name('bio.links.add');
+    Route::post('/api/bio/{id}/reorder', [BioController::class, 'reorderLinks'])->name('bio.links.reorder');
+    Route::patch('/api/bio/links/{link_id}', [BioController::class, 'updateLink'])->name('bio.links.update');
+    Route::delete('/api/bio/links/{link_id}', [BioController::class, 'destroyLink'])->name('bio.links.destroy');
 });
+
+
+// Public Bio Page (Prefix /b/ to avoid conflict with short codes)
+Route::get('/b/{slug}', [BioController::class, 'show'])->name('bio.show');
 
 
 // Redirect Route (Must be last)

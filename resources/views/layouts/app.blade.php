@@ -91,11 +91,20 @@
                     </div>
                 </button>
                 @auth
+                    <div class="flex items-center gap-4 md:gap-8 mr-2 md:mr-6 border-r border-slate-200/60 pr-4 md:pr-8">
+                        <a href="/" class="text-[10px] md:text-xs font-black {{ Request::is('/') ? 'text-brand-blue' : 'text-slate-400' }} hover:text-brand-blue transition-all uppercase tracking-widest">Links</a>
+                        <a href="/bio" class="text-[10px] md:text-xs font-black {{ Request::is('bio*') ? 'text-brand-blue' : 'text-slate-400' }} hover:text-brand-blue transition-all uppercase tracking-widest">Bio Pages</a>
+                    </div>
                     <div class="flex items-center gap-3 md:gap-4">
-                        <span class="text-slate-500 font-semibold hidden md:inline">Chào, <span class="text-slate-800 font-bold">{{ Auth::user()->name }}</span>!</span>
-                        <form action="/api/logout" method="POST">
+                        <div class="flex flex-col items-end">
+                            <span class="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">Owner</span>
+                            <span class="text-slate-800 font-bold text-sm hidden md:inline leading-none">{{ Auth::user()->name }}</span>
+                        </div>
+                        <form action="/api/logout" method="POST" class="inline">
                             @csrf
-                            <button type="submit" class="text-[10px] md:text-xs font-black text-rose-500 hover:bg-rose-50 px-4 md:px-5 py-2 md:py-2.5 rounded-2xl transition-all border border-transparent hover:border-rose-100 uppercase tracking-widest">Đăng xuất</button>
+                            <button type="submit" class="p-2 text-rose-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all" title="Đăng xuất">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                            </button>
                         </form>
                     </div>
                 @else

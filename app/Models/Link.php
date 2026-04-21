@@ -23,13 +23,22 @@ class Link extends Model
         'title',
         'description',
         'thumbnail',
-        'is_active'
+        'is_active',
+        'workspace_id'
     ];
 
     protected $casts = [
         'expires_at' => 'datetime',
         'is_active' => 'boolean',
     ];
+
+    /**
+     * Get the workspace that owns the link.
+     */
+    public function workspace()
+    {
+        return $this->belongsTo(Workspace::class);
+    }
 
     /**
      * Lấy lịch sử truy cập của link này.

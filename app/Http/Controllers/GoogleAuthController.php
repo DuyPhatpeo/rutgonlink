@@ -41,6 +41,8 @@ class GoogleAuthController extends Controller
                         'google_id' => $googleUser->id,
                         'password' => Hash::make(Str::random(24)), // Mật khẩu ngẫu nhiên
                     ]);
+
+                    $user->createPersonalWorkspace();
                 }
             }
 
