@@ -58,9 +58,15 @@ class BioController extends Controller
             'theme_data' => [
                 'background' => '#f8fafc',
                 'text_color' => '#1e293b',
+                'bio_text_color' => '#64748b',
+                'bio_bg_color' => 'transparent',
+                'bio_text_align' => 'center',
+                'bio_text_size' => 'text-[14px]',
+                'bio_text_weight' => 'font-medium',
                 'button_bg' => '#2563eb',
                 'button_text' => '#ffffff',
                 'button_style' => 'rounded-xl',
+                'button_type' => 'solid',
             ],
         ]);
 
@@ -100,6 +106,11 @@ class BioController extends Controller
             'profile_image' => 'nullable|url',
             'theme_data' => 'nullable|array',
         ]);
+
+        if ($request->has('theme_data')) {
+            $currentTheme = $bioPage->theme_data ?? [];
+            $validated['theme_data'] = array_merge($currentTheme, $request->input('theme_data'));
+        }
 
         $bioPage->update($validated);
 
