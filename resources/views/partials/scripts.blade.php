@@ -411,6 +411,15 @@
                 const msg = err.data?.errors ? Object.values(err.data.errors).flat().join('<br>') : (err.data?.message || 'Lỗi đăng ký');
                 ErrorUI.show(form.querySelector('[name=email]'), msg);
             }
+        },
+        googleLogin() {
+            const width = 600;
+            const height = 700;
+            const left = (window.innerWidth / 2) - (width / 2);
+            const top = (window.innerHeight / 2) - (height / 2);
+            
+            const url = "{{ route('google.login') }}";
+            window.open(url, 'GoogleLogin', `width=${width},height=${height},top=${top},left=${left},scrollbars=yes,status=yes`);
         }
     };
 

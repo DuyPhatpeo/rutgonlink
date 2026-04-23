@@ -49,9 +49,9 @@ class GoogleAuthController extends Controller
             Auth::login($user);
             session()->flash('success', 'Đăng nhập bằng Google thành công!');
 
-            return redirect()->intended('/');
+            return view('auth.callback');
         } catch (\Exception $e) {
-            return redirect('/')->with('error', 'Lỗi đăng nhập từ Google. Vui lòng thử lại.');
+            return view('auth.callback', ['error' => 'Lỗi đăng nhập từ Google. Vui lòng thử lại.']);
         }
     }
 }
