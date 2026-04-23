@@ -100,14 +100,14 @@
                 @auth
                     {{-- Desktop Links --}}
                     <div class="hidden md:flex items-center gap-8 mr-6 border-r border-slate-200/60 pr-8">
-                        <a href="/" class="text-xs font-black {{ Request::is('/') ? 'text-brand-blue' : 'text-slate-400' }} hover:text-brand-blue transition-all uppercase tracking-widest">Links</a>
-                        <a href="/bio" class="text-xs font-black {{ Request::is('bio*') ? 'text-brand-blue' : 'text-slate-400' }} hover:text-brand-blue transition-all uppercase tracking-widest">Bio Pages</a>
+                        <a href="/" class="text-xs font-black {{ Request::is('/') ? 'text-brand-blue' : 'text-slate-400' }} hover:text-brand-blue transition-all uppercase tracking-widest">Liên kết</a>
+                        <a href="/bio" class="text-xs font-black {{ Request::is('bio*') ? 'text-brand-blue' : 'text-slate-400' }} hover:text-brand-blue transition-all uppercase tracking-widest">Trang Bio</a>
                     </div>
                     
                     {{-- Desktop User Info & Logout --}}
                     <div class="hidden md:flex items-center gap-4">
                         <div class="flex flex-col items-end">
-                            <span class="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">Owner</span>
+                            <span class="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">Tài khoản</span>
                             <span class="text-slate-800 font-bold text-sm leading-none">{{ Auth::user()->name }}</span>
                         </div>
                         <form action="/api/logout" method="POST" class="inline">
@@ -145,10 +145,10 @@
         {{-- Decorative element --}}
         <div class="absolute bottom-0 right-0 w-64 h-64 bg-blue-50/50 rounded-full blur-3xl translate-y-32 translate-x-32 -z-10"></div>
         
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
                 {{-- Column 1: Brand --}}
-                <div class="col-span-1 md:col-span-2 lg:col-span-1 space-y-6">
+                <div class="space-y-6">
                     <div class="flex items-center gap-3">
                         <img src="{{ asset('logo.png') }}" alt="LinkSnap" class="w-10 h-10 rounded-xl shadow-lg shadow-blue-100">
                         <span class="text-2xl font-black text-slate-800 tracking-tighter italic">LinkSnap</span>
@@ -170,9 +170,9 @@
                 <div class="space-y-6">
                     <h4 class="text-xs font-black text-slate-900 uppercase tracking-[0.2em] italic">Khám phá</h4>
                     <ul class="space-y-4">
-                        <li><a href="/" class="text-sm font-bold text-slate-500 hover:text-brand-blue transition-colors">Rút gọn liên kết</a></li>
-                        <li><a href="{{ route('bio.index') }}" class="text-sm font-bold text-slate-500 hover:text-brand-blue transition-colors">Bio Pages Profile</a></li>
-                        <li><a href="#" class="text-sm font-bold text-slate-500 hover:text-brand-blue transition-colors opacity-50 cursor-not-allowed">Phân tích chuyên sâu</a></li>
+                        <li><a href="/" class="text-sm font-bold text-slate-600 hover:text-brand-blue transition-colors">Rút gọn liên kết</a></li>
+                        <li><a href="{{ route('bio.index') }}" class="text-sm font-bold text-slate-600 hover:text-brand-blue transition-colors">Tạo Trang Bio</a></li>
+                        <li><a href="#" class="text-sm font-bold text-slate-400 hover:text-brand-blue transition-colors opacity-60 cursor-not-allowed">Phân tích chuyên sâu</a></li>
                     </ul>
                 </div>
                 
@@ -181,42 +181,26 @@
                     <h4 class="text-xs font-black text-slate-900 uppercase tracking-[0.2em] italic">Tài khoản</h4>
                     <ul class="space-y-4">
                         @auth
-                            <li><a href="/" class="text-sm font-bold text-slate-500 hover:text-brand-blue transition-colors">Dashboard chính</a></li>
-                            <li><a href="{{ route('bio.index') }}" class="text-sm font-bold text-slate-500 hover:text-brand-blue transition-colors">Quản lý Bio Pages</a></li>
-                            <li>
-                                <form action="/api/logout" method="POST">
-                                    @csrf
-                                    <button type="submit" class="text-sm font-bold text-rose-400 hover:text-rose-600 transition-colors">Đăng xuất</button>
-                                </form>
-                            </li>
+                            <li><a href="/" class="text-sm font-bold text-slate-600 hover:text-brand-blue transition-colors">Bảng điều khiển</a></li>
+                            <li><a href="{{ route('bio.index') }}" class="text-sm font-bold text-slate-600 hover:text-brand-blue transition-colors">Quản lý Bio</a></li>
                         @else
                             <li><button onclick="Modal.open('loginModal')" class="text-sm font-bold text-slate-500 hover:text-brand-blue transition-colors">Đăng nhập</button></li>
-                            <li><button onclick="Modal.open('registerModal')" class="text-sm font-bold text-slate-500 hover:text-brand-blue transition-colors">Đăng ký thành viên</button></li>
+                            <li><button onclick="Modal.open('registerModal')" class="text-sm font-bold text-slate-500 hover:text-brand-blue transition-colors">Tham gia ngay</button></li>
                         @endauth
                     </ul>
-                </div>
-                
-                {{-- Column 4: Contact/Author --}}
-                <div class="space-y-6">
-                    <h4 class="text-xs font-black text-slate-900 uppercase tracking-[0.2em] italic">Nhà phát triển</h4>
-                    <div class="bg-slate-50 rounded-3xl p-6 border border-slate-100">
-                        <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Sáng tạo bởi</p>
-                        <p class="text-slate-800 font-black text-sm mb-4">Trần Duy Phát</p>
-                        <a href="mailto:phat@example.com" class="inline-flex items-center gap-2 text-xs font-bold text-brand-blue hover:underline">
-                             Liên hệ hợp tác &rarr;
-                        </a>
-                    </div>
                 </div>
             </div>
             
             {{-- Bottom Bar --}}
             <div class="pt-8 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6">
-                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
-                    &copy; {{ date('Y') }} LINKSNAP &bull; MADE WITH PASSION
-                </p>
+                <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">&copy; {{ date('Y') }} LINKSNAP</span>
+                    <span class="w-1 h-1 rounded-full bg-slate-200"></span>
+                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Phát triển bởi LinkSnap</span>
+                </div>
                 <div class="flex items-center gap-6">
-                    <a href="#" class="text-[10px] font-black text-slate-300 hover:text-slate-600 uppercase tracking-widest transition-colors">Quy định sử dụng</a>
-                    <a href="#" class="text-[10px] font-black text-slate-300 hover:text-slate-600 uppercase tracking-widest transition-colors">Bảo mật thông tin</a>
+                    <a href="#" class="text-[10px] font-black text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors">Điều khoản</a>
+                    <a href="#" class="text-[10px] font-black text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors">Bảo mật</a>
                 </div>
             </div>
         </div>
@@ -248,7 +232,7 @@
                         {{ substr(Auth::user()->name, 0, 1) }}
                     </div>
                     <div>
-                        <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">Authenticated as</p>
+                        <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">Đăng nhập với</p>
                         <p class="text-slate-800 font-bold text-base leading-none">{{ Auth::user()->name }}</p>
                     </div>
                 </div>
@@ -256,11 +240,11 @@
 
             {{-- Links --}}
             <div class="flex-1 p-6 space-y-4">
-                <p class="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em] mb-4">Navigation</p>
+                <p class="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em] mb-4">Điều hướng</p>
                 <a href="/" class="flex items-center justify-between px-5 py-4 rounded-3xl {{ Request::is('/') ? 'bg-brand-blue text-white shadow-lg shadow-blue-100' : 'bg-white text-slate-600 border border-slate-100' }} transition-all group active:scale-95">
                     <div class="flex items-center gap-4">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.826a4 4 0 015.656 0l4 4a4 4 0 01-5.656 5.656l-1.1-1.1" /></svg>
-                        <span class="font-black text-xs uppercase tracking-widest">My Links</span>
+                        <span class="font-black text-xs uppercase tracking-widest">Liên kết của tôi</span>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
                 </a>
@@ -268,7 +252,7 @@
                 <a href="/bio" class="flex items-center justify-between px-5 py-4 rounded-3xl {{ Request::is('bio*') ? 'bg-brand-blue text-white shadow-lg shadow-blue-100' : 'bg-white text-slate-600 border border-slate-100' }} transition-all group active:scale-95">
                     <div class="flex items-center gap-4">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-                        <span class="font-black text-xs uppercase tracking-widest">Bio Pages</span>
+                        <span class="font-black text-xs uppercase tracking-widest">Trang Bio</span>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
                 </a>

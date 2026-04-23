@@ -8,7 +8,7 @@
         {{-- Header --}}
         <div class="mb-10 animate-in fade-in duration-700">
             <div class="flex items-center gap-2 mb-3">
-                <span class="px-2.5 py-1 bg-indigo-50 text-indigo-600 text-[9px] font-black uppercase tracking-[0.2em] rounded-full border border-indigo-100/50">My Bio Pages</span>
+                <span class="px-2.5 py-1 bg-indigo-50 text-indigo-600 text-[9px] font-black uppercase tracking-[0.2em] rounded-full border border-indigo-100/50">Trang Bio của tôi</span>
                 <div class="h-px w-8 bg-indigo-100"></div>
             </div>
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -58,7 +58,7 @@
                 <div class="relative z-10 flex items-center justify-between pt-4 border-t border-slate-100">
                     <div class="flex items-center gap-1.5 text-slate-400">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.826a4 4 0 015.656 0l4 4a4 4 0 01-5.656 5.656l-1.1-1.1" /></svg>
-                        <span class="text-[11px] md:text-xs font-bold">{{ $page->links_count }} links</span>
+                        <span class="text-[11px] md:text-xs font-bold">{{ $page->links_count }} liên kết</span>
                     </div>
                     <div class="flex gap-1.5">
                         <a href="{{ route('bio.show', $page->slug) }}" target="_blank" class="relative z-20 p-2 md:p-2.5 bg-slate-50 text-slate-400 hover:text-brand-blue hover:bg-blue-50 rounded-xl transition-all" title="Xem công khai">

@@ -41,7 +41,7 @@
                     <div class="absolute inset-0 mx-auto max-w-sm w-full bg-white rounded-3xl shadow-xl p-6 transform rotate-3 group-hover:rotate-0 transition-transform duration-700">
                         <div class="h-full flex flex-col">
                             <div class="flex items-center justify-between mb-6">
-                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Live Activity</span>
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Hoạt động trực tiếp</span>
                                 <div class="flex gap-1">
                                     <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></div>
                                     <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse delay-75"></div>
@@ -60,7 +60,7 @@
                             </div>
                             <div class="mt-auto pt-4 border-t border-slate-50">
                                 <span class="text-2xl font-black text-slate-800 tracking-tighter">12,482</span>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase ml-2">Total Clicks</span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase ml-2">Tổng lượt click</span>
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                 <div class="flex-1 w-full flex justify-center md:justify-start">
                     <div class="w-48 h-48 md:w-64 md:h-64 bg-white p-4 rounded-3xl shadow-2xl transform group-hover:-rotate-3 group-hover:scale-105 transition-all duration-700 relative">
                         <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=premium" class="w-full h-full opacity-90 rounded-xl" alt="QR">
-                        <div class="absolute -bottom-4 -right-4 bg-brand-blue text-white text-[10px] uppercase font-black tracking-widest px-4 py-2 rounded-xl shadow-lg transform rotate-6">Ready to scan</div>
+                        <div class="absolute -bottom-4 -right-4 bg-brand-blue text-white text-[10px] uppercase font-black tracking-widest px-4 py-2 rounded-xl shadow-lg transform rotate-6">Sẵn sàng quét</div>
                     </div>
                 </div>
             </div>
@@ -90,8 +90,8 @@
             <div class="bg-white rounded-3xl md:rounded-[40px] p-6 md:p-12 border border-slate-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-10 group hover:border-brand-blue/30 transition-all duration-500">
                 <div class="flex-1 space-y-6">
                     <div class="flex gap-2">
-                         <div class="px-3 py-1 bg-amber-50 text-amber-600 text-[10px] font-black uppercase tracking-widest rounded-full">Premium</div>
-                         <div class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-widest rounded-full">Security</div>
+                         <div class="px-3 py-1 bg-amber-50 text-amber-600 text-[10px] font-black uppercase tracking-widest rounded-full">Cao cấp</div>
+                         <div class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-widest rounded-full">Bảo mật</div>
                     </div>
                     <h3 class="font-vietnam text-2xl md:text-3xl font-black text-slate-900 leading-tight">Mật khẩu & Hạn dùng.</h3>
                     <p class="text-slate-500 font-medium text-lg leading-relaxed max-w-sm">Bảo vệ liên kết của bạn bằng mật khẩu mạnh mẽ. Thiết lập ngày giờ hết hạn hoặc giới hạn tổng số lượt click để kiểm soát truy cập tuyệt đối.</p>
@@ -122,7 +122,7 @@
                 
                 <div class="relative z-10 flex flex-col md:flex-row gap-8 items-center">
                     <div class="flex-1 space-y-6">
-                        <h3 class="font-vietnam text-2xl md:text-3xl font-black leading-tight">Branding & <br>Social Preview.</h3>
+                        <h3 class="font-vietnam text-2xl md:text-3xl font-black leading-tight">Thương hiệu & <br>Xem trước mạng xã hội.</h3>
                         <p class="text-blue-100 font-medium">Tùy chỉnh tiêu đề, mô tả và ảnh đại diện khi chia sẻ link lên Facebook, Zalo. Tạo ấn tượng chuyên nghiệp ngay khi người dùng chưa click vào.</p>
                         <ul class="space-y-2">
                              <li class="flex items-center gap-2 text-xs font-bold text-white/90">

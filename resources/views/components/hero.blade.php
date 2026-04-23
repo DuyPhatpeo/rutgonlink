@@ -11,8 +11,8 @@
             </div>
 
             <h1 class="font-vietnam text-4xl md:text-7xl font-black text-slate-900 leading-[1.1] tracking-tight mb-6">
-                Snap Your Links, <br class="hidden md:block">
-                <span class="bg-gradient-to-r from-brand-blue via-indigo-600 to-violet-600 bg-clip-text text-transparent italic">Control Everything.</span>
+                Rút gọn liên kết, <br class="hidden md:block">
+                <span class="bg-gradient-to-r from-brand-blue via-indigo-600 to-violet-600 bg-clip-text text-transparent italic">Kiểm soát mọi thứ.</span>
             </h1>
             
             <p class="max-w-2xl mx-auto text-slate-500 font-medium text-sm md:text-xl leading-relaxed mb-10">

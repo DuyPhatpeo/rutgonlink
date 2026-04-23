@@ -43,7 +43,7 @@
                     </div>
                 </button>
                 <div class="hidden px-8 pb-8 animate-in slide-in-from-top-2 duration-300">
-                    <p class="text-slate-500 font-medium leading-relaxed">Hoàn toàn được! Nếu bạn đã đăng nhập, bạn có thể vào trang Dashboard, chọn link cần sửa và cập nhật URL gốc mới mà không làm thay đổi link rút gọn đã chia sẻ.</p>
+                    <p class="text-slate-500 font-medium leading-relaxed">Hoàn toàn được! Nếu bạn đã đăng nhập, bạn có thể vào trang Bảng điều khiển, chọn link cần sửa và cập nhật URL gốc mới mà không làm thay đổi link rút gọn đã chia sẻ.</p>
                 </div>
             </div>
 

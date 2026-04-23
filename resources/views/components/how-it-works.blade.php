@@ -41,7 +41,7 @@
                     <div class="absolute -right-2 -top-2 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-black shadow-lg">📈</div>
                 </div>
                 <h3 class="font-vietnam text-xl font-black text-slate-800 mt-8 mb-4 tracking-tight">Chia sẻ & Theo dõi</h3>
-                <p class="text-slate-500 text-sm font-medium leading-relaxed">Sử dụng liên kết mới hoặc mã QR để chia sẻ. Truy cập Dashboard để xem thống kê chi tiết.</p>
+                <p class="text-slate-500 text-sm font-medium leading-relaxed">Sử dụng liên kết mới hoặc mã QR để chia sẻ. Truy cập Bảng điều khiển để xem thống kê chi tiết.</p>
             </div>
         </div>
     </div>

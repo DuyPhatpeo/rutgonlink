@@ -76,7 +76,7 @@
                         <div class="flex items-center gap-3 mb-4">
                             <div class="flex items-center gap-2">
                                 <div class="w-2 h-2 rounded-full bg-blue-400"></div>
-                                <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Social Icons</span>
+                                <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Biểu tượng mạng xã hội</span>
                             </div>
                             <div class="flex-1 h-px bg-slate-100"></div>
                             <span class="text-[10px] font-bold text-slate-300">{{ $socialLinks->count() }}</span>
@@ -124,7 +124,7 @@
                         <div class="flex items-center gap-3 mb-4">
                             <div class="flex items-center gap-2">
                                 <div class="w-2 h-2 rounded-full bg-violet-400"></div>
-                                <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Nút bấm (Buttons)</span>
+                                <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Danh sách nút bấm</span>
                             </div>
                             <div class="flex-1 h-px bg-slate-100"></div>
                             <span class="text-[10px] font-bold text-slate-300">{{ $buttonLinks->count() }}</span>
@@ -276,10 +276,10 @@
                                         <div class="flex items-center gap-3 bg-slate-50 border border-slate-100 p-2.5 rounded-2xl min-w-0">
                                             <div class="relative w-8 h-8 shrink-0 rounded-lg overflow-hidden border border-slate-100">
                                                 <input type="color" name="theme_data[bio_bg_color]" value="{{ $theme['bio_bg_color'] ?? '#ffffff' }}"
-                                                    oninput="this.parentElement.nextElementSibling.innerText = (this.value === '#ffffff' ? 'None' : this.value.toUpperCase()); Editor.updatePreviewLive('bio_bg_color', this.value)"
+                                                    oninput="this.parentElement.nextElementSibling.innerText = (this.value === '#ffffff' ? 'Không có' : this.value.toUpperCase()); Editor.updatePreviewLive('bio_bg_color', this.value)"
                                                     class="absolute -inset-2 w-[150%] h-[150%] cursor-pointer">
                                             </div>
-                                            <span class="text-[9px] font-black text-slate-600 uppercase truncate">{{ (isset($theme['bio_bg_color']) && $theme['bio_bg_color'] !== 'transparent' && $theme['bio_bg_color'] !== '#ffffff') ? $theme['bio_bg_color'] : 'None' }}</span>
+                                            <span class="text-[9px] font-black text-slate-600 uppercase truncate">{{ (isset($theme['bio_bg_color']) && $theme['bio_bg_color'] !== 'transparent' && $theme['bio_bg_color'] !== '#ffffff') ? $theme['bio_bg_color'] : 'Không có' }}</span>
                                         </div>
                                     </div>
 
@@ -459,7 +459,7 @@
             {{-- Preview Mobile bên phải (Desktop) --}}
             <div class="md:col-span-5 md:sticky md:top-28 hidden md:block">
                 <div class="text-center mb-4">
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Live Preview</span>
+                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Xem trước trực tiếp</span>
                 </div>
                 <div class="relative mx-auto" style="width: 320px">
                     <div class="relative rounded-[52px] p-[10px] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.35),0_0_0_1px_rgba(255,255,255,0.08)]" style="background: linear-gradient(145deg, #2a2d35 0%, #1a1c22 100%)">

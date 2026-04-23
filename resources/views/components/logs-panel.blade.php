@@ -1,7 +1,7 @@
 {{-- Panel: Hoạt động gần đây (Logs) --}}
 <div class="flex flex-col gap-4">
     <div class="space-y-1">
-        <span class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] block">Recent Traffic</span>
+        <span class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] block">Lưu lượng truy cập</span>
         <h3 class="text-xl font-black text-slate-800 tracking-tight flex items-center gap-2 px-1">
             <span class="w-1.5 h-6 bg-emerald-500 rounded-full"></span>
             Hoạt động gần đây
